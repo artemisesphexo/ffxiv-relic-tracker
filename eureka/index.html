@@ -127,8 +127,11 @@
             : 'border-slate-700 bg-slate-800 opacity-45 hover:opacity-100 grayscale hover:grayscale-0')"
 >
     <img
-        :src="'./images/jobs/' + job.id + '.png'"
-        class="absolute inset-0 w-full h-full object-cover"
+        :src="isJobComplete(job.id)
+            ? './images/weapons/' + job.id + '.png'
+            : './images/jobs/' + job.id + '.png'"
+        class="absolute inset-0 w-full h-full"
+        :class="isJobComplete(job.id) ? 'object-contain p-0.5 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]' : 'object-cover'"
         :alt="job.id"
         onerror="
             this.style.display = 'none';
@@ -370,7 +373,7 @@
         ? 'peer-checked:bg-[#6b21a8]/20 peer-checked:border-purple-400 peer-checked:shadow-[0_0_15px_rgba(192,132,252,0.6)]'
         : 'peer-checked:bg-green-900/80 peer-checked:border-green-500 peer-checked:shadow-[0_0_10px_rgba(34,197,94,0.3)]'">
 																	<img
-																		:src="'./images/jobs/' + jobId + '.png'"
+																		:src="(item.id === 'physeos_complete' && inventory[item.id].includes(jobId)) ? './images/weapons/' + jobId + '.png' : './images/jobs/' + jobId + '.png'"
 																		class="w-5 h-5 object-contain drop-shadow-md filter grayscale opacity-70 peer-checked:grayscale-0 peer-checked:opacity-100 transition-all duration-500"
 																		:alt="jobId"
 																		onerror="
