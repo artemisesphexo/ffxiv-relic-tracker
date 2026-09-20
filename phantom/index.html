@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Phantom Weapon Tracker – FFXIV Dawntrail Relic Guide (i745–i795)</title>
+<meta name="description" content="Track every Phantom Weapon relic material for Final Fantasy XIV Dawntrail's Occult Crescent, i745 to i795 — Demiatma, Arcanite exchanges, Aetherwell roulettes, Crystal Paste, and Phantom Dispellers, stage by stage." />
+<link rel="canonical" href="https://ffxiv-relic-tracker.netlify.app/phantom/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="FFXIV Relic Weapon Trackers" />
+<meta property="og:title" content="Phantom Weapon Tracker – FFXIV Dawntrail Relic Guide" />
+<meta property="og:description" content="Track every Phantom Weapon relic material for Final Fantasy XIV Dawntrail's Occult Crescent, i745 to i795, stage by stage." />
+<meta property="og:url" content="https://ffxiv-relic-tracker.netlify.app/phantom/" />
+<meta property="og:image" content="https://ffxiv-relic-tracker.netlify.app/assets/og/phantom-og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Phantom Weapon Tracker – FFXIV Dawntrail Relic Guide" />
+<meta name="twitter:description" content="Track every Phantom Weapon relic material for Final Fantasy XIV Dawntrail's Occult Crescent, i745 to i795, stage by stage." />
+<meta name="twitter:image" content="https://ffxiv-relic-tracker.netlify.app/assets/og/phantom-og.png" />
+<meta name="twitter:creator" content="@ArtemisEsphexo" />
+
+<link rel="stylesheet" href="/assets/site.css" />
+<link rel="stylesheet" href="/assets/fonts.css" />
+<script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<style>
+  h1, h2, h3, .ff-title { font-family: "Cinzel", serif; }
+  body { font-family: "Lato", sans-serif; }
+  .ff-bg {
+    background: radial-gradient(circle at top, #142420, #0a1210);
+    min-height: 100vh;
+  }
+  .ff-card {
+    background: linear-gradient(180deg, rgba(24, 38, 34, 0.95) 0%, rgba(14, 22, 20, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 2px solid #7fae7a;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  .text-jade-gradient {
+    background: linear-gradient(to bottom, #d9f0c8, #8fbf7a, #4a7a45);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-thumb { background: #3a4f3a; border-radius: 4px; }
+  input[type=number]::-webkit-inner-spin-button { opacity: 1; }
+</style>
+</head>
+<body class="ff-bg text-slate-200 pb-28 text-sm selection:bg-emerald-600/30 selection:text-emerald-100">
+<div x-data="relicApp" class="max-w-[820px] mx-auto px-3 md:px-4">
+
+  <nav class="flex items-center justify-center gap-4 pt-4 text-[11px] font-bold uppercase tracking-wider flex-wrap">
+    <a href="../" class="text-slate-500 hover:text-slate-300 transition-colors">&larr; All Trackers</a>
+    <span class="text-slate-700">&middot;</span>
+    <a href="../anima/" class="text-slate-500 hover:text-[#d4af37] transition-colors">&larr; Anima (Heavensward)</a>
+    <span class="text-slate-700">&middot;</span>
+    <a href="../bozja/" class="text-slate-500 hover:text-[#e0837a] transition-colors">Bozja (Shadowbringers)</a>
+    <span class="text-slate-700">&middot;</span>
+    <span class="text-emerald-400">Phantom (Dawntrail)</span>
+  </nav>
+
+  <!-- Compact header -->
+  <header class="pt-4 pb-4">
+    <div class="flex items-center justify-between gap-3 mb-3">
+      <div>
+        <h1 class="text-lg md:text-xl font-bold text-jade-gradient tracking-wide uppercase leading-none">Phantom Weapon Tracker</h1>
+        <p class="text-slate-500 text-[11px] mt-1">Dawntrail Relic &middot; Occult Crescent</p>
+      </div>
+      <button @click="resetAll()" class="px-2.5 py-1 rounded bg-slate-800/50 hover:bg-red-900/20 border border-slate-700 hover:border-red-500/30 transition-all text-[10px] font-bold uppercase text-slate-400 hover:text-red-400 shrink-0">
+        Reset
+      </button>
+    </div>
+
+    <!-- Job selector: compact chip row -->
+    <div class="ff-card px-2.5 py-2 rounded-lg mb-2 flex items-center gap-2 flex-wrap">
+      <template x-for="job in availableJobs" :key="job.id">
+        <button
+          @click="toggleJob(job.id)"
+          :title="job.label"
+          class="relative w-7 h-7 rounded-md border overflow-hidden flex items-center justify-center transition-all duration-150"
+          :class="isJobComplete(job.id)
+            ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_8px_rgba(192,132,252,0.5)]'
+            : (selectedJobs.includes(job.id)
+                ? roleRing(job.role)
+                : 'border-slate-700 bg-slate-800/70 opacity-45 hover:opacity-100')"
+        >
+          <img
+            :src="isJobComplete(job.id) ? './images/weapons/' + job.id + '.png' : './images/jobs/' + job.id + '.png'"
+            :alt="job.id"
+            class="w-full h-full"
+            :class="isJobComplete(job.id)
+              ? 'object-contain p-0.5 drop-shadow-[0_0_5px_rgba(192,132,252,0.5)]'
+              : (selectedJobs.includes(job.id) ? 'object-cover' : 'object-cover grayscale opacity-60')"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <div
+            class="hidden w-full h-full items-center justify-center font-bold text-[9px] tracking-tight"
+            :class="isJobComplete(job.id) ? 'text-purple-100' : (selectedJobs.includes(job.id) ? 'text-white' : 'text-slate-500')"
+            x-text="job.id"
+          ></div>
+          <div x-show="isJobComplete(job.id)" class="absolute -top-1 -right-1 w-2 h-2 bg-purple-400 rounded-full border border-[#0e1614]"></div>
+        </button>
+      </template>
+
+      <span class="ml-auto text-[10px] text-slate-500 font-mono pl-2" x-text="weaponCount + ' selected'"></span>
+    </div>
+
+    <!-- Overall progress bar -->
+    <div class="relative h-2.5 bg-[#080a0d] rounded-full border border-[#3a4a2a] overflow-hidden">
+      <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-[#4a7a45] to-[#7fae7a] transition-all duration-700"
+           :style="'width: ' + getTotalProgress() + '%'"></div>
+    </div>
+    <div class="flex justify-between mt-1 text-[10px] text-slate-500">
+      <span><span class="text-emerald-400 font-semibold">Account-wide</span> = gather once &middot; <span class="text-amber-400 font-semibold">Per Weapon</span> = scales with jobs selected</span>
+      <span class="font-mono text-slate-400" x-text="getTotalProgress() + '%'"></span>
+    </div>
+
+    <!-- Split view toggle: account-wide (one-time) vs per-weapon (continuous, e.g. Arcanite exchange) -->
+    <div class="flex gap-1.5 mt-3">
+      <button
+        @click="viewMode = 'shared'"
+        class="flex-1 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wide border transition-all"
+        :class="viewMode === 'shared'
+          ? 'bg-emerald-900/40 border-emerald-400 text-emerald-300'
+          : 'bg-slate-800/40 border-slate-700 text-slate-500 hover:text-slate-300'"
+      >
+        Account-Wide
+      </button>
+      <button
+        @click="viewMode = 'perWeapon'"
+        class="flex-1 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wide border transition-all"
+        :class="viewMode === 'perWeapon'
+          ? 'bg-amber-900/40 border-amber-400 text-amber-300'
+          : 'bg-slate-800/40 border-slate-700 text-slate-500 hover:text-slate-300'"
+      >
+        Per Weapon
+      </button>
+    </div>
+
+    <!-- Already finished a weapon before? Skip re-gathering the one-time materials. -->
+    <button
+      x-show="viewMode === 'shared'"
+      @click="toggleAccountWideDone()"
+      class="w-full mt-1.5 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wide border transition-all"
+      :class="accountWideDone
+        ? 'bg-purple-900/40 border-purple-400 text-purple-300'
+        : 'bg-slate-800/40 border-slate-700 text-slate-400 hover:text-slate-200 hover:border-slate-500'"
+    >
+      <span x-text="accountWideDone ? 'Account-Wide marked complete ✓ — click to undo' : 'Already have one weapon finished? Mark Account-Wide materials complete'"></span>
+    </button>
+  </header>
+
+  <!-- Stage groups -->
+  <div class="space-y-3">
+    <template x-for="group in groupedItems()" :key="group.name">
+      <div x-data="{ open: true }" class="ff-card rounded-lg overflow-hidden relative border-l-2 border-[#7fae7a]">
+
+        <div @click="open = !open" class="relative bg-[#141f1c]/80 px-3 py-2 flex items-center justify-between cursor-pointer hover:bg-[#1b2a26] transition-colors select-none">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="text-[11px] font-mono w-8 shrink-0 text-emerald-400 font-bold" x-text="getStageProgress(group.name) + '%'"></span>
+            <div class="min-w-0">
+              <h2 class="text-sm font-bold text-slate-200 tracking-wide truncate" x-text="group.name"></h2>
+              <p class="text-[10px] text-slate-500 truncate" x-text="stageInfo[group.name]"></p>
+            </div>
+          </div>
+          <svg class="w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div>
+
+        <div x-show="open" x-transition class="divide-y divide-slate-800/40">
+          <template x-for="item in group.items" :key="item.id">
+            <div>
+              <template x-if="item.type !== 'completion'">
+                <div class="px-3 py-1.5 flex items-center gap-2 text-xs" :class="getRemaining(item) === 0 ? 'bg-emerald-900/5' : 'hover:bg-slate-800/20'">
+
+                  <div class="w-8 h-8 shrink-0 rounded-md border border-slate-700 bg-slate-800 shadow-md flex items-center justify-center relative overflow-hidden">
+                    <img :src="'./images/items/' + item.id + '.png'" :alt="item.name"
+                         class="w-full h-full object-cover"
+                         :class="getRemaining(item) === 0 ? 'grayscale opacity-50' : ''"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                    <span class="hidden text-base items-center justify-center w-full h-full absolute inset-0" x-text="item.emoji"></span>
+                  </div>
+
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-1.5">
+                      <span class="font-semibold text-slate-200 truncate" :class="getRemaining(item) === 0 ? 'text-slate-500 line-through decoration-slate-600' : ''" x-text="item.name"></span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 truncate" x-title="item.tip" x-text="item.tip"></p>
+                  </div>
+
+                  <input type="number" x-model="inventory[item.id]" placeholder="0"
+                         class="w-14 bg-[#0b0e0d] border border-slate-800 rounded text-center font-mono text-xs py-0.5 outline-none text-white focus:border-emerald-500 placeholder-slate-700 transition shrink-0" />
+                  <span class="text-slate-600 shrink-0">/</span>
+                  <span class="w-16 shrink-0 font-mono text-slate-400" x-text="getGoal(item).toLocaleString()"></span>
+
+                  <div class="w-24 text-right shrink-0">
+                    <span x-show="getRemaining(item) === 0" class="text-emerald-500 font-bold text-[10px]">DONE ✓</span>
+                    <template x-if="getRemaining(item) > 0">
+                      <span class="font-mono font-bold text-[11px]" :class="item.options[0].currency === 'Mathematics' ? 'text-amber-400' : 'text-slate-300'"
+                            x-text="item.options[0].cost > 0 ? (getRemaining(item) * item.options[0].cost).toLocaleString() + ' ' + item.options[0].currency : 'Need ' + getRemaining(item).toLocaleString()"></span>
+                    </template>
+                  </div>
+                </div>
+              </template>
+
+              <!-- Per-weapon "already finished" checker: excludes a completed job's
+                   materials from every goal above, without touching the input boxes. -->
+              <template x-if="item.type === 'completion'">
+                <div class="px-3 py-2 flex items-center gap-2 text-xs bg-purple-900/5">
+                  <div class="w-8 h-8 shrink-0 rounded-md border border-slate-700 bg-slate-800 shadow-md flex items-center justify-center relative overflow-hidden">
+                    <img :src="'./images/items/' + item.id + '.png'" :alt="item.name" class="w-full h-full object-cover"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                    <span class="hidden text-base items-center justify-center w-full h-full absolute inset-0" x-text="item.emoji"></span>
+                  </div>
+
+                  <div class="min-w-0 flex-1">
+                    <span class="font-semibold text-slate-200" x-text="item.name"></span>
+                    <p class="text-[10px] text-slate-500 truncate" x-title="item.tip" x-text="item.tip"></p>
+                  </div>
+
+                  <div class="flex gap-1.5 flex-wrap justify-end shrink-0">
+                    <template x-for="jobId in selectedJobs" :key="jobId">
+                      <label class="cursor-pointer relative" :title="jobId + (isJobComplete(jobId) ? ' — weapon complete' : ' — mark complete')">
+                        <input type="checkbox" :checked="isJobComplete(jobId)" @change="toggleJobComplete(jobId)" class="peer sr-only" />
+                        <div class="w-7 h-7 rounded-md border border-slate-700 bg-slate-800 overflow-hidden flex items-center justify-center transition-all duration-150 hover:scale-110 peer-checked:border-purple-400 peer-checked:bg-purple-900/40 peer-checked:shadow-[0_0_8px_rgba(192,132,252,0.5)]">
+                          <img :src="isJobComplete(jobId) ? './images/weapons/' + jobId + '.png' : './images/jobs/' + jobId + '.png'"
+                               class="w-full h-full transition-opacity"
+                               :class="isJobComplete(jobId) ? 'object-contain p-0.5 opacity-100' : 'object-cover opacity-60 peer-checked:opacity-100'"
+                               :alt="jobId"
+                               onerror="if (this.src.includes('weapons')) { this.src = './images/jobs/' + this.alt + '.png'; } else { this.style.display='none'; }" />
+                        </div>
+                      </label>
+                    </template>
+                    <span x-show="!selectedJobs.length" class="text-[10px] text-slate-600">Select a job above</span>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </template>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- STATIC_CONTENT_START: generated by scripts/generate-static-content.js from the PHANTOM_DATA array below. Edit that array, not this block. -->
+<details class="ff-card rounded-lg p-4 text-xs text-slate-300 leading-relaxed">
+    <summary class="cursor-pointer text-sm font-bold text-slate-200 select-none">Full material list — every stage, i745 to i795</summary>
+    <div class="mt-3">
+      <p class="text-[11px] text-slate-500 mb-4">Complete Phantom Weapon relic requirements for Dawntrail's Occult Crescent, stage by stage. &quot;Account-wide&quot; materials are gathered once total; &quot;Per weapon&quot; materials (like the Arcanite exchanges) are needed again for every job.</p>
+<div class="mb-5">
+        <h4 class="text-sm font-bold text-slate-200 mb-1">1. Penumbrae (i745)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">One-time: gather 18 Demiatma (3 of each of 6 colors), then buy Arcanite with Mathematics per weapon.</p>
+        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
+        <th class="text-left font-semibold pr-3 py-1">Item</th>
+        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
+        <th class="text-left font-semibold pr-3 py-1">Scope</th>
+        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
+        <th class="text-left font-semibold py-1">Exchange cost</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Azurite Demiatma</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Urqopacha FATEs, or CEs in Occult Crescent: South Horn (SE area).</td>
+        <td class="py-1.5">FATE / Critical Encounter</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Verdigris Demiatma</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Kozama'uka FATEs, or CEs in Occult Crescent: South Horn (SW area).</td>
+        <td class="py-1.5">FATE / Critical Encounter</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Malachite Demiatma</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Yak T'el FATEs, or CEs in Occult Crescent: South Horn (central-west area).</td>
+        <td class="py-1.5">FATE / Critical Encounter</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Realgar Demiatma</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Shaaloani FATEs, or CEs in Occult Crescent: South Horn (NW area).</td>
+        <td class="py-1.5">FATE / Critical Encounter</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Caput Mortuum Demiatma</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Heritage Found FATEs, or CEs in Occult Crescent: South Horn (E ruins area).</td>
+        <td class="py-1.5">FATE / Critical Encounter</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Orpiment Demiatma</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Living Memory FATEs, or CEs in Occult Crescent: South Horn (NE/central area).</td>
+        <td class="py-1.5">FATE / Critical Encounter</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Arcanite Exchange</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Per weapon</td>
+        <td class="py-1.5 pr-3">Buy Arcanite from Ermina (500 Mathematics each, capped at 2000/week so exchange continuously), then trade with Dodokkuli for the i745 weapon.</td>
+        <td class="py-1.5">500 Mathematics</td>
+      </tr>
+    </tbody>
+  </table></div>
+      </div>
+<div class="mb-5">
+        <h4 class="text-sm font-bold text-slate-200 mb-1">2. Umbrae (i760)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">One-time: craft/buy 5 materials and fill the Aetherwell Array via roulettes, then Waxing Arcanite per weapon.</p>
+        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
+        <th class="text-left font-semibold pr-3 py-1">Item</th>
+        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
+        <th class="text-left font-semibold pr-3 py-1">Scope</th>
+        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
+        <th class="text-left font-semibold py-1">Exchange cost</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Rroneek Glue</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Buy from Goplu in Tuliyollal.</td>
+        <td class="py-1.5">300,000 Gil</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Ut'ohmu Siderite</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Buy from Rral Wuruq in Yak T'el, or from the Market Board.</td>
+        <td class="py-1.5">600 Gemstones</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Synthetic Dark Matter Alpha</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Blacksmith / Armorer / Goldsmith, or bought off the Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Synthetic Dark Matter Beta</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Carpenter / Leatherworker / Weaver, or bought off the Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Synthetic Dark Matter Gamma</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Alchemist / Culinarian, or bought off the Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Aetherwell: Green</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">10,000</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Duty Roulette: High-level Dungeons. ~13-14 days at 1 clear/day with daily bonus.</td>
+        <td class="py-1.5">Roulette Clear</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Aetherwell: Blue</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">10,000</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Duty Roulette: Alliance Raids. Can be the slowest well (Crystal Tower over-represented).</td>
+        <td class="py-1.5">Roulette Clear</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Aetherwell: Red</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">10,000</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Duty Roulette: Trials.</td>
+        <td class="py-1.5">Roulette Clear</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Aetherwell: Yellow</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">10,000</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Duty Roulette: Normal Raids.</td>
+        <td class="py-1.5">Roulette Clear</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Waxing Arcanite Exchange</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Per weapon</td>
+        <td class="py-1.5 pr-3">Buy Waxing Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously), trade + your Penumbrae weapon to Dodokkuli.</td>
+        <td class="py-1.5">500 Mathematics</td>
+      </tr>
+    </tbody>
+  </table></div>
+      </div>
+<div class="mb-5">
+        <h4 class="text-sm font-bold text-slate-200 mb-1">3. Obscurum (i775)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">One-time: craft/buy 4 materials and collect 1200 Crystal Paste, then Waning Arcanite per weapon.</p>
+        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
+        <th class="text-left font-semibold pr-3 py-1">Item</th>
+        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
+        <th class="text-left font-semibold pr-3 py-1">Scope</th>
+        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
+        <th class="text-left font-semibold py-1">Exchange cost</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Umbral Clay</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Buy from Goplu in Tuliyollal.</td>
+        <td class="py-1.5">500,000 Gil</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Aspected Aetheroconductor</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Blacksmith / Armorer / Goldsmith, or Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Aspected Aether Agglomerate</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Carpenter / Leatherworker / Weaver, or Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Aspected Aetherocatalyst</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Alchemist / Culinarian, or Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Crystal Paste</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1,200</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Turn in at 100/200/300/600. Earned from leveling &amp; expert roulettes, DT zone FATEs, Occult Crescent CEs, Extreme trials, Savage raids, and deep dungeons.</td>
+        <td class="py-1.5">Duties / Roulettes</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Waning Arcanite Exchange</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Per weapon</td>
+        <td class="py-1.5 pr-3">Buy Waning Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously), trade + your Umbrae weapon to Dodokkuli.</td>
+        <td class="py-1.5">500 Mathematics</td>
+      </tr>
+    </tbody>
+  </table></div>
+      </div>
+<div class="mb-5">
+        <h4 class="text-sm font-bold text-slate-200 mb-1">4. Eclipticum (i790)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">One-time: craft/buy 4 materials and collect 300 Phantom Dispellers, then Ecliptic Arcanite per weapon.</p>
+        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
+        <th class="text-left font-semibold pr-3 py-1">Item</th>
+        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
+        <th class="text-left font-semibold pr-3 py-1">Scope</th>
+        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
+        <th class="text-left font-semibold py-1">Exchange cost</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Monarch Whetstone</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Buy from Goplu in Tuliyollal.</td>
+        <td class="py-1.5">500,000 Gil</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Ancestral Alloy Ingot</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Blacksmith / Armorer / Goldsmith, or Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Ascendant Twine</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Carpenter / Leatherworker / Weaver, or Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Majestic Polish</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">Crafted by Alchemist / Culinarian, or Market Board.</td>
+        <td class="py-1.5">Craft / Market Board</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Phantom Dispeller α</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">100</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">North Horn FATEs (3 each) / CEs (10 each), or high-level Dungeon duty roulettes.</td>
+        <td class="py-1.5">FATE / CE / Roulette</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Phantom Dispeller β</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">100</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">North Horn FATEs (3 each) / CEs (10 each), or Trial duty roulettes.</td>
+        <td class="py-1.5">FATE / CE / Roulette</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Phantom Dispeller γ</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">100</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">North Horn FATEs (3 each) / CEs (10 each), or Normal Raid duty roulettes.</td>
+        <td class="py-1.5">FATE / CE / Roulette</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Ecliptic Arcanite Exchange</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Per weapon</td>
+        <td class="py-1.5 pr-3">Buy Ecliptic Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously) from Ermina for the i790 weapon.</td>
+        <td class="py-1.5">500 Mathematics</td>
+      </tr>
+    </tbody>
+  </table></div>
+      </div>
+<div class="mb-5">
+        <h4 class="text-sm font-bold text-slate-200 mb-1">5. Occultum (i795)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">One-time: complete the Final Phantasm objective set, then claim &amp; customize each weapon.</p>
+        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
+        <th class="text-left font-semibold pr-3 py-1">Item</th>
+        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
+        <th class="text-left font-semibold pr-3 py-1">Scope</th>
+        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
+        <th class="text-left font-semibold py-1">Exchange cost</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Final Phantasm Checklist</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Account-wide</td>
+        <td class="py-1.5 pr-3">One-time: defeat enemies and clear FATEs across Dawntrail zones plus every unique piece of instanced content in the Occult Crescent.</td>
+        <td class="py-1.5">Objectives Complete</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Claim &amp; Customize Weapon</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">Per weapon</td>
+        <td class="py-1.5 pr-3">After the Final Phantasm checklist is done once, claim each i795 Occultum weapon from Dodokkuli and choose its bonus attributes.</td>
+        <td class="py-1.5">Claim from Dodokkuli</td>
+      </tr>
+    </tbody>
+  </table></div>
+      </div>
+      <p class="text-[10px] text-slate-600 mt-2">Arcanite exchange quantities are tracked in number of Arcanite bought (not Tomestones of Mathematics), since Mathematics tomestones are capped at 2000/week and must be exchanged continuously.</p>
+    </div>
+  </details>
+<!-- STATIC_CONTENT_END -->
+
+  <div class="text-center text-[11px] text-slate-600 py-5">
+    Made by
+    <a href="https://x.com/ArtemisEsphexo" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-semibold">@ArtemisEsphexo</a>
+  </div>
+
+  <!-- Sticky resource footer -->
+  <div class="fixed bottom-0 left-0 right-0 z-50">
+    <div class="max-w-[820px] mx-auto bg-[#0e1614]/95 border-t border-[#7fae7a]/60 backdrop-blur-md px-3 py-2 flex items-center justify-center gap-4 flex-wrap">
+        <div x-show="getTotalLiability('Mathematics') > 0" class="flex items-center gap-1.5 text-xs">
+          <span>📜</span>
+          <span class="text-amber-400 font-semibold text-[10px] uppercase">Mathematics</span>
+          <span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Mathematics').toLocaleString()"></span>
+        </div>
+        <div x-show="getTotalLiability('Gil') > 0" class="flex items-center gap-1.5 text-xs">
+          <span class="w-4 h-4 shrink-0 relative inline-block">
+            <img src="./images/currency/gil.png" alt="Gil" class="w-full h-full object-contain"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+            <span class="hidden absolute inset-0" style="line-height:1rem;">💰</span>
+          </span>
+          <span class="text-yellow-300 font-semibold text-[10px] uppercase">Gil</span>
+          <span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Gil').toLocaleString()"></span>
+        </div>
+        <div x-show="getTotalLiability('Gemstones') > 0" class="flex items-center gap-1.5 text-xs">
+          <span class="w-4 h-4 shrink-0 relative inline-block">
+            <img src="./images/currency/gemstone.png" alt="Gemstones" class="w-full h-full object-contain"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+            <span class="hidden absolute inset-0" style="line-height:1rem;">🔶</span>
+          </span>
+          <span class="text-orange-300 font-semibold text-[10px] uppercase">Gemstones</span>
+          <span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Gemstones').toLocaleString()"></span>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('alpine:init', () => {
+
+  const STAGE_ORDER = [
+    "1. Penumbrae (i745)",
+    "2. Umbrae (i760)",
+    "3. Obscurum (i775)",
+    "4. Eclipticum (i790)",
+    "5. Occultum (i795)",
+  ];
+
+  const STAGE_INFO = {
+    "1. Penumbrae (i745)": "One-time: gather 18 Demiatma (3 of each of 6 colors), then buy Arcanite with Mathematics per weapon.",
+    "2. Umbrae (i760)": "One-time: craft/buy 5 materials and fill the Aetherwell Array via roulettes, then Waxing Arcanite per weapon.",
+    "3. Obscurum (i775)": "One-time: craft/buy 4 materials and collect 1200 Crystal Paste, then Waning Arcanite per weapon.",
+    "4. Eclipticum (i790)": "One-time: craft/buy 4 materials and collect 300 Phantom Dispellers, then Ecliptic Arcanite per weapon.",
+    "5. Occultum (i795)": "One-time: complete the Final Phantasm objective set, then claim & customize each weapon.",
+  };
+
+  const PHANTOM_DATA = [
+    // --- STAGE 1: Penumbrae (i745) ---
+    { id: "demiatma_azurite", stage: STAGE_ORDER[0], name: "Azurite Demiatma", emoji: "🔷", qty: 3, scope: "shared",
+      tip: "Urqopacha FATEs, or CEs in Occult Crescent: South Horn (SE area).",
+      options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
+    { id: "demiatma_verdigris", stage: STAGE_ORDER[0], name: "Verdigris Demiatma", emoji: "💠", qty: 3, scope: "shared",
+      tip: "Kozama'uka FATEs, or CEs in Occult Crescent: South Horn (SW area).",
+      options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
+    { id: "demiatma_malachite", stage: STAGE_ORDER[0], name: "Malachite Demiatma", emoji: "🟢", qty: 3, scope: "shared",
+      tip: "Yak T'el FATEs, or CEs in Occult Crescent: South Horn (central-west area).",
+      options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
+    { id: "demiatma_realgar", stage: STAGE_ORDER[0], name: "Realgar Demiatma", emoji: "🟠", qty: 3, scope: "shared",
+      tip: "Shaaloani FATEs, or CEs in Occult Crescent: South Horn (NW area).",
+      options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
+    { id: "demiatma_caput", stage: STAGE_ORDER[0], name: "Caput Mortuum Demiatma", emoji: "🟣", qty: 3, scope: "shared",
+      tip: "Heritage Found FATEs, or CEs in Occult Crescent: South Horn (E ruins area).",
+      options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
+    { id: "demiatma_orpiment", stage: STAGE_ORDER[0], name: "Orpiment Demiatma", emoji: "🟡", qty: 3, scope: "shared",
+      tip: "Living Memory FATEs, or CEs in Occult Crescent: South Horn (NE/central area).",
+      options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
+    { id: "math_penumbrae", stage: STAGE_ORDER[0], name: "Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
+      tip: "Buy Arcanite from Ermina (500 Mathematics each, capped at 2000/week so exchange continuously), then trade with Dodokkuli for the i745 weapon.",
+      options: [{ label: "Arcanite", cost: 500, currency: "Mathematics" }] },
+
+    // --- STAGE 2: Umbrae (i760) ---
+    { id: "rroneek_glue", stage: STAGE_ORDER[1], name: "Rroneek Glue", emoji: "🧴", qty: 1, scope: "shared",
+      tip: "Buy from Goplu in Tuliyollal.",
+      options: [{ label: "Gil", cost: 300000, currency: "Gil" }] },
+    { id: "utohmu_siderite", stage: STAGE_ORDER[1], name: "Ut'ohmu Siderite", emoji: "🪨", qty: 1, scope: "shared",
+      tip: "Buy from Rral Wuruq in Yak T'el, or from the Market Board.",
+      options: [{ label: "Bicolor Gemstones", cost: 600, currency: "Gemstones" }, { label: "Market Board", cost: 0, currency: "" }] },
+    { id: "synth_alpha", stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Alpha", emoji: "⚗️", qty: 1, scope: "shared",
+      tip: "Crafted by Blacksmith / Armorer / Goldsmith, or bought off the Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "synth_beta", stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Beta", emoji: "⚗️", qty: 1, scope: "shared",
+      tip: "Crafted by Carpenter / Leatherworker / Weaver, or bought off the Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "synth_gamma", stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Gamma", emoji: "⚗️", qty: 1, scope: "shared",
+      tip: "Crafted by Alchemist / Culinarian, or bought off the Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "aether_green", stage: STAGE_ORDER[1], name: "Aetherwell: Green", emoji: "🟢", qty: 10000, scope: "shared",
+      tip: "Duty Roulette: High-level Dungeons. ~13-14 days at 1 clear/day with daily bonus.",
+      options: [{ label: "Roulette Clear", cost: 0, currency: "" }] },
+    { id: "aether_blue", stage: STAGE_ORDER[1], name: "Aetherwell: Blue", emoji: "🔵", qty: 10000, scope: "shared",
+      tip: "Duty Roulette: Alliance Raids. Can be the slowest well (Crystal Tower over-represented).",
+      options: [{ label: "Roulette Clear", cost: 0, currency: "" }] },
+    { id: "aether_red", stage: STAGE_ORDER[1], name: "Aetherwell: Red", emoji: "🔴", qty: 10000, scope: "shared",
+      tip: "Duty Roulette: Trials.",
+      options: [{ label: "Roulette Clear", cost: 0, currency: "" }] },
+    { id: "aether_yellow", stage: STAGE_ORDER[1], name: "Aetherwell: Yellow", emoji: "🟡", qty: 10000, scope: "shared",
+      tip: "Duty Roulette: Normal Raids.",
+      options: [{ label: "Roulette Clear", cost: 0, currency: "" }] },
+    { id: "math_umbrae", stage: STAGE_ORDER[1], name: "Waxing Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
+      tip: "Buy Waxing Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously), trade + your Penumbrae weapon to Dodokkuli.",
+      options: [{ label: "Arcanite", cost: 500, currency: "Mathematics" }] },
+
+    // --- STAGE 3: Obscurum (i775) ---
+    { id: "umbral_clay", stage: STAGE_ORDER[2], name: "Umbral Clay", emoji: "🏺", qty: 1, scope: "shared",
+      tip: "Buy from Goplu in Tuliyollal.",
+      options: [{ label: "Gil", cost: 500000, currency: "Gil" }] },
+    { id: "aspected_conductor", stage: STAGE_ORDER[2], name: "Aspected Aetheroconductor", emoji: "🔧", qty: 1, scope: "shared",
+      tip: "Crafted by Blacksmith / Armorer / Goldsmith, or Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "aspected_agglomerate", stage: STAGE_ORDER[2], name: "Aspected Aether Agglomerate", emoji: "🧵", qty: 1, scope: "shared",
+      tip: "Crafted by Carpenter / Leatherworker / Weaver, or Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "aspected_catalyst", stage: STAGE_ORDER[2], name: "Aspected Aetherocatalyst", emoji: "🧪", qty: 1, scope: "shared",
+      tip: "Crafted by Alchemist / Culinarian, or Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "crystal_paste", stage: STAGE_ORDER[2], name: "Crystal Paste", emoji: "✨", qty: 1200, scope: "shared",
+      tip: "Turn in at 100/200/300/600. Earned from leveling & expert roulettes, DT zone FATEs, Occult Crescent CEs, Extreme trials, Savage raids, and deep dungeons.",
+      options: [{ label: "Duties / Roulettes", cost: 0, currency: "" }] },
+    { id: "math_obscurum", stage: STAGE_ORDER[2], name: "Waning Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
+      tip: "Buy Waning Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously), trade + your Umbrae weapon to Dodokkuli.",
+      options: [{ label: "Arcanite", cost: 500, currency: "Mathematics" }] },
+
+    // --- STAGE 4: Eclipticum (i790) ---
+    { id: "monarch_whetstone", stage: STAGE_ORDER[3], name: "Monarch Whetstone", emoji: "🪓", qty: 1, scope: "shared",
+      tip: "Buy from Goplu in Tuliyollal.",
+      options: [{ label: "Gil", cost: 500000, currency: "Gil" }] },
+    { id: "ancestral_alloy", stage: STAGE_ORDER[3], name: "Ancestral Alloy Ingot", emoji: "🔩", qty: 1, scope: "shared",
+      tip: "Crafted by Blacksmith / Armorer / Goldsmith, or Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "ascendant_twine", stage: STAGE_ORDER[3], name: "Ascendant Twine", emoji: "🧶", qty: 1, scope: "shared",
+      tip: "Crafted by Carpenter / Leatherworker / Weaver, or Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "majestic_polish", stage: STAGE_ORDER[3], name: "Majestic Polish", emoji: "🧴", qty: 1, scope: "shared",
+      tip: "Crafted by Alchemist / Culinarian, or Market Board.",
+      options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
+    { id: "dispeller_alpha", stage: STAGE_ORDER[3], name: "Phantom Dispeller α", emoji: "α", qty: 100, scope: "shared",
+      tip: "North Horn FATEs (3 each) / CEs (10 each), or high-level Dungeon duty roulettes.",
+      options: [{ label: "FATE / CE / Roulette", cost: 0, currency: "" }] },
+    { id: "dispeller_beta", stage: STAGE_ORDER[3], name: "Phantom Dispeller β", emoji: "β", qty: 100, scope: "shared",
+      tip: "North Horn FATEs (3 each) / CEs (10 each), or Trial duty roulettes.",
+      options: [{ label: "FATE / CE / Roulette", cost: 0, currency: "" }] },
+    { id: "dispeller_gamma", stage: STAGE_ORDER[3], name: "Phantom Dispeller γ", emoji: "γ", qty: 100, scope: "shared",
+      tip: "North Horn FATEs (3 each) / CEs (10 each), or Normal Raid duty roulettes.",
+      options: [{ label: "FATE / CE / Roulette", cost: 0, currency: "" }] },
+    { id: "math_eclipticum", stage: STAGE_ORDER[3], name: "Ecliptic Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
+      tip: "Buy Ecliptic Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously) from Ermina for the i790 weapon.",
+      options: [{ label: "Arcanite", cost: 500, currency: "Mathematics" }] },
+
+    // --- STAGE 5: Occultum (i795) ---
+    { id: "final_phantasm", stage: STAGE_ORDER[4], name: "Final Phantasm Checklist", emoji: "🌙", qty: 1, scope: "shared",
+      tip: "One-time: defeat enemies and clear FATEs across Dawntrail zones plus every unique piece of instanced content in the Occult Crescent.",
+      options: [{ label: "Objectives Complete", cost: 0, currency: "" }] },
+    { id: "attribute_choice", stage: STAGE_ORDER[4], name: "Claim & Customize Weapon", emoji: "⭐", qty: 1, scope: "perWeapon",
+      tip: "After the Final Phantasm checklist is done once, claim each i795 Occultum weapon from Dodokkuli and choose its bonus attributes.",
+      options: [{ label: "Claim from Dodokkuli", cost: 0, currency: "" }] },
+    // Not a real material — a per-job checkbox that excludes that job's per-weapon
+    // requirements from every total above once its Phantom Weapon is fully done.
+    { id: "weapon_complete", stage: STAGE_ORDER[4], name: "Phantom Weapon Complete", emoji: "🏆", qty: 0, scope: "perWeapon", type: "completion",
+      tip: "Already finished a weapon? Check it off here to drop its materials from the totals above.",
+      options: [] },
+  ];
+
+  const JOBS = [
+    { id: "PLD", label: "Paladin", role: "tank" },
+    { id: "WAR", label: "Warrior", role: "tank" },
+    { id: "DRK", label: "Dark Knight", role: "tank" },
+    { id: "GNB", label: "Gunbreaker", role: "tank" },
+    { id: "WHM", label: "White Mage", role: "healer" },
+    { id: "SCH", label: "Scholar", role: "healer" },
+    { id: "AST", label: "Astrologian", role: "healer" },
+    { id: "SGE", label: "Sage", role: "healer" },
+    { id: "MNK", label: "Monk", role: "dps" },
+    { id: "DRG", label: "Dragoon", role: "dps" },
+    { id: "NIN", label: "Ninja", role: "dps" },
+    { id: "SAM", label: "Samurai", role: "dps" },
+    { id: "RPR", label: "Reaper", role: "dps" },
+    { id: "VPR", label: "Viper", role: "dps" },
+    { id: "BRD", label: "Bard", role: "dps" },
+    { id: "MCH", label: "Machinist", role: "dps" },
+    { id: "DNC", label: "Dancer", role: "dps" },
+    { id: "BLM", label: "Black Mage", role: "dps" },
+    { id: "SMN", label: "Summoner", role: "dps" },
+    { id: "RDM", label: "Red Mage", role: "dps" },
+    { id: "PCT", label: "Pictomancer", role: "dps" },
+  ];
+
+  Alpine.data("relicApp", () => ({
+    items: PHANTOM_DATA,
+    availableJobs: JOBS,
+    stageInfo: STAGE_INFO,
+    selectedJobs: [],
+    inventory: {},
+    viewMode: "shared",
+    accountWideDone: false,
+
+    init() {
+      try {
+        const sInv = localStorage.getItem("phantom_inventory");
+        if (sInv) this.inventory = JSON.parse(sInv);
+      } catch (e) { localStorage.clear(); }
+
+      try {
+        const sJobs = localStorage.getItem("phantom_jobs");
+        this.selectedJobs = sJobs ? JSON.parse(sJobs) : ["PLD"];
+      } catch (e) { this.selectedJobs = ["PLD"]; }
+
+      try {
+        const sDone = localStorage.getItem("phantom_completed_jobs");
+        this.completedJobs = sDone ? JSON.parse(sDone) : [];
+      } catch (e) { this.completedJobs = []; }
+
+      try {
+        const sView = localStorage.getItem("phantom_view_mode");
+        this.viewMode = sView === "shared" || sView === "perWeapon" ? sView : "shared";
+      } catch (e) { this.viewMode = "shared"; }
+
+      try {
+        const sAccount = localStorage.getItem("phantom_accountwide_done");
+        this.accountWideDone = sAccount === "true";
+      } catch (e) { this.accountWideDone = false; }
+
+      this.items.forEach((item) => {
+        if (this.inventory[item.id] === undefined) this.inventory[item.id] = "";
+      });
+
+      this.$watch("selectedJobs", (v) => localStorage.setItem("phantom_jobs", JSON.stringify(v)));
+      this.$watch("inventory", (v) => localStorage.setItem("phantom_inventory", JSON.stringify(v)), { deep: true });
+      this.$watch("completedJobs", (v) => localStorage.setItem("phantom_completed_jobs", JSON.stringify(v)), { deep: true });
+      this.$watch("viewMode", (v) => localStorage.setItem("phantom_view_mode", v));
+      this.$watch("accountWideDone", (v) => localStorage.setItem("phantom_accountwide_done", v));
+    },
+
+    completedJobs: [],
+
+    get weaponCount() {
+      return this.selectedJobs.length || 1;
+    },
+
+    // Jobs whose Phantom Weapon isn't finished yet — per-weapon goals only
+    // count these, so a completed job's share drops out of every total.
+    get activeWeaponCount() {
+      const jobs = this.selectedJobs.length ? this.selectedJobs : ["PLD"];
+      return jobs.filter((id) => !this.isJobComplete(id)).length;
+    },
+
+    toggleJob(jobId) {
+      if (this.isJobComplete(jobId)) return;
+      if (this.selectedJobs.includes(jobId)) {
+        this.selectedJobs = this.selectedJobs.filter((id) => id !== jobId);
+      } else {
+        this.selectedJobs.push(jobId);
+      }
+    },
+
+    isJobComplete(jobId) {
+      return this.completedJobs.includes(jobId);
+    },
+
+    // Toggled from the "Phantom Weapon Complete" checkbox row — a pure flag,
+    // doesn't touch any input values. Finishing a weapon also auto-flips the
+    // Account-Wide done switch on (one-way ratchet; it never auto-unflips).
+    toggleJobComplete(jobId) {
+      if (this.isJobComplete(jobId)) {
+        this.completedJobs = this.completedJobs.filter((id) => id !== jobId);
+      } else {
+        this.completedJobs = [...this.completedJobs, jobId];
+        if (!this.accountWideDone) this.accountWideDone = true;
+      }
+    },
+
+    toggleAccountWideDone() {
+      this.accountWideDone = !this.accountWideDone;
+    },
+
+    roleRing(role) {
+      if (role === "tank") return "border-blue-400 bg-blue-900/30 shadow-blue-500/20";
+      if (role === "healer") return "border-emerald-400 bg-emerald-900/30 shadow-emerald-500/20";
+      return "border-rose-400 bg-rose-900/30 shadow-rose-500/20";
+    },
+    roleDot(role) {
+      if (role === "tank") return "bg-blue-400";
+      if (role === "healer") return "bg-emerald-400";
+      return "bg-rose-400";
+    },
+
+    getGoal(item) {
+      if (item.type === "completion") return 0;
+      return item.scope === "shared" ? item.qty : item.qty * this.activeWeaponCount;
+    },
+
+    getOwned(item) {
+      return parseInt(this.inventory[item.id]) || 0;
+    },
+
+    // Owned amount used for progress bars/rings: real input for anything not
+    // yet flagged done, or the full goal once Account-Wide is marked
+    // complete (without ever rewriting what's actually in the input boxes).
+    getEffectiveOwned(item) {
+      const goal = this.getGoal(item);
+      if (item.scope === "shared" && this.accountWideDone) return goal;
+      return Math.min(this.getOwned(item), goal);
+    },
+
+    getRemaining(item) {
+      if (item.scope === "shared" && this.accountWideDone) return 0;
+      return Math.max(0, this.getGoal(item) - this.getOwned(item));
+    },
+
+    getStageProgress(stageName) {
+      const group = this.items.filter((i) => i.stage === stageName && i.scope === this.viewMode && i.type !== "completion");
+      if (!group.length) return 0;
+      let totalNeeded = 0, totalOwned = 0;
+      group.forEach((item) => {
+        const goal = this.getGoal(item);
+        totalNeeded += goal;
+        totalOwned += this.getEffectiveOwned(item);
+      });
+      if (totalNeeded === 0) return 100;
+      return Math.floor((totalOwned / totalNeeded) * 100);
+    },
+
+    getTotalProgress() {
+      let totalNeeded = 0, totalOwned = 0;
+      this.items.forEach((item) => {
+        if (item.type === "completion") return;
+        const goal = this.getGoal(item);
+        totalNeeded += goal;
+        totalOwned += this.getEffectiveOwned(item);
+      });
+      if (totalNeeded === 0) return 0;
+      return Math.floor((totalOwned / totalNeeded) * 100);
+    },
+
+    getTotalLiability(currencyName) {
+      let total = 0;
+      this.items.forEach((item) => {
+        const remaining = this.getRemaining(item);
+        if (remaining > 0) {
+          const option = item.options.find((o) => o.currency === currencyName);
+          if (option && option.cost > 0) total += remaining * option.cost;
+        }
+      });
+      return total;
+    },
+
+    groupedItems() {
+      const groups = [];
+      const filtered = this.items.filter((item) => item.scope === this.viewMode);
+      filtered.forEach((item) => {
+        const stageName = item.stage || "Unknown";
+        let group = groups.find((g) => g.name === stageName);
+        if (!group) { group = { name: stageName, items: [] }; groups.push(group); }
+        group.items.push(item);
+      });
+      return groups.sort((a, b) => STAGE_ORDER.indexOf(a.name) - STAGE_ORDER.indexOf(b.name));
+    },
+
+    resetAll() {
+      if (confirm("Are you sure you want to clear all inventory data?")) {
+        this.inventory = {};
+        this.selectedJobs = ["PLD"];
+        this.completedJobs = [];
+        this.accountWideDone = false;
+        this.items.forEach((item) => { this.inventory[item.id] = ""; });
+        localStorage.removeItem("phantom_inventory");
+        localStorage.removeItem("phantom_jobs");
+        localStorage.removeItem("phantom_completed_jobs");
+        localStorage.removeItem("phantom_accountwide_done");
+      }
+    },
+  }));
+});
+</script>
+</body>
+</html>

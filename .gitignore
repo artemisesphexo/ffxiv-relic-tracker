@@ -1,0 +1,16 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Local build tooling (if you ever rebuild Tailwind locally)
+node_modules/
+package-lock.json
+
+# Scratch/temp
+_to_delete/
+*.tmp
