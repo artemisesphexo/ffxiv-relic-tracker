@@ -220,12 +220,12 @@
 
           <!-- Per-stage weapon check: tick a job's weapon once it has reached this stage's item level.
                Checking stage N implies stages 1..N; unchecking drops the job to N-1. -->
-          <div class="px-3 py-2 flex items-center gap-2 text-xs bg-purple-900/5">
-            <div class="min-w-0 flex-1">
+          <div class="px-3 py-2 flex items-center gap-2 text-xs bg-purple-900/5" style="flex-wrap:wrap;">
+            <div class="min-w-0" style="flex:1 1 220px;">
               <span class="font-semibold text-slate-200" x-text="stageNumber(group.name) === 5 ? 'Phantom Weapon Complete' : 'Weapon reached this stage'"></span>
-              <p class="text-[10px] text-slate-500 truncate" x-text="stageNumber(group.name) === 5 ? 'Finished a weapon? Check it off to drop its materials from the totals.' : 'Already upgraded a job this far? Check it off to drop that stage\'s per-weapon costs and mark its one-time materials done.'"></p>
+              <p class="text-[10px] text-slate-500" x-text="stageNumber(group.name) === 5 ? 'Finished a weapon? Check it off to drop its materials from the totals.' : 'Already upgraded a job this far? Check it off to drop that stage\'s per-weapon costs and mark its one-time materials done.'"></p>
             </div>
-            <div class="flex gap-1.5 flex-wrap justify-end shrink-0">
+            <div class="flex gap-1.5 flex-wrap justify-end" style="flex:0 1 auto;max-width:100%;">
               <template x-for="jobId in selectedJobs" :key="jobId">
                 <label class="cursor-pointer relative" :title="jobId + (getJobStage(jobId) >= stageNumber(group.name) ? ' — reached' : ' — mark reached')">
                   <input type="checkbox" :checked="getJobStage(jobId) >= stageNumber(group.name)" @change="toggleJobStage(jobId, stageNumber(group.name))" class="peer sr-only" />
@@ -927,29 +927,53 @@ document.addEventListener('alpine:init', () => {
       return Math.max(0, this.getGoal(item) - this.getOwned(item));
     },
 
-    getStageProgress(stageName) {
-      const group = this.items.filter((i) => i.stage === stageName && i.scope === this.viewMode && i.type !== "completion");
-      if (!group.length) return 0;
-      let totalNeeded = 0, totalOwned = 0;
-      group.forEach((item) => {
-        const goal = this.getGoal(item);
-        totalNeeded += goal;
-        totalOwned += this.getEffectiveOwned(item);
-      });
-      if (totalNeeded === 0) return 100;
-      return Math.floor((totalOwned / totalNeeded) * 100);
+    // How complete one item is, 0..1. Every item counts equally regardless of its
+    // quantity, so 10,000 Aetherwell points don't drown out a single Ut'ohmu Siderite.
+    itemFraction(item) {
+      const owned = this.getOwned(item);
+      if (item.scope === "shared") {
+        if (this.isSharedDone(item)) return 1;
+        return item.qty > 0 ? Math.min(owned, item.qty) / item.qty : 1;
+      }
+      // Per-weapon: jobs already past this stage count as fully done; the input box
+      // is measured against what the remaining jobs still need.
+      const n = this.selectedJobs.length || 1;
+      const needing = this.weaponsNeedingStage(this.stageNumber(item.stage));
+      if (needing === 0) return 1;
+      const goal = item.qty * needing;
+      const partial = goal > 0 ? Math.min(owned, goal) / goal : 1;
+      return (n - needing + needing * partial) / n;
     },
 
+    // Average completion of one scope ("shared" | "perWeapon") within a stage, or null if it has none.
+    stageScopeFraction(stageName, scope) {
+      const list = this.items.filter((i) => i.stage === stageName && i.scope === scope && i.type !== "completion");
+      if (!list.length) return null;
+      return list.reduce((sum, i) => sum + this.itemFraction(i), 0) / list.length;
+    },
+
+    // Stage header %: the scope currently on screen.
+    getStageProgress(stageName) {
+      const f = this.stageScopeFraction(stageName, this.viewMode);
+      return f === null ? 0 : Math.floor(f * 100);
+    },
+
+    // Overall %: every stage counts equally. Within a stage, the one-time (account-wide)
+    // part weighs 1 and the per-weapon part weighs one per selected job, since each job
+    // repeats it. A job that has reached a stage counts as fully done for that stage's
+    // per-weapon part.
     getTotalProgress() {
-      let totalNeeded = 0, totalOwned = 0;
-      this.items.forEach((item) => {
-        if (item.type === "completion") return;
-        const goal = this.getGoal(item);
-        totalNeeded += goal;
-        totalOwned += this.getEffectiveOwned(item);
+      const n = this.selectedJobs.length || 1;
+      let sum = 0;
+      STAGE_ORDER.forEach((stage) => {
+        const shared = this.stageScopeFraction(stage, "shared");
+        const per = this.stageScopeFraction(stage, "perWeapon");
+        let weight = 0, value = 0;
+        if (shared !== null) { weight += 1; value += shared; }
+        if (per !== null) { weight += n; value += per * n; }
+        sum += weight ? value / weight : 1;
       });
-      if (totalNeeded === 0) return 0;
-      return Math.floor((totalOwned / totalNeeded) * 100);
+      return Math.floor((sum / STAGE_ORDER.length) * 100);
     },
 
     getTotalLiability(currencyName) {
