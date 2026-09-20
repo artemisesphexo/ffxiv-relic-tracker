@@ -94,13 +94,15 @@
                 : 'border-slate-700 bg-slate-800/70 opacity-45 hover:opacity-100')"
         >
           <img
-            :src="isJobComplete(job.id) ? './images/weapons/' + job.id + '.png' : './images/jobs/' + job.id + '.png'"
+            :src="jobChipIcon(job.id)"
             :alt="job.id"
             class="w-full h-full"
             :class="isJobComplete(job.id)
               ? 'object-contain p-0.5 drop-shadow-[0_0_5px_rgba(192,132,252,0.5)]'
-              : (selectedJobs.includes(job.id) ? 'object-cover' : 'object-cover grayscale opacity-60')"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              : (getJobStage(job.id) > 0
+                  ? 'object-contain p-0.5' + (selectedJobs.includes(job.id) ? '' : ' grayscale opacity-60')
+                  : (selectedJobs.includes(job.id) ? 'object-cover' : 'object-cover grayscale opacity-60'))"
+            onerror="if (!this.dataset.fb) { this.dataset.fb = 1; this.src = './images/jobs/' + this.alt + '.png'; } else { this.style.display='none'; this.nextElementSibling.style.display='flex'; }"
           />
           <div
             class="hidden w-full h-full items-center justify-center font-bold text-[9px] tracking-tight"
@@ -108,6 +110,7 @@
             x-text="job.id"
           ></div>
           <div x-show="isJobComplete(job.id)" class="absolute -top-1 -right-1 w-2 h-2 bg-purple-400 rounded-full border border-[#0e1614]"></div>
+          <div x-show="getJobStage(job.id) > 0 && !isJobComplete(job.id)" class="absolute bottom-0 right-0 font-mono font-bold text-emerald-300 leading-none" style="font-size:8px;padding:1px 2px;background:rgba(14,22,20,.92);border-top-left-radius:4px;" x-text="getJobStage(job.id) + '/5'"></div>
         </button>
       </template>
 
@@ -211,40 +214,32 @@
                 </div>
               </template>
 
-              <!-- Per-weapon "already finished" checker: excludes a completed job's
-                   materials from every goal above, without touching the input boxes. -->
-              <template x-if="item.type === 'completion'">
-                <div class="px-3 py-2 flex items-center gap-2 text-xs bg-purple-900/5">
-                  <div class="w-8 h-8 shrink-0 rounded-md border border-slate-700 bg-slate-800 shadow-md flex items-center justify-center relative overflow-hidden">
-                    <img :src="'./images/items/' + item.id + '.png'" :alt="item.name" class="w-full h-full object-cover"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                    <span class="hidden text-base items-center justify-center w-full h-full absolute inset-0" x-text="item.emoji"></span>
-                  </div>
-
-                  <div class="min-w-0 flex-1">
-                    <span class="font-semibold text-slate-200" x-text="item.name"></span>
-                    <p class="text-[10px] text-slate-500 truncate" x-title="item.tip" x-text="item.tip"></p>
-                  </div>
-
-                  <div class="flex gap-1.5 flex-wrap justify-end shrink-0">
-                    <template x-for="jobId in selectedJobs" :key="jobId">
-                      <label class="cursor-pointer relative" :title="jobId + (isJobComplete(jobId) ? ' — weapon complete' : ' — mark complete')">
-                        <input type="checkbox" :checked="isJobComplete(jobId)" @change="toggleJobComplete(jobId)" class="peer sr-only" />
-                        <div class="w-7 h-7 rounded-md border border-slate-700 bg-slate-800 overflow-hidden flex items-center justify-center transition-all duration-150 hover:scale-110 peer-checked:border-purple-400 peer-checked:bg-purple-900/40 peer-checked:shadow-[0_0_8px_rgba(192,132,252,0.5)]">
-                          <img :src="isJobComplete(jobId) ? './images/weapons/' + jobId + '.png' : './images/jobs/' + jobId + '.png'"
-                               class="w-full h-full transition-opacity"
-                               :class="isJobComplete(jobId) ? 'object-contain p-0.5 opacity-100' : 'object-cover opacity-60 peer-checked:opacity-100'"
-                               :alt="jobId"
-                               onerror="if (this.src.includes('weapons')) { this.src = './images/jobs/' + this.alt + '.png'; } else { this.style.display='none'; }" />
-                        </div>
-                      </label>
-                    </template>
-                    <span x-show="!selectedJobs.length" class="text-[10px] text-slate-600">Select a job above</span>
-                  </div>
-                </div>
-              </template>
+              <!-- completion items are handled by the per-stage weapon row below -->
             </div>
           </template>
+
+          <!-- Per-stage weapon check: tick a job's weapon once it has reached this stage's item level.
+               Checking stage N implies stages 1..N; unchecking drops the job to N-1. -->
+          <div class="px-3 py-2 flex items-center gap-2 text-xs bg-purple-900/5">
+            <div class="min-w-0 flex-1">
+              <span class="font-semibold text-slate-200" x-text="stageNumber(group.name) === 5 ? 'Phantom Weapon Complete' : 'Weapon reached this stage'"></span>
+              <p class="text-[10px] text-slate-500 truncate" x-text="stageNumber(group.name) === 5 ? 'Finished a weapon? Check it off to drop its materials from the totals.' : 'Already upgraded a job this far? Check it off to drop that stage\'s per-weapon costs and mark its one-time materials done.'"></p>
+            </div>
+            <div class="flex gap-1.5 flex-wrap justify-end shrink-0">
+              <template x-for="jobId in selectedJobs" :key="jobId">
+                <label class="cursor-pointer relative" :title="jobId + (getJobStage(jobId) >= stageNumber(group.name) ? ' — reached' : ' — mark reached')">
+                  <input type="checkbox" :checked="getJobStage(jobId) >= stageNumber(group.name)" @change="toggleJobStage(jobId, stageNumber(group.name))" class="peer sr-only" />
+                  <div class="w-8 h-8 rounded-md border border-slate-700 bg-slate-800 overflow-hidden flex items-center justify-center transition-all duration-150 hover:scale-110 peer-checked:border-purple-400 peer-checked:bg-purple-900/40 peer-checked:shadow-[0_0_8px_rgba(192,132,252,0.5)]">
+                    <img :src="stageIcon(jobId, stageNumber(group.name))" :alt="jobId"
+                         class="w-full h-full object-contain p-0.5 transition-all"
+                         :class="getJobStage(jobId) >= stageNumber(group.name) ? 'opacity-100' : 'grayscale opacity-50'"
+                         onerror="if (!this.dataset.fb) { this.dataset.fb = 1; this.src = './images/jobs/' + this.alt + '.png'; } else { this.style.display='none'; }" />
+                  </div>
+                </label>
+              </template>
+              <span x-show="!selectedJobs.length" class="text-[10px] text-slate-600">Select a job above</span>
+            </div>
+          </div>
         </div>
       </div>
     </template>
@@ -778,6 +773,11 @@ document.addEventListener('alpine:init', () => {
     inventory: {},
     viewMode: "shared",
     accountWideDone: false,
+    // jobStage: highest stage (0-5) each job's weapon has reached. Stage 5 = weapon complete.
+    jobStage: {},
+    // sharedStageDone: highest stage whose one-time (account-wide) materials count as done.
+    // One-way ratchet: checking a stage raises it, unchecking never lowers it.
+    sharedStageDone: 0,
 
     init() {
       try {
@@ -791,9 +791,20 @@ document.addEventListener('alpine:init', () => {
       } catch (e) { this.selectedJobs = ["PLD"]; }
 
       try {
+        const sStage = localStorage.getItem("phantom_job_stage");
+        this.jobStage = sStage ? JSON.parse(sStage) : {};
+        // Migrate the old "completed jobs" flag list: those jobs are at stage 5.
         const sDone = localStorage.getItem("phantom_completed_jobs");
-        this.completedJobs = sDone ? JSON.parse(sDone) : [];
-      } catch (e) { this.completedJobs = []; }
+        if (sDone) {
+          JSON.parse(sDone).forEach((id) => { this.jobStage[id] = 5; });
+          localStorage.removeItem("phantom_completed_jobs");
+        }
+      } catch (e) { this.jobStage = {}; }
+
+      try {
+        const sShared = parseInt(localStorage.getItem("phantom_shared_stage"));
+        this.sharedStageDone = sShared >= 0 && sShared <= 5 ? sShared : 0;
+      } catch (e) { this.sharedStageDone = 0; }
 
       try {
         const sView = localStorage.getItem("phantom_view_mode");
@@ -811,22 +822,40 @@ document.addEventListener('alpine:init', () => {
 
       this.$watch("selectedJobs", (v) => localStorage.setItem("phantom_jobs", JSON.stringify(v)));
       this.$watch("inventory", (v) => localStorage.setItem("phantom_inventory", JSON.stringify(v)), { deep: true });
-      this.$watch("completedJobs", (v) => localStorage.setItem("phantom_completed_jobs", JSON.stringify(v)), { deep: true });
+      this.$watch("jobStage", (v) => localStorage.setItem("phantom_job_stage", JSON.stringify(v)), { deep: true });
+      this.$watch("sharedStageDone", (v) => localStorage.setItem("phantom_shared_stage", v));
       this.$watch("viewMode", (v) => localStorage.setItem("phantom_view_mode", v));
       this.$watch("accountWideDone", (v) => localStorage.setItem("phantom_accountwide_done", v));
     },
-
-    completedJobs: [],
 
     get weaponCount() {
       return this.selectedJobs.length || 1;
     },
 
-    // Jobs whose Phantom Weapon isn't finished yet — per-weapon goals only
-    // count these, so a completed job's share drops out of every total.
-    get activeWeaponCount() {
+    // Number of selected jobs that still need to pass stage `n` — per-weapon
+    // goals for that stage only count these, so progress drops out of totals.
+    weaponsNeedingStage(n) {
       const jobs = this.selectedJobs.length ? this.selectedJobs : ["PLD"];
-      return jobs.filter((id) => !this.isJobComplete(id)).length;
+      return jobs.filter((id) => this.getJobStage(id) < n).length;
+    },
+
+    stageNumber(stageName) {
+      return STAGE_ORDER.indexOf(stageName) + 1;
+    },
+
+    getJobStage(jobId) {
+      return this.jobStage[jobId] || 0;
+    },
+
+    // Icon of the weapon a job holds at stage n (1-4 from images/stages, 5 = final weapon).
+    stageIcon(jobId, n) {
+      return n >= 5 ? "./images/weapons/" + jobId + ".png" : "./images/stages/" + jobId + "_" + n + ".png";
+    },
+
+    // Header chip: the weapon at the job's current stage, or the plain job icon at stage 0.
+    jobChipIcon(jobId) {
+      const st = this.getJobStage(jobId);
+      return st > 0 ? this.stageIcon(jobId, st) : "./images/jobs/" + jobId + ".png";
     },
 
     toggleJob(jobId) {
@@ -839,19 +868,25 @@ document.addEventListener('alpine:init', () => {
     },
 
     isJobComplete(jobId) {
-      return this.completedJobs.includes(jobId);
+      return this.getJobStage(jobId) >= 5;
     },
 
-    // Toggled from the "Phantom Weapon Complete" checkbox row — a pure flag,
-    // doesn't touch any input values. Finishing a weapon also auto-flips the
-    // Account-Wide done switch on (one-way ratchet; it never auto-unflips).
-    toggleJobComplete(jobId) {
-      if (this.isJobComplete(jobId)) {
-        this.completedJobs = this.completedJobs.filter((id) => id !== jobId);
+    // Per-stage weapon check — a pure flag, doesn't touch any input values.
+    // Checking stage n sets the job to at least n (implies stages 1..n) and marks
+    // the one-time materials of stages 1..n done (one-way ratchet, never auto-unflips).
+    // Unchecking stage n drops the job to n-1.
+    toggleJobStage(jobId, n) {
+      if (this.getJobStage(jobId) >= n) {
+        this.jobStage = { ...this.jobStage, [jobId]: n - 1 };
       } else {
-        this.completedJobs = [...this.completedJobs, jobId];
-        if (!this.accountWideDone) this.accountWideDone = true;
+        this.jobStage = { ...this.jobStage, [jobId]: n };
+        if (this.sharedStageDone < n) this.sharedStageDone = n;
       }
+    },
+
+    // One-time item counts as done if Account-Wide was marked manually, or a job has reached its stage.
+    isSharedDone(item) {
+      return item.scope === "shared" && (this.accountWideDone || STAGE_ORDER.indexOf(item.stage) + 1 <= this.sharedStageDone);
     },
 
     toggleAccountWideDone() {
@@ -871,7 +906,7 @@ document.addEventListener('alpine:init', () => {
 
     getGoal(item) {
       if (item.type === "completion") return 0;
-      return item.scope === "shared" ? item.qty : item.qty * this.activeWeaponCount;
+      return item.scope === "shared" ? item.qty : item.qty * this.weaponsNeedingStage(STAGE_ORDER.indexOf(item.stage) + 1);
     },
 
     getOwned(item) {
@@ -883,12 +918,12 @@ document.addEventListener('alpine:init', () => {
     // complete (without ever rewriting what's actually in the input boxes).
     getEffectiveOwned(item) {
       const goal = this.getGoal(item);
-      if (item.scope === "shared" && this.accountWideDone) return goal;
+      if (this.isSharedDone(item)) return goal;
       return Math.min(this.getOwned(item), goal);
     },
 
     getRemaining(item) {
-      if (item.scope === "shared" && this.accountWideDone) return 0;
+      if (this.isSharedDone(item)) return 0;
       return Math.max(0, this.getGoal(item) - this.getOwned(item));
     },
 
@@ -945,13 +980,16 @@ document.addEventListener('alpine:init', () => {
       if (confirm("Are you sure you want to clear all inventory data?")) {
         this.inventory = {};
         this.selectedJobs = ["PLD"];
-        this.completedJobs = [];
+        this.jobStage = {};
+        this.sharedStageDone = 0;
         this.accountWideDone = false;
         this.items.forEach((item) => { this.inventory[item.id] = ""; });
         localStorage.removeItem("phantom_inventory");
         localStorage.removeItem("phantom_jobs");
         localStorage.removeItem("phantom_completed_jobs");
         localStorage.removeItem("phantom_accountwide_done");
+        localStorage.removeItem("phantom_job_stage");
+        localStorage.removeItem("phantom_shared_stage");
       }
     },
   }));

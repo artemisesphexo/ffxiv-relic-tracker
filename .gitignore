@@ -13,6 +13,7 @@ package-lock.json
 
 # Scratch/temp
 _to_delete/
+icon img/
 *.tmp
 
 ._*
