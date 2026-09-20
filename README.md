@@ -6,6 +6,7 @@ Progress checklists for Final Fantasy XIV's relic weapon grinds. Pick a line, ch
 
 ## Trackers
 
+- **ARR Relic Weapon** — the original A Realm Reborn Zodiac Weapon line, i80 → i135. Relic, Zenith, Atma, Animus, Novus, Nexus, Zodiac Braves, and the final Zeta.
 - **Anima Weapon** — Heavensward relic progression, i170 → i275. Nine stages, dungeon runs, and the primal gauntlet.
 - **Bozja Resistance Weapon** — Shadowbringers relic progression, i485 → i535. Zadnor grinding and the Irresistible stat allocation.
 - **Phantom Weapon** — Dawntrail relic progression, i745 → i795. Five stages through the Occult Crescent.
@@ -38,6 +39,7 @@ npx tailwindcss -i input.css -o assets/site.css --minify
 
 ```
 ├── index.html          # hub page linking to all trackers
+├── arr/                  # A Realm Reborn relic tracker
 ├── anima/               # Heavensward relic tracker
 ├── bozja/                # Shadowbringers relic tracker
 ├── phantom/            # Dawntrail relic tracker
