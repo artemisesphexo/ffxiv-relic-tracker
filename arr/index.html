@@ -3,24 +3,24 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Anima Weapon Tracker – FFXIV Heavensward Relic Guide (i170–i275)</title>
-		<meta name="description" content="Track every Anima Weapon relic material for Final Fantasy XIV Heavensward, i170 to i275 — Luminous Crystals, Alexander tokens, Aether Oil, Crystal Sand, Singing Clusters, and the Primal Gauntlet, stage by stage." />
-		<link rel="canonical" href="https://ffxiv-relic-tracker.netlify.app/anima/" />
+		<title>ARR Relic Weapon Tracker – FFXIV Zodiac Weapon Guide (i80–i135)</title>
+		<meta name="description" content="Track every stage of Final Fantasy XIV's original A Realm Reborn relic weapon, i80 to i135 — Relic, Zenith, Atma, Animus, Novus, Nexus, Zodiac Braves, and the final Zodiac Zeta, stage by stage." />
+		<link rel="canonical" href="https://ffxiv-relic-tracker.netlify.app/arr/" />
 		<link rel="icon" type="image/svg+xml" href="../favicon.svg" />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="FFXIV Relic Weapon Trackers" />
-		<meta property="og:title" content="Anima Weapon Tracker – FFXIV Heavensward Relic Guide" />
-		<meta property="og:description" content="Track every Anima Weapon relic material for Final Fantasy XIV Heavensward, i170 to i275, stage by stage." />
-		<meta property="og:url" content="https://ffxiv-relic-tracker.netlify.app/anima/" />
-		<meta property="og:image" content="https://ffxiv-relic-tracker.netlify.app/assets/og/anima-og.png" />
+		<meta property="og:title" content="ARR Relic Weapon Tracker – FFXIV Zodiac Weapon Guide" />
+		<meta property="og:description" content="Track every stage of Final Fantasy XIV's original A Realm Reborn relic weapon, i80 to i135, stage by stage." />
+		<meta property="og:url" content="https://ffxiv-relic-tracker.netlify.app/arr/" />
+		<meta property="og:image" content="https://ffxiv-relic-tracker.netlify.app/assets/og/hub-og.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Anima Weapon Tracker – FFXIV Heavensward Relic Guide" />
-		<meta name="twitter:description" content="Track every Anima Weapon relic material for Final Fantasy XIV Heavensward, i170 to i275, stage by stage." />
-		<meta name="twitter:image" content="https://ffxiv-relic-tracker.netlify.app/assets/og/anima-og.png" />
+		<meta name="twitter:title" content="ARR Relic Weapon Tracker – FFXIV Zodiac Weapon Guide" />
+		<meta name="twitter:description" content="Track every stage of Final Fantasy XIV's original A Realm Reborn relic weapon, i80 to i135, stage by stage." />
+		<meta name="twitter:image" content="https://ffxiv-relic-tracker.netlify.app/assets/og/hub-og.png" />
 		<meta name="twitter:creator" content="@ArtemisEsphexo" />
 
 		<link rel="stylesheet" href="../assets/site.css" />
@@ -53,13 +53,13 @@
 					rgba(20, 24, 32, 0.95) 100%
 				);
 				border: 1px solid rgba(255, 255, 255, 0.1);
-				border-top: 2px solid #b79c59; /* Gold Accent */
+				border-top: 2px solid #9c7a2e; /* Zodiac Gold Accent */
 				box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 			}
 
-			/* Golden Text Gradient */
-			.text-gold-gradient {
-				background: linear-gradient(to bottom, #fceeb0, #d4af37, #996515);
+			/* Zodiac Gold Text Gradient */
+			.text-zodiac-gradient {
+				background: linear-gradient(to bottom, #f5e0a3, #c9a227, #7a5c14);
 				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
@@ -74,13 +74,13 @@
 	<body
 		class="ff-bg text-slate-200 pb-28 text-sm selection:bg-yellow-600/30 selection:text-yellow-100"
 	>
-		<div x-data="relicApp" class="max-w-[1000px] mx-auto px-3 md:px-4">
+		<div x-data="arrApp" class="max-w-[1000px] mx-auto px-3 md:px-4">
 			<nav class="flex items-center justify-center gap-4 pt-4 text-[11px] font-bold uppercase tracking-wider flex-wrap">
 				<a href="../" class="text-slate-500 hover:text-slate-300 transition-colors">&larr; All Trackers</a>
 				<span class="text-slate-700">&middot;</span>
-				<a href="../arr/" class="text-slate-500 hover:text-[#c9a227] transition-colors">ARR (Zodiac)</a>
+				<span class="text-[#c9a227]">ARR (Zodiac)</span>
 				<span class="text-slate-700">&middot;</span>
-				<span class="text-[#d4af37]">Anima (Heavensward)</span>
+				<a href="../anima/" class="text-slate-500 hover:text-[#d4af37] transition-colors">Anima (Heavensward)</a>
 				<span class="text-slate-700">&middot;</span>
 				<a href="../bozja/" class="text-slate-500 hover:text-[#e0837a] transition-colors">Bozja (Shadowbringers)</a>
 				<span class="text-slate-700">&middot;</span>
@@ -92,9 +92,9 @@
 				>
 					<div>
 						<h1
-							class="text-lg md:text-xl font-bold text-gold-gradient tracking-wide uppercase leading-none"
+							class="text-lg md:text-xl font-bold text-zodiac-gradient tracking-wide uppercase leading-none"
 						>
-							Anima Weapon Tracker
+							ARR Relic Weapon Tracker
 						</h1>
 						<p class="text-slate-500 text-[11px] mt-1 flex items-center gap-1.5">
 							<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
@@ -125,11 +125,8 @@
             : 'border-slate-700 bg-slate-800 opacity-45 hover:opacity-100 grayscale hover:grayscale-0')"
 >
     <img
-        :src="isJobComplete(job.id)
-            ? './images/weapons/' + job.id + '.png'
-            : './images/jobs/' + job.id + '.png'"
-        class="absolute inset-0 w-full h-full"
-        :class="isJobComplete(job.id) ? 'object-contain p-0.5 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]' : 'object-cover'"
+        :src="'./images/jobs/' + job.id + '.png'"
+        class="absolute inset-0 w-full h-full object-cover"
         :alt="job.id"
         onerror="
             this.style.display = 'none';
@@ -179,7 +176,7 @@
 				<template x-for="group in groupedItems()" :key="group.name">
 					<div
 						x-data="{ open: true }"
-						class="ff-card rounded-lg overflow-hidden relative group transition-all duration-300 border-l-2 border-[#b79c59]"
+						class="ff-card rounded-lg overflow-hidden relative group transition-all duration-300 border-l-2 border-[#9c7a2e]"
 					>
 						<div
 							@click="open = !open"
@@ -358,37 +355,25 @@
 																class="cursor-pointer group relative"
 																:title="jobId"
 															>
-																<input 
-    type="checkbox" 
-    :value="jobId" 
-    x-model="inventory[item.id]" 
-    @change="if(item.id === 'primal_gauntlet') toggleCompleteJob(jobId, $el.checked)"
+																<input
+    type="checkbox"
+    :value="jobId"
+    x-model="inventory[item.id]"
+    @change="if(item.id === 'zeta_complete') toggleCompleteJob(jobId, $el.checked)"
     class="peer sr-only"
 >
 
 																<div class="p-0.5 rounded-md border border-slate-700 bg-slate-800 transition-all duration-200 hover:border-slate-500 hover:scale-110 hover:z-10"
-     :class="item.id === 'primal_gauntlet' 
-        ? 'peer-checked:bg-[#6b21a8]/20 peer-checked:border-purple-400 peer-checked:shadow-[0_0_15px_rgba(192,132,252,0.6)]' 
-        : (item.id === 'dungeon_crawl'
-            ? 'peer-checked:bg-yellow-900/20 peer-checked:border-yellow-500 peer-checked:shadow-[0_0_15px_rgba(234,179,8,0.6)]'
-            : 'peer-checked:bg-green-900/80 peer-checked:border-green-500 peer-checked:shadow-[0_0_10px_rgba(34,197,94,0.3)]')">
+     :class="item.id === 'zeta_complete'
+        ? 'peer-checked:bg-[#6b21a8]/20 peer-checked:border-purple-400 peer-checked:shadow-[0_0_15px_rgba(192,132,252,0.6)]'
+        : 'peer-checked:bg-green-900/80 peer-checked:border-green-500 peer-checked:shadow-[0_0_10px_rgba(34,197,94,0.3)]'">
 																	<img
-																		:src="(item.id === 'primal_gauntlet' && inventory[item.id].includes(jobId)) 
-                                                                            ? './images/weapons/' + jobId + '.png' 
-                                                                            : './images/jobs/' + jobId + '.png'"
+																		:src="'./images/jobs/' + jobId + '.png'"
 																		class="w-5 h-5 object-contain drop-shadow-md filter grayscale opacity-70 peer-checked:grayscale-0 peer-checked:opacity-100 transition-all duration-500"
 																		:alt="jobId"
 																		onerror="
-																			if (this.src.includes('weapons')) {
-																				this.src =
-																					'/images/jobs/' +
-																					this.getAttribute('alt') +
-																					'.png';
-																			} else {
-																				this.style.display = 'none';
-																				this.nextElementSibling.style.display =
-																					'block';
-																			}
+																			this.style.display = 'none';
+																			this.nextElementSibling.style.display = 'block';
 																		"
 																	/>
 
@@ -399,7 +384,7 @@
 																</div>
 
 																<div class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-[#0b0e14] opacity-0 peer-checked:opacity-100 transition-opacity"
-     x-show="item.id !== 'primal_gauntlet' && item.id !== 'dungeon_crawl'"></div>
+     x-show="item.id !== 'zeta_complete'"></div>
 															</label>
 														</template>
 													</div>
@@ -507,7 +492,7 @@
 											<h4
 												class="text-[10px] uppercase text-blue-400 font-bold mb-2 tracking-widest border-b border-slate-800 pb-1.5"
 											>
-												Required Dungeons
+												Steps
 											</h4>
 											<div
 												class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1.5"
@@ -534,12 +519,12 @@
 
 			<!-- STATIC_CONTENT_START: generated by scripts/generate-static-content.js from src/data.js. Edit data.js, not this block. -->
 <details class="ff-card rounded-lg p-4 text-xs text-slate-300 leading-relaxed">
-    <summary class="cursor-pointer text-sm font-bold text-slate-200 select-none">Full material list — every stage, i170 to i275</summary>
+    <summary class="cursor-pointer text-sm font-bold text-slate-200 select-none">Full material list — every stage, i80 to i135</summary>
     <div class="mt-3">
-      <p class="text-[11px] text-slate-500 mb-4">Complete Anima Weapon relic requirements for Heavensward, stage by stage. Quantities below are per weapon (each job you level the relic for needs its own full set).</p>
+      <p class="text-[11px] text-slate-500 mb-4">Complete ARR Zodiac Weapon relic requirements for the original A Realm Reborn relic line, stage by stage. Quantities below are per weapon (each job you level the relic for needs its own full set). Nexus onward is quest/light-gated rather than a simple item turn-in — see each stage's tip for the real requirement.</p>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">1. Animated (i170)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Farm FATEs in Heavensward zones to get crystals.</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">1. Relic (i80)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Job quest chain through Gerolt: trial, dungeon, beastmen, and four Hard-mode primals unsynced.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -552,53 +537,18 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Luminous Crystal (Wind)</td>
+        <td class="py-1.5 pr-3 font-semibold">Base Relic Weapon</td>
         <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">FATEs in Churning Mists. Drop rate is approx 10%.</td>
-        <td class="py-1.5">FATE (Churning Mists)</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Luminous Crystal (Fire)</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
-        
-        <td class="py-1.5 pr-3">FATEs in Azys Lla.</td>
-        <td class="py-1.5">FATE (Azys Lla)</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Luminous Crystal (Lightning)</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
-        
-        <td class="py-1.5 pr-3">FATEs in Dravanian Forelands.</td>
-        <td class="py-1.5">FATE (Dravanian Forelands)</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Luminous Crystal (Ice)</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
-        
-        <td class="py-1.5 pr-3">FATEs in Coerthas Western Highlands.</td>
-        <td class="py-1.5">FATE (Coerthas Western)</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Luminous Crystal (Earth)</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
-        
-        <td class="py-1.5 pr-3">FATEs in Dravanian Hinterlands.</td>
-        <td class="py-1.5">FATE (Dravanian Hinterlands)</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Luminous Crystal (Water)</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
-        
-        <td class="py-1.5 pr-3">FATEs in The Sea of Clouds.</td>
-        <td class="py-1.5">FATE (Sea of Clouds)</td>
+        <td class="py-1.5 pr-3">Start with 'The Weaponsmith of Legend' (Vesper Bay) into 'A Relic Reborn' (Gerolt, North Shroud). Collect the Timeworn weapon, deliver a materia-melded weapon, clear the Chimera trial, run Amdapor Keep, defeat 24 beastmen, then clear Hydra + Ifrit/Garuda/Titan (Hard) unsynced.</td>
+        <td class="py-1.5">Quest Complete</td>
       </tr>
     </tbody>
   </table></div>
       </div>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">2. Awoken (i200)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Run 10 specific dungeons with your weapon equipped.</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">2. Zenith (i90)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Trade 3 Thavnairian Mist at the Furnace to reforge your relic.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -611,18 +561,119 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Dungeon Crawl</td>
+        <td class="py-1.5 pr-3 font-semibold">Thavnairian Mist</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        
+        <td class="py-1.5 pr-3">With your base relic equipped, speak to Gerolt, then trade 3 Thavnairian Mist (bought with Poetics) at the Furnace to reforge into the Zenith weapon.</td>
+        <td class="py-1.5">Poetics Vendor</td>
+      </tr>
+    </tbody>
+  </table></div>
+      </div>
+<div class="mb-5">
+        <h4 class="text-sm font-bold text-slate-200 mb-1">3. Atma (i100)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Collect all 12 Atma from FATEs across La Noscea, Thanalan, and the Shroud.</p>
+        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
+        <th class="text-left font-semibold pr-3 py-1">Item</th>
+        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
+        
+        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
+        <th class="text-left font-semibold py-1">Exchange cost</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Lion</td>
         <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Equip your Animated weapon before exiting the dungeon!</td>
-        <td class="py-1.5">Duty Complete</td>
+        <td class="py-1.5 pr-3">Outer La Noscea FATEs, Zenith weapon equipped. ~20% drop per completion; does not require good FATE performance.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Water-bearer</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Upper La Noscea FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Ram</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Middle La Noscea FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Crab</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Western La Noscea FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Fish</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Lower La Noscea FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Bull</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Eastern Thanalan FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Scales</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Central Thanalan FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Twins</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Western Thanalan FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Scorpion</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Southern Thanalan FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Archer</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">North Shroud FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Goat</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">East Shroud FATEs, Zenith weapon equipped.</td>
+        <td class="py-1.5">FATE Completion</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Atma of the Maiden</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Central Shroud FATEs, Zenith weapon equipped. Last of the 12 Atma — completing this upgrades Zenith to Atma via 'Up in Arms'.</td>
+        <td class="py-1.5">FATE Completion</td>
       </tr>
     </tbody>
   </table></div>
       </div>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">3. Anima (i210)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">The massive grind. Collect tokens via Poetics, Tribes, or Alex Normal.</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">4. Animus (i100)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Buy and clear all 9 Trials of the Braves books for a cosmetic weapon glow.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -635,67 +686,74 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Unidentifiable Bone</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">10</td>
+        <td class="py-1.5 pr-3 font-semibold">Book of Skyfire I</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Precision Gordian Bolt drops from Alexander - The Fist of the Father (A1).</td>
-        <td class="py-1.5">150 Poetics <span class="opacity-50">or</span> 3 Steel Amalj'ok <span class="opacity-50">or</span> 6 Vanu Whitebone <span class="opacity-50">or</span> 6 Black Copper Gil <span class="opacity-50">or</span> 18 Carved Kupo Nut <span class="opacity-50">or</span> 300 Allied Seals <span class="opacity-50">or</span> 3 Alex P1</td>
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete: kill 10 enemies, clear 3 dungeons, 3 FATEs, and 3 levequests.</td>
+        <td class="py-1.5">100 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Unidentifiable Shell</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">10</td>
+        <td class="py-1.5 pr-3 font-semibold">Book of Skyfire II</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Precision Lens drops from Alexander - The Cuff of the Father (A2) Normal.</td>
-        <td class="py-1.5">150 Poetics <span class="opacity-50">or</span> 3 Sahagin <span class="opacity-50">or</span> 6 Vanu Whitebone <span class="opacity-50">or</span> 6 Black Copper Gil <span class="opacity-50">or</span> 18 Carved Kupo Nut <span class="opacity-50">or</span> 3 Alex P2</td>
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete the book's kill/dungeon/FATE/levequest tasks.</td>
+        <td class="py-1.5">100 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Unidentifiable Ore</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">10</td>
+        <td class="py-1.5 pr-3 font-semibold">Book of Netherfire I</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Precision Shaft drops from Alexander - The Arm of the Father (A3) Normal.</td>
-        <td class="py-1.5">150 Poetics <span class="opacity-50">or</span> 3 Kobold <span class="opacity-50">or</span> 6 Vanu Whitebone <span class="opacity-50">or</span> 6 Black Copper Gil <span class="opacity-50">or</span> 18 Carved Kupo Nut <span class="opacity-50">or</span> 3 Alex P3</td>
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete the book's kill/dungeon/FATE/levequest tasks.</td>
+        <td class="py-1.5">100 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Unidentifiable Seeds</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">10</td>
+        <td class="py-1.5 pr-3 font-semibold">Book of Skyfall I</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Precision Spring drops from Alexander Gordias (A4) Normal.</td>
-        <td class="py-1.5">150 Poetics <span class="opacity-50">or</span> 3 Sylph <span class="opacity-50">or</span> 6 Vanu Whitebone <span class="opacity-50">or</span> 6 Black Copper Gil <span class="opacity-50">or</span> 18 Carved Kupo Nut <span class="opacity-50">or</span> 300 Allied Seals <span class="opacity-50">or</span> 3 Alex P4</td>
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete the book's kill/dungeon/FATE/levequest tasks.</td>
+        <td class="py-1.5">100 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Adamantite Francesca</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">4</td>
+        <td class="py-1.5 pr-3 font-semibold">Book of Skyfall II</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Can also be crafted. Refer to crafting log.</td>
-        <td class="py-1.5">5,000 GC Seals</td>
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete the book's kill/dungeon/FATE/levequest tasks.</td>
+        <td class="py-1.5">100 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Titanium Alloy Mirror</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">4</td>
+        <td class="py-1.5 pr-3 font-semibold">Book of Netherfall I</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Can also be crafted. Refer to crafting log.</td>
-        <td class="py-1.5">5,000 GC Seals</td>
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete the book's kill/dungeon/FATE/levequest tasks.</td>
+        <td class="py-1.5">100 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Dispelling Arrow</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">4</td>
+        <td class="py-1.5 pr-3 font-semibold">Book of Skywind I</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Can also be crafted. Refer to crafting log.</td>
-        <td class="py-1.5">5,000 GC Seals</td>
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete the book's kill/dungeon/FATE/levequest tasks.</td>
+        <td class="py-1.5">100 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Kingcake</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">4</td>
+        <td class="py-1.5 pr-3 font-semibold">Book of Skywind II</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Can also be crafted. Refer to crafting log.</td>
-        <td class="py-1.5">5,000 GC Seals</td>
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete the book's kill/dungeon/FATE/levequest tasks.</td>
+        <td class="py-1.5">100 Poetics</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Book of Skyearth I</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Buy from G'jusana, then complete the book's kill/dungeon/FATE/levequest tasks. Last of the 9 books — completing it finishes the Animus.</td>
+        <td class="py-1.5">100 Poetics</td>
       </tr>
     </tbody>
   </table></div>
       </div>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">4. Hyperconductive (i230)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Collect 5 Aether Oils (Weekly CT quest is best).</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">5. Novus (i110)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Meld 75 Alexandrite and 75 materia into a Sphere Scroll for another cosmetic upgrade.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -708,49 +766,32 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Aether Oil</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">5</td>
-        
-        <td class="py-1.5 pr-3">Weekly quest 'The Gift of the Archmagus' gives 1 oil.</td>
-        <td class="py-1.5">350 Poetics</td>
-      </tr>
-    </tbody>
-  </table></div>
-      </div>
-<div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">5. Reconditioned (i240)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Feed Crystal Sand &amp; Umbrite to the weapon stats.</p>
-        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
-    <thead>
-      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
-        <th class="text-left font-semibold pr-3 py-1">Item</th>
-        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
-        
-        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
-        <th class="text-left font-semibold py-1">Exchange cost</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Umbrite</td>
+        <td class="py-1.5 pr-3 font-semibold">Alexandrite</td>
         <td class="py-1.5 pr-3 whitespace-nowrap">75</td>
         
-        <td class="py-1.5 pr-3">No other way to get this. Pure Poetics dump.</td>
+        <td class="py-1.5 pr-3">Random drops from Gold-rated FATEs (Animus weapon equipped), Allied Seals (50 per unit), or Mysterious Maps (5 Alexandrite each, bought with Poetics).</td>
         <td class="py-1.5">75 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Crystal Sand</td>
+        <td class="py-1.5 pr-3 font-semibold">Materia (any grade)</td>
         <td class="py-1.5 pr-3 whitespace-nowrap">75</td>
         
-        <td class="py-1.5 pr-3">Trade items to Ulan. Each trade yields 2 Crystal Sands.</td>
-        <td class="py-1.5">5 Tokens <span class="opacity-50">or</span> 1 Items <span class="opacity-50">or</span> 5 Items <span class="opacity-50">or</span> 450 Poetics</td>
+        <td class="py-1.5 pr-3">Melded onto the weapon as part of the Sphere Scroll infusion. Since the Novus weapon is purely cosmetic at this point, cheap low-grade materia works fine.</td>
+        <td class="py-1.5">Market Board / Melding</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Superior Enchanted Ink</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
+        
+        <td class="py-1.5 pr-3">Quest: 'Celestial Radiance' — speak to Jalzahn in Hyrstmill with Animus equipped. Buy the ink, then return with Animus unequipped to receive the Novus weapon.</td>
+        <td class="py-1.5">25 Poetics</td>
       </tr>
     </tbody>
   </table></div>
       </div>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">6. Sharpened (i260)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Collect Singing Clusters via Daily/Weekly quests.</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">6. Nexus (i115)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Farm 2,000 Light across FATEs, dungeons, trials, raids, and PvP.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -763,66 +804,87 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Singing Cluster</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">50</td>
-        
-        <td class="py-1.5 pr-3">Do the Weekly Quest (18 clusters) and Daily Quest (1 cluster) in Idyllshire.</td>
-        <td class="py-1.5">40 Poetics</td>
-      </tr>
-    </tbody>
-  </table></div>
-      </div>
-<div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">7. Complete (i270)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Run 3 HM Primals and collect 15 Pneumite.</p>
-        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
-    <thead>
-      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
-        <th class="text-left font-semibold pr-3 py-1">Item</th>
-        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
-        
-        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
-        <th class="text-left font-semibold py-1">Exchange cost</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Pneumite</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">15</td>
-        
-        <td class="py-1.5 pr-3">Use GC Seals as they are easier to farm than Poetics.</td>
-        <td class="py-1.5">100 Poetics <span class="opacity-50">or</span> 4,000 GC Seals</td>
-      </tr>
-    </tbody>
-  </table></div>
-      </div>
-<div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">8. Lux (i275)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">The victory lap. Defeat primal pairs and buy the Ink.</p>
-        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
-    <thead>
-      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
-        <th class="text-left font-semibold pr-3 py-1">Item</th>
-        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
-        
-        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
-        <th class="text-left font-semibold py-1">Exchange cost</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Archaic Enchanted Ink</td>
+        <td class="py-1.5 pr-3 font-semibold">Farm 2,000 Light</td>
         <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Buy from Hismena (Idyllshire) for 500 Poetics.</td>
-        <td class="py-1.5">500 Poetics</td>
+        <td class="py-1.5 pr-3">Quest: 'Mmmmmm, Soulglazed Relics' grants a Zodiac Glass. Accumulate 2,000 Light from FATEs, dungeons, trials, raids, and PvP (8–128 points per completion, more during bonus windows), then return to Jalzahn.</td>
+        <td class="py-1.5">Light Farming</td>
       </tr>
+    </tbody>
+  </table></div>
+      </div>
+<div class="mb-5">
+        <h4 class="text-sm font-bold text-slate-200 mb-1">7. Zodiac Braves (i125)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Clear four ordered dungeon-treasure quests — 'Atma 2.0'.</p>
+        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
+        <th class="text-left font-semibold pr-3 py-1">Item</th>
+        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
+        
+        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
+        <th class="text-left font-semibold py-1">Exchange cost</th>
+      </tr>
+    </thead>
+    <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Primal Gauntlet (Lux)</td>
+        <td class="py-1.5 pr-3 font-semibold">'A Ponze of Flesh'</td>
         <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Complete the 12 Trials. Clicking DONE reveals your finished Lux Weapon!</td>
-        <td class="py-1.5">Duty Complete</td>
+        <td class="py-1.5 pr-3">First of four 'Atma 2.0' quests — collect dungeon-specific treasures instead of FATE Atma. Must be completed in order before the next quest unlocks.</td>
+        <td class="py-1.5">Dungeon Treasure</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">'Labor of Love'</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Second of the four quests — more dungeon-specific treasures (Bombard Core, Sacred Spring Water, and similar).</td>
+        <td class="py-1.5">Dungeon Treasure</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">'Method in His Malice'</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Third of the four quests — dungeon-specific treasures plus Soldiery currency.</td>
+        <td class="py-1.5">Dungeon Treasure / Soldiery</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">'A Treasured Mother'</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Final of the four quests — completing it unlocks the Zodiac Braves weapon model (particle effects still locked until Zeta).</td>
+        <td class="py-1.5">Dungeon Treasure</td>
+      </tr>
+    </tbody>
+  </table></div>
+      </div>
+<div class="mb-5">
+        <h4 class="text-sm font-bold text-slate-200 mb-1">8. Zodiac Zeta (i135)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Buy 12 Mahatma with Lesser Tomestones and Light, then claim your finished Zeta weapon.</p>
+        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
+        <th class="text-left font-semibold pr-3 py-1">Item</th>
+        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
+        
+        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
+        <th class="text-left font-semibold py-1">Exchange cost</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Mahatma</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">12</td>
+        
+        <td class="py-1.5 pr-3">Bought with Lesser Tomestones once you've banked enough Light (Nexus's Light carries forward as 'Zeta resonance'). Total across all Mahatma: roughly 2,400 tomestones and 480 Light.</td>
+        <td class="py-1.5">200 Tomestones</td>
+      </tr>
+<tr class="border-b border-slate-800/60 align-top">
+        <td class="py-1.5 pr-3 font-semibold">Zodiac Zeta Weapon</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
+        
+        <td class="py-1.5 pr-3">Turn in every bound Mahatma to Jalzahn to finish the reforge and claim your completed Zodiac Zeta — the final stage of the ARR relic weapon!</td>
+        <td class="py-1.5">Quest Complete</td>
       </tr>
     </tbody>
   </table></div>
@@ -834,33 +896,21 @@
 
 			<div class="text-center text-[11px] text-slate-600 py-5">
 				Made by
-				<a href="https://x.com/ArtemisEsphexo" target="_blank" rel="noopener noreferrer" class="text-[#d4af37] hover:text-[#fceeb0] font-semibold">@ArtemisEsphexo</a>
+				<a href="https://x.com/ArtemisEsphexo" target="_blank" rel="noopener noreferrer" class="text-[#c9a227] hover:text-[#f5e0a3] font-semibold">@ArtemisEsphexo</a>
 			</div>
 
 			<div class="fixed bottom-0 left-0 right-0 z-50">
-				<div class="max-w-[1000px] mx-auto bg-[#12151a]/95 border-t border-[#b79c59]/60 backdrop-blur-md px-3 py-2 flex items-center justify-center gap-4 flex-wrap">
+				<div class="max-w-[1000px] mx-auto bg-[#12151a]/95 border-t border-[#9c7a2e]/60 backdrop-blur-md px-3 py-2 flex items-center justify-center gap-4 flex-wrap">
 					<div x-show="getTotalLiability('Poetics') > 0" class="flex items-center gap-1.5 text-xs">
 						<img src="images/icons/poetics.png" class="w-4 h-4 object-contain" alt="Poetics">
-						<span class="text-[#d4af37] font-semibold text-[10px] uppercase">Poetics</span>
+						<span class="text-[#c9a227] font-semibold text-[10px] uppercase">Poetics</span>
 						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Poetics').toLocaleString()"></span>
 					</div>
 
-					<div x-show="getTotalLiability('GC Seals') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/gc-seals.png" class="w-4 h-4 object-contain" alt="GC Seals">
-						<span class="text-blue-400 font-semibold text-[10px] uppercase">GC Seals</span>
-						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('GC Seals').toLocaleString()"></span>
-					</div>
-
-					<div x-show="getTotalLiability('Tokens') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/scrip-token.png" class="w-4 h-4 object-contain" alt="Tokens">
-						<span class="text-purple-400 font-semibold text-[10px] uppercase">Scrip Tokens</span>
-						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Tokens').toLocaleString()"></span>
-					</div>
-
-					<div x-show="getTotalLiability('Seals') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/allied-seals.png" class="w-4 h-4 object-contain" alt="Allied Seals">
-						<span class="text-green-400 font-semibold text-[10px] uppercase">Allied Seals</span>
-						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Seals').toLocaleString()"></span>
+					<div x-show="getTotalLiability('Tomestones') > 0" class="flex items-center gap-1.5 text-xs">
+						<img src="images/icons/poetics.png" class="w-4 h-4 object-contain" alt="Tomestones">
+						<span class="text-blue-400 font-semibold text-[10px] uppercase">Tomestones</span>
+						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Tomestones').toLocaleString()"></span>
 					</div>
 				</div>
 			</div>
