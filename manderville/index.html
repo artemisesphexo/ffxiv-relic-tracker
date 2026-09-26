@@ -3,23 +3,23 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Bozja Resistance Weapon Tracker – FFXIV Shadowbringers Relic Guide (i485–i535)</title>
-		<meta name="description" content="Track every Bozja Resistance Weapon relic material for Final Fantasy XIV Shadowbringers, i485 to i535 — Memories of the Dying, Zadnor materials, Delubrum Reginae drops, and the Irresistible stat allocation, stage by stage." />
-		<link rel="canonical" href="https://ffxiv-relic-tracker.netlify.app/bozja/" />
+		<title>Manderville Weapon Tracker – FFXIV Endwalker Relic Guide (i615–i665)</title>
+		<meta name="description" content="Track every stage of Final Fantasy XIV's Endwalker relic weapon, i615 to i665 — Manderium Meteorites, Complementary Chondrites, Amplifying Achondrites, and Cosmic Crystallites, with live Allagan Tomestone of Poetics totals for every job." />
+		<link rel="canonical" href="https://ffxiv-relic-tracker.netlify.app/manderville/" />
 		<link rel="icon" type="image/svg+xml" href="../favicon.svg" />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="FFXIV Relic Weapon Trackers" />
-		<meta property="og:title" content="Bozja Resistance Weapon Tracker – FFXIV Shadowbringers Relic Guide" />
-		<meta property="og:description" content="Track every Bozja Resistance Weapon relic material for Final Fantasy XIV Shadowbringers, i485 to i535, stage by stage." />
-		<meta property="og:url" content="https://ffxiv-relic-tracker.netlify.app/bozja/" />
+		<meta property="og:title" content="Manderville Weapon Tracker – FFXIV Endwalker Relic Guide" />
+		<meta property="og:description" content="Track every stage of Final Fantasy XIV's Endwalker relic weapon, i615 to i665, stage by stage." />
+		<meta property="og:url" content="https://ffxiv-relic-tracker.netlify.app/manderville/" />
 		<meta property="og:image" content="https://ffxiv-relic-tracker.netlify.app/assets/og/hub-og.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Bozja Resistance Weapon Tracker – FFXIV Shadowbringers Relic Guide" />
-		<meta name="twitter:description" content="Track every Bozja Resistance Weapon relic material for Final Fantasy XIV Shadowbringers, i485 to i535, stage by stage." />
+		<meta name="twitter:title" content="Manderville Weapon Tracker – FFXIV Endwalker Relic Guide" />
+		<meta name="twitter:description" content="Track every stage of Final Fantasy XIV's Endwalker relic weapon, i615 to i665, stage by stage." />
 		<meta name="twitter:image" content="https://ffxiv-relic-tracker.netlify.app/assets/og/hub-og.png" />
 		<meta name="twitter:creator" content="@ArtemisEsphexo" />
 
@@ -53,13 +53,20 @@
 					rgba(20, 24, 32, 0.95) 100%
 				);
 				border: 1px solid rgba(255, 255, 255, 0.1);
-				border-top: 2px solid #a3453d; /* Crimson Accent */
+				border-top: 2px solid #6b93e8; /* Endwalker Blue Accent */
 				box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 			}
 
-			/* Crimson Text Gradient */
-			.text-crimson-gradient {
-				background: linear-gradient(to bottom, #f5c6c0, #e0837a, #7a2e28);
+			/* Endwalker accent — defined here because site.css has no compiled
+			   utility classes for this colour */
+			.acc-text { color: #6b93e8; }
+			.acc-bg { background-color: #6b93e8; }
+			.acc-border { border-color: #6b93e8; }
+			.acc-link:hover { color: #c9d9ff; }
+
+			/* Blue Text Gradient */
+			.text-accent-gradient {
+				background: linear-gradient(to bottom, #c9d9ff, #6b93e8, #2a4a9a);
 				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
@@ -72,9 +79,9 @@
 		</style>
 	</head>
 	<body
-		class="ff-bg text-slate-200 pb-28 text-sm selection:bg-yellow-600/30 selection:text-yellow-100"
+		class="ff-bg text-slate-200 pb-10 text-sm selection:bg-yellow-600/30 selection:text-yellow-100"
 	>
-		<div x-data="bozjaApp" class="max-w-[1000px] mx-auto px-3 md:px-4">
+		<div x-data="mandervilleApp" class="max-w-[1000px] mx-auto px-3 md:px-4">
 			<nav class="flex items-center justify-center gap-4 pt-4 text-[11px] font-bold uppercase tracking-wider flex-wrap">
 				<a href="../" class="text-slate-500 hover:text-slate-300 transition-colors">&larr; All Trackers</a>
 				<span class="text-slate-700">&middot;</span>
@@ -82,11 +89,11 @@
 				<span class="text-slate-700">&middot;</span>
 				<a href="../anima/" class="text-slate-500 hover:text-[#d4af37] transition-colors">Anima (Heavensward)</a>
 				<span class="text-slate-700">&middot;</span>
-				<a href="../eureka/" class="text-slate-500 hover:text-[#2ea8a3] transition-colors">Eureka (Stormblood)</a>
+				<a href="../eureka/" class="text-slate-500 hover:text-slate-300 transition-colors">Eureka (Stormblood)</a>
 				<span class="text-slate-700">&middot;</span>
-				<span class="text-[#e0837a]">Bozja (Shadowbringers)</span>
+				<a href="../bozja/" class="text-slate-500 hover:text-[#e0837a] transition-colors">Bozja (Shadowbringers)</a>
 				<span class="text-slate-700">&middot;</span>
-				<a href="../manderville/" class="text-slate-500 hover:text-slate-300 transition-colors">Manderville (Endwalker)</a>
+				<span class="acc-text">Manderville (Endwalker)</span>
 				<span class="text-slate-700">&middot;</span>
 				<a href="../phantom/" class="text-slate-500 hover:text-emerald-400 transition-colors">Phantom (Dawntrail) &rarr;</a>
 			</nav>
@@ -96,9 +103,9 @@
 				>
 					<div>
 						<h1
-							class="text-lg md:text-xl font-bold text-crimson-gradient tracking-wide uppercase leading-none"
+							class="text-lg md:text-xl font-bold text-accent-gradient tracking-wide uppercase leading-none"
 						>
-							Bozja Resistance Weapon Tracker
+							Manderville Weapon Tracker
 						</h1>
 						<p class="text-slate-500 text-[11px] mt-1 flex items-center gap-1.5">
 							<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
@@ -130,7 +137,7 @@
 >
     <img
         :src="isJobComplete(job.id)
-            ? './images/weapons/' + job.id + '.png'
+            ? weaponIcon(job.id)
             : './images/jobs/' + job.id + '.png'"
         class="absolute inset-0 w-full h-full"
         :class="isJobComplete(job.id) ? 'object-contain p-0.5 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]' : 'object-cover'"
@@ -169,7 +176,7 @@
 
 				<div class="relative h-2.5 bg-[#080a0d] rounded-full border border-[#4a3b2a] shadow-[inset_0_2px_5px_rgba(0,0,0,0.8)] overflow-hidden">
 
-    <div class="absolute top-0 left-0 h-full bg-[#c28e2b] transition-all duration-700 ease-out"
+    <div class="absolute top-0 left-0 h-full acc-bg transition-all duration-700 ease-out"
          :style="'width: ' + getTotalProgress() + '%'">
     </div>
 </div>
@@ -183,7 +190,7 @@
 				<template x-for="group in groupedItems()" :key="group.name">
 					<div
 						x-data="{ open: true }"
-						class="ff-card rounded-lg overflow-hidden relative group transition-all duration-300 border-l-2 border-[#a3453d]"
+						class="ff-card rounded-lg overflow-hidden relative group transition-all duration-300 border-l-2 acc-border"
 					>
 						<div
 							@click="open = !open"
@@ -362,35 +369,25 @@
 																class="cursor-pointer group relative"
 																:title="jobId"
 															>
-																<input 
-    type="checkbox" 
-    :value="jobId" 
-    x-model="inventory[item.id]" 
-    @change="if(item.id === 'resistance_trials') toggleCompleteJob(jobId, $el.checked)"
+																<input
+    type="checkbox"
+    :value="jobId"
+    x-model="inventory[item.id]"
+    @change="if(item.id === 'mandervillous_complete') toggleCompleteJob(jobId, $el.checked)"
     class="peer sr-only"
 >
 
 																<div class="p-0.5 rounded-md border border-slate-700 bg-slate-800 transition-all duration-200 hover:border-slate-500 hover:scale-110 hover:z-10"
-     :class="item.id === 'resistance_trials' 
-        ? 'peer-checked:bg-[#6b21a8]/20 peer-checked:border-purple-400 peer-checked:shadow-[0_0_15px_rgba(192,132,252,0.6)]' 
-        : (item.id === 'dungeon_crawl'
-            ? 'peer-checked:bg-yellow-900/20 peer-checked:border-yellow-500 peer-checked:shadow-[0_0_15px_rgba(234,179,8,0.6)]'
-            : 'peer-checked:bg-green-900/80 peer-checked:border-green-500 peer-checked:shadow-[0_0_10px_rgba(34,197,94,0.3)]')">
+     :class="item.id === 'mandervillous_complete'
+        ? 'peer-checked:bg-[#6b21a8]/20 peer-checked:border-purple-400 peer-checked:shadow-[0_0_15px_rgba(192,132,252,0.6)]'
+        : 'peer-checked:bg-green-900/80 peer-checked:border-green-500 peer-checked:shadow-[0_0_10px_rgba(34,197,94,0.3)]'">
 																	<img
-																		:src="(item.id === 'resistance_trials' && inventory[item.id].includes(jobId)) ? './images/weapons/' + jobId + '.png' : './images/jobs/' + jobId + '.png'"
+																		:src="(item.id === 'mandervillous_complete' && inventory[item.id].includes(jobId)) ? weaponIcon(jobId) : './images/jobs/' + jobId + '.png'"
 																		class="w-5 h-5 object-contain drop-shadow-md filter grayscale opacity-70 peer-checked:grayscale-0 peer-checked:opacity-100 transition-all duration-500"
 																		:alt="jobId"
 																		onerror="
-																			if (this.src.includes('weapons')) {
-																				this.src =
-																					'./images/jobs/' +
-																					this.getAttribute('alt') +
-																					'.png';
-																			} else {
-																				this.style.display = 'none';
-																				this.nextElementSibling.style.display =
-																					'block';
-																			}
+																			this.style.display = 'none';
+																			this.nextElementSibling.style.display = 'block';
 																		"
 																	/>
 
@@ -401,7 +398,7 @@
 																</div>
 
 																<div class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-[#0b0e14] opacity-0 peer-checked:opacity-100 transition-opacity"
-     x-show="item.id !== 'resistance_trials' && item.id !== 'dungeon_crawl'"></div>
+     x-show="item.id !== 'mandervillous_complete'"></div>
 															</label>
 														</template>
 													</div>
@@ -453,7 +450,6 @@
 												<template x-for="opt in item.options">
 													<div
 														class="flex items-center justify-between text-[11px] bg-[#11141a] px-2.5 py-1 rounded border border-slate-800"
-														:class="opt.currency === 'Poetics' ? 'border-yellow-900/30 bg-yellow-900/5' : ''"
 													>
 														<div class="flex items-center gap-1.5 truncate pr-2">
 															<template x-if="opt.icon">
@@ -472,8 +468,7 @@
 														<div class="text-right whitespace-nowrap">
 															<template x-if="opt.cost > 0">
 																<span
-																	class="font-mono font-bold"
-																	:class="opt.currency === 'Poetics' ? 'text-yellow-500' : 'text-slate-300'"
+																	class="font-mono font-bold text-slate-300"
 																	x-text="(getRemaining(item) * opt.cost).toLocaleString()"
 																></span>
 															</template>
@@ -509,7 +504,7 @@
 											<h4
 												class="text-[10px] uppercase text-blue-400 font-bold mb-2 tracking-widest border-b border-slate-800 pb-1.5"
 											>
-												Required Dungeons
+												Steps
 											</h4>
 											<div
 												class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1.5"
@@ -536,12 +531,12 @@
 
 			<!-- STATIC_CONTENT_START: generated by scripts/generate-static-content.js from src/data.js. Edit data.js, not this block. -->
 <details class="ff-card rounded-lg p-4 text-xs text-slate-300 leading-relaxed">
-    <summary class="cursor-pointer text-sm font-bold text-slate-200 select-none">Full material list — every stage, i485 to i535</summary>
+    <summary class="cursor-pointer text-sm font-bold text-slate-200 select-none">Full material list — every stage, i615 to i665</summary>
     <div class="mt-3">
-      <p class="text-[11px] text-slate-500 mb-4">Complete Bozja Resistance Weapon relic requirements for Shadowbringers' Bozjan Southern Front and Zadnor, stage by stage. Quantities below are per weapon (each job you level the relic for needs its own full set).</p>
+      <p class="text-[11px] text-slate-500 mb-4">Complete Manderville Weapon relic requirements for Endwalker, stage by stage. Quantities below are per weapon (each job you upgrade needs its own set), and every upgrade item costs 500 Allagan Tomestones of Poetics.</p>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">1. Resistance (i485)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Buy Thavnairian Scalepowder with Poetics to start the relic.</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">1. Manderville (i615)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Needs Endwalker MSQ and the Hildibrand questline through 'The Imperfect Gentleman'. 3 Manderium Meteorites (1,500 Poetics) per weapon.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -554,18 +549,18 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Thavnairian Scalepowder</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">4</td>
+        <td class="py-1.5 pr-3 font-semibold">Manderium Meteorite</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
         
-        <td class="py-1.5 pr-3">Quest: 'A Sober Proposal'. Bought with Poetics from Sundry Splendors vendors.</td>
-        <td class="py-1.5">250 Poetics</td>
+        <td class="py-1.5 pr-3">Buy from Jubrunnah in Radz-at-Han (X:12.2, Y:10.9) for 500 Poetics each. First weapon via 'Make It a Manderville', every one after via 'Make Another Manderville' (House Manderville Artisan).</td>
+        <td class="py-1.5">500 Poetics</td>
       </tr>
     </tbody>
   </table></div>
       </div>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">2. Augmented Resistance (i500)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Collect 60 Memories of the Dying from FATEs or Bozja skirmishes.</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">2. Amazing Manderville (i630)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Continue the Somehow Further Hildibrand Adventures. 3 Complementary Chondrites (1,500 Poetics) per weapon.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -578,32 +573,18 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Tortured Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">20</td>
+        <td class="py-1.5 pr-3 font-semibold">Complementary Chondrite</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
         
-        <td class="py-1.5 pr-3">Quest: 'For Want of a Memory'. Heavensward FATEs (Coerthas/Sea of Clouds) or Bozjan Southern Front skirmishes.</td>
-        <td class="py-1.5">FATE / Skirmish</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Sorrowful Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">20</td>
-        
-        <td class="py-1.5 pr-3">Heavensward FATEs (Dravanian areas) or Old Bozja skirmishes.</td>
-        <td class="py-1.5">FATE / Skirmish</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Harrowing Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">20</td>
-        
-        <td class="py-1.5 pr-3">Heavensward FATEs (Hinterlands/Azys Lla) or Alermuc Climb skirmishes.</td>
-        <td class="py-1.5">FATE / Skirmish</td>
+        <td class="py-1.5 pr-3">Buy from Jubrunnah in Radz-at-Han for 500 Poetics each, then turn in with your Manderville weapon via 'The Next Mander-level'.</td>
+        <td class="py-1.5">500 Poetics</td>
       </tr>
     </tbody>
   </table></div>
       </div>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">3. Recollection (i500)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Run 6 synced level 60 dungeons for Bitter Memories.</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">3. Majestic Manderville (i645)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Continue the Hildibrand story. 3 Amplifying Achondrites (1,500 Poetics) per weapon, and you choose the substats.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -616,18 +597,18 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Bitter Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">6</td>
+        <td class="py-1.5 pr-3 font-semibold">Amplifying Achondrite</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
         
-        <td class="py-1.5 pr-3">Quest: 'The Will to Resist'. Level 60 dungeons (synced) or Duty Roulette: Leveling.</td>
-        <td class="py-1.5">Dungeon / Roulette</td>
+        <td class="py-1.5 pr-3">Buy from Jubrunnah in Radz-at-Han for 500 Poetics each, then turn in with your Amazing weapon via 'In Need of Adjustment'. You pick the substats: two at 293, one at 72 (re-rolling costs 1 more Achondrite).</td>
+        <td class="py-1.5">500 Poetics</td>
       </tr>
     </tbody>
   </table></div>
       </div>
 <div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">4. Law's Order (i510)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Clear Castrum Lacus Litore or Crystal Tower raids for Loathsome Memories.</p>
+        <h4 class="text-sm font-bold text-slate-200 mb-1">4. Mandervillous (i665)</h4>
+        <p class="text-[11px] text-slate-500 mb-2">Finish the Hildibrand story (includes the trial 'The Gilded Araya'). 3 Cosmic Crystallites (1,500 Poetics) per weapon.</p>
         <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
     <thead>
       <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
@@ -640,138 +621,17 @@
     </thead>
     <tbody>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Loathsome Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">15</td>
+        <td class="py-1.5 pr-3 font-semibold">Cosmic Crystallite</td>
+        <td class="py-1.5 pr-3 whitespace-nowrap">3</td>
         
-        <td class="py-1.5 pr-3">Quest: 'Change of Arms'. Castrum Lacus Litore (5 guaranteed per clear) or Crystal Tower alliance raids synced (1 per clear).</td>
-        <td class="py-1.5">Castrum / Alliance Raid</td>
-      </tr>
-    </tbody>
-  </table></div>
-      </div>
-<div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">5. Augmented Law's Order (i515)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Dun Scaith / Return to Ivalice raids, then Delubrum Reginae for Timeworn Artifacts.</p>
-        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
-    <thead>
-      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
-        <th class="text-left font-semibold pr-3 py-1">Item</th>
-        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
-        
-        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
-        <th class="text-left font-semibold py-1">Exchange cost</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Haunting Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">18</td>
-        
-        <td class="py-1.5 pr-3">Quest: 'The Resistance Remembers'. Dun Scaith alliance raids synced (3 per clear) or Gyr Abania FATEs.</td>
-        <td class="py-1.5">Alliance Raid / FATE</td>
+        <td class="py-1.5 pr-3">Buy from Jubrunnah in Radz-at-Han for 500 Poetics each, then turn in with your Majestic weapon via 'Positively Mandervillous'. Substats: two at 306, one at 72 (re-rolling costs 1 more Crystallite).</td>
+        <td class="py-1.5">500 Poetics</td>
       </tr>
 <tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Vexatious Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">18</td>
-        
-        <td class="py-1.5 pr-3">Return to Ivalice alliance raids synced (3 per clear) or Far East FATEs.</td>
-        <td class="py-1.5">Alliance Raid / FATE</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Timeworn Artifact</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">15</td>
-        
-        <td class="py-1.5 pr-3">Quest: 'A New Path of Resistance'. Delubrum Reginae (3 guaranteed per clear) or Palace of the Dead (100% at floors 151+).</td>
-        <td class="py-1.5">Delubrum Reginae / PotD</td>
-      </tr>
-    </tbody>
-  </table></div>
-      </div>
-<div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">6. Blade's Weapon (i535)</h4>
-        <p class="text-[11px] text-slate-500 mb-2">The Zadnor grind — 6 material types (30 each) plus Raw Emotion from Irresistible.</p>
-        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
-    <thead>
-      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
-        <th class="text-left font-semibold pr-3 py-1">Item</th>
-        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
-        
-        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
-        <th class="text-left font-semibold py-1">Exchange cost</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Compact Axle</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">30</td>
-        
-        <td class="py-1.5 pr-3">Quest: 'Spare Parts'. Zadnor Southern Plateau skirmishes, or Alexander Normal floors 1-2/5-6/9-10.</td>
-        <td class="py-1.5">Skirmish / Alexander</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Compact Spring</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">30</td>
-        
-        <td class="py-1.5 pr-3">Zadnor Southern Plateau Critical Engagements (2 per CE), or Alexander floors 3-4/7-8/11-12.</td>
-        <td class="py-1.5">Critical Engagement / Alexander</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">A Day in the Life: Battles for the Realm</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">30</td>
-        
-        <td class="py-1.5 pr-3">Quest: 'Tell Me a Story'. Zadnor Western Plateau skirmishes, or Omega Normal floors 1-2/5-6/9-10.</td>
-        <td class="py-1.5">Skirmish / Omega</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">A Day in the Life: Beyond the Rift</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">30</td>
-        
-        <td class="py-1.5 pr-3">Zadnor Western Plateau Critical Engagements (2 per CE), or Omega floors 3-4/7-8/11-12.</td>
-        <td class="py-1.5">Critical Engagement / Omega</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Bleak Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">30</td>
-        
-        <td class="py-1.5 pr-3">Quest: 'A Fond Memory'. Zadnor Northern Plateau skirmishes, or Eden Normal floors 1-2/5-6/9-10.</td>
-        <td class="py-1.5">Skirmish / Eden</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Lurid Memory of the Dying</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">30</td>
-        
-        <td class="py-1.5 pr-3">Zadnor Northern Plateau Critical Engagements (2 per CE), or Eden floors 3-4/7-8/11-12.</td>
-        <td class="py-1.5">Critical Engagement / Eden</td>
-      </tr>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Raw Emotion</td>
-        <td class="py-1.5 pr-3 whitespace-nowrap">15</td>
-        
-        <td class="py-1.5 pr-3">Quest: 'Irresistible' (repeats per weapon). The Dalriada (3/clear), Delubrum Reginae (2/clear), or synced Lv70 Stormblood dungeons (1/clear).</td>
-        <td class="py-1.5">Dalriada / Delubrum / Dungeon</td>
-      </tr>
-    </tbody>
-  </table></div>
-      </div>
-<div class="mb-5">
-        <h4 class="text-sm font-bold text-slate-200 mb-1">7. Victory</h4>
-        <p class="text-[11px] text-slate-500 mb-2">Allocate your stat points and claim the finished Blade's Weapon!</p>
-        <div class="overflow-x-auto"><table class="w-full text-left border-collapse">
-    <thead>
-      <tr class="border-b border-slate-700 text-slate-400 uppercase text-[10px] tracking-wide">
-        <th class="text-left font-semibold pr-3 py-1">Item</th>
-        <th class="text-left font-semibold pr-3 py-1">Qty needed</th>
-        
-        <th class="text-left font-semibold pr-3 py-1">How to obtain</th>
-        <th class="text-left font-semibold py-1">Exchange cost</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr class="border-b border-slate-800/60 align-top">
-        <td class="py-1.5 pr-3 font-semibold">Stat Allocation (Irresistible)</td>
+        <td class="py-1.5 pr-3 font-semibold">Mandervillous Weapon</td>
         <td class="py-1.5 pr-3 whitespace-nowrap">1</td>
         
-        <td class="py-1.5 pr-3">Finish the 'Irresistible' quest and allocate 1,167 points across 4 stats to reveal your finished Blade's Weapon!</td>
+        <td class="py-1.5 pr-3">Turn in 3 Cosmic Crystallites and your Majestic weapon to the House Manderville Artisan and pick your substats — the final Endwalker relic!</td>
         <td class="py-1.5">Quest Complete</td>
       </tr>
     </tbody>
@@ -784,33 +644,15 @@
 
 			<div class="text-center text-[11px] text-slate-600 py-5">
 				Made by
-				<a href="https://x.com/ArtemisEsphexo" target="_blank" rel="noopener noreferrer" class="text-[#e0837a] hover:text-[#f5c6c0] font-semibold">@ArtemisEsphexo</a>
+				<a href="https://x.com/ArtemisEsphexo" target="_blank" rel="noopener noreferrer" class="acc-text acc-link font-semibold">@ArtemisEsphexo</a>
 			</div>
 
 			<div class="fixed bottom-0 left-0 right-0 z-50">
-				<div class="max-w-[1000px] mx-auto bg-[#12151a]/95 border-t border-[#a3453d]/60 backdrop-blur-md px-3 py-2 flex items-center justify-center gap-4 flex-wrap">
+				<div class="max-w-[1000px] mx-auto bg-[#12151a]/95 border-t border-slate-700 backdrop-blur-md px-3 py-2 flex items-center justify-center gap-4 flex-wrap">
 					<div x-show="getTotalLiability('Poetics') > 0" class="flex items-center gap-1.5 text-xs">
 						<img src="images/icons/poetics.png" data-xiv-item="28" class="w-4 h-4 object-contain" alt="Poetics">
-						<span class="text-[#e0837a] font-semibold text-[10px] uppercase">Poetics</span>
+						<span class="acc-text font-semibold text-[10px] uppercase">Poetics</span>
 						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Poetics').toLocaleString()"></span>
-					</div>
-
-					<div x-show="getTotalLiability('GC Seals') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/gc-seals.png" data-xiv-item="20" class="w-4 h-4 object-contain" alt="GC Seals">
-						<span class="text-blue-400 font-semibold text-[10px] uppercase">GC Seals</span>
-						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('GC Seals').toLocaleString()"></span>
-					</div>
-
-					<div x-show="getTotalLiability('Tokens') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/scrip-token.png" data-xiv-item="12839" class="w-4 h-4 object-contain" alt="Tokens">
-						<span class="text-purple-400 font-semibold text-[10px] uppercase">Scrip Tokens</span>
-						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Tokens').toLocaleString()"></span>
-					</div>
-
-					<div x-show="getTotalLiability('Seals') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/allied-seals.png" data-xiv-item="27" class="w-4 h-4 object-contain" alt="Allied Seals">
-						<span class="text-green-400 font-semibold text-[10px] uppercase">Allied Seals</span>
-						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Seals').toLocaleString()"></span>
 					</div>
 				</div>
 			</div>
