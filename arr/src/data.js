@@ -26,6 +26,7 @@ const ARR_DATA = [
 		name: "Base Relic Weapon",
 		type: "checklist",
 		icon: "./images/icons/relic.png",
+		itemId: 1675, // Curtana (PLD relic)
 		qty: 1,
 		tip: "Start with 'The Weaponsmith of Legend' (Vesper Bay) into 'A Relic Reborn' (Gerolt, North Shroud). Collect the Timeworn weapon, deliver a materia-melded weapon, clear the Chimera trial, run Amdapor Keep, defeat 24 beastmen, then clear Hydra + Ifrit/Garuda/Titan (Hard) unsynced.",
 		tooltip: [
@@ -307,6 +308,7 @@ const ARR_DATA = [
 		name: "Materia (any grade)",
 		type: "item",
 		icon: "./images/icons/materia.png",
+		itemId: 5676, // Savage Might Materia III
 		qty: 75,
 		tip: "Melded onto the weapon as part of the Sphere Scroll infusion. Since the Novus weapon is purely cosmetic at this point, cheap low-grade materia works fine.",
 		options: [{ label: "Market Board / Melding", cost: 0, currency: "" }],
@@ -330,6 +332,7 @@ const ARR_DATA = [
 		name: "Farm 2,000 Light",
 		type: "checklist",
 		icon: "./images/icons/light.png",
+		itemId: 8659, // Zodiac Glass
 		qty: 1,
 		tip: "Quest: 'Mmmmmm, Soulglazed Relics' grants a Zodiac Glass. Accumulate 2,000 Light from FATEs, dungeons, trials, raids, and PvP (8–128 points per completion, more during bonus windows), then return to Jalzahn.",
 		options: [{ label: "Light Farming", cost: 0, currency: "" }],
@@ -342,6 +345,7 @@ const ARR_DATA = [
 		name: "'A Ponze of Flesh'",
 		type: "item",
 		icon: "./images/icons/treasure.png",
+		itemId: "Icon:61808", // duty icon: Treasure Hunt
 		qty: 1,
 		tip: "First of four 'Atma 2.0' quests — collect dungeon-specific treasures instead of FATE Atma. Must be completed in order before the next quest unlocks.",
 		options: [{ label: "Dungeon Treasure", cost: 0, currency: "" }],
@@ -352,6 +356,7 @@ const ARR_DATA = [
 		name: "'Labor of Love'",
 		type: "item",
 		icon: "./images/icons/treasure.png",
+		itemId: "Icon:61808", // duty icon: Treasure Hunt
 		qty: 1,
 		tip: "Second of the four quests — more dungeon-specific treasures (Bombard Core, Sacred Spring Water, and similar).",
 		options: [{ label: "Dungeon Treasure", cost: 0, currency: "" }],
@@ -362,6 +367,7 @@ const ARR_DATA = [
 		name: "'Method in His Malice'",
 		type: "item",
 		icon: "./images/icons/treasure.png",
+		itemId: "Icon:61808", // duty icon: Treasure Hunt
 		qty: 1,
 		tip: "Third of the four quests — dungeon-specific treasures plus Soldiery currency.",
 		options: [{ label: "Dungeon Treasure / Soldiery", cost: 0, currency: "" }],
@@ -372,6 +378,7 @@ const ARR_DATA = [
 		name: "'A Treasured Mother'",
 		type: "item",
 		icon: "./images/icons/treasure.png",
+		itemId: "Icon:61808", // duty icon: Treasure Hunt
 		qty: 1,
 		tip: "Final of the four quests — completing it unlocks the Zodiac Braves weapon model (particle effects still locked until Zeta).",
 		options: [{ label: "Dungeon Treasure", cost: 0, currency: "" }],
@@ -384,6 +391,7 @@ const ARR_DATA = [
 		name: "Mahatma",
 		type: "item",
 		icon: "./images/icons/mahatma.png",
+		itemId: 7858, // stand-in: Atma icon (no Mahatma item on XIVAPI)
 		qty: 12,
 		tip: "Bought with Lesser Tomestones once you've banked enough Light (Nexus's Light carries forward as 'Zeta resonance'). Total across all Mahatma: roughly 2,400 tomestones and 480 Light.",
 		options: [{ label: "Lesser Tomestones", cost: 200, currency: "Tomestones" }],
@@ -395,6 +403,7 @@ const ARR_DATA = [
 		name: "Zodiac Zeta Weapon",
 		type: "checklist",
 		icon: "./images/icons/zeta.png",
+		itemId: 10054, // Excalibur Zeta (PLD)
 		qty: 1,
 		tip: "Turn in every bound Mahatma to Jalzahn to finish the reforge and claim your completed Zodiac Zeta — the final stage of the ARR relic weapon!",
 		tooltip: [

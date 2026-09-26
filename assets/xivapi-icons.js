@@ -20,6 +20,10 @@
  * Referencing an icon:
  *   - A number is an Item sheet row ID:          itemId: 28
  *   - Key items live in a different sheet:       itemId: "EventItem:2001298"
+ *   - A raw game icon ID (no lookup needed):     itemId: "Icon:61801"
+ *     Handy for things that aren't items — duty types, FATEs, etc. IDs come
+ *     from https://ffxiv.gamerescape.com/wiki/Dictionary_of_Icons (e.g.
+ *     061801 = Dungeon, 061804 = Trial, 061809 = FATE).
  *
  * Usage (inside an Alpine component's init()):
  *   if (typeof XivIcons !== "undefined") {
@@ -55,6 +59,19 @@
 
 	function assetUrl(texPath) {
 		return API + "/asset?path=" + encodeURIComponent(texPath) + "&format=png";
+	}
+
+	function pad6(n) {
+		return ("000000" + n).slice(-6);
+	}
+
+	/** Candidate URLs for a raw icon ID: high-res first, then standard. */
+	function iconUrls(iconId) {
+		var dir = "ui/icon/" + pad6(Math.floor(iconId / 1000) * 1000) + "/";
+		return [
+			assetUrl(dir + pad6(iconId) + "_hr1.tex"),
+			assetUrl(dir + pad6(iconId) + ".tex"),
+		];
 	}
 
 	// ---- cache -----------------------------------------------------------
@@ -137,7 +154,7 @@
 			var p = parseRef(ref);
 			if (!p) return;
 			var k = p.sheet + ":" + p.id;
-			if (cache[k]) return;
+			if (cache[k] || p.sheet === "Icon") return;
 			(missing[p.sheet] = missing[p.sheet] || {})[p.id] = true;
 		});
 
@@ -185,6 +202,20 @@
 		return preloaded[url];
 	}
 
+	/** Preload candidates in order; resolves with the first that loads, or null. */
+	function firstLoaded(urls) {
+		var i = 0;
+		function next() {
+			while (i < urls.length && !urls[i]) i++;
+			if (i >= urls.length) return Promise.resolve(null);
+			var url = urls[i++];
+			return preload(url).then(function (ok) {
+				return ok ? url : next();
+			});
+		}
+		return next();
+	}
+
 	/**
 	 * targets: [{ ref, apply(url) }]. Resolves refs, preloads, then calls
 	 * apply() for every icon that loaded. Anything that fails is left alone.
@@ -201,10 +232,11 @@
 		).then(function (icons) {
 			return Promise.all(
 				targets.map(function (t) {
-					var url = icons[keyOf(t.ref)];
-					if (!url) return null;
-					return preload(url).then(function (ok) {
-						if (ok) t.apply(url);
+					var p = parseRef(t.ref);
+					var urls =
+						p.sheet === "Icon" ? iconUrls(p.id) : [icons[keyOf(t.ref)]];
+					return firstLoaded(urls).then(function (url) {
+						if (url) t.apply(url);
 					});
 				}),
 			);

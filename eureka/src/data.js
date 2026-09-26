@@ -24,6 +24,7 @@ const EUREKA_DATA = [
 		name: "Antiquated Weapon",
 		type: "checklist",
 		icon: "./images/icons/relic.png",
+		itemId: 17817, // Antiquated Galatyn (PLD)
 		qty: 1,
 		tip: "Reward from your level 70 job quest, or purchased from the Calamity Salvager (Idyllshire) if you missed it.",
 		options: [{ label: "Quest Complete / Purchase", cost: 0, currency: "" }],
@@ -117,6 +118,7 @@ const EUREKA_DATA = [
 		name: "Logos Actions Unlocked",
 		type: "item",
 		icon: "./images/icons/logos.png",
+		itemId: "Icon:61833", // duty icon: Eureka
 		qty: 30,
 		tip: "Unique Logos Actions found in notebooks scattered through Eureka Pyros. The required count grows across the Elemental+1, Elemental+2, and Pyros turn-ins.",
 		options: [{ label: "Notebook Pickup", cost: 0, currency: "" }],
@@ -165,6 +167,7 @@ const EUREKA_DATA = [
 		name: "Physeos Weapon",
 		type: "checklist",
 		icon: "./images/icons/physeos.png",
+		itemId: 24707, // Antea Physeos (PLD)
 		qty: 1,
 		tip: "Fill enough Magia Board nodes with Eureka Fragments and turn in to Gerolt to finish your Physeos-stage weapon — the final upgrade to the Eurekan relic!",
 		tooltip: [
