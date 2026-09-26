@@ -842,25 +842,25 @@
 			<div class="fixed bottom-0 left-0 right-0 z-50">
 				<div class="max-w-[1000px] mx-auto bg-[#12151a]/95 border-t border-[#b79c59]/60 backdrop-blur-md px-3 py-2 flex items-center justify-center gap-4 flex-wrap">
 					<div x-show="getTotalLiability('Poetics') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/poetics.png" class="w-4 h-4 object-contain" alt="Poetics">
+						<img src="images/icons/poetics.png" data-xiv-item="28" class="w-4 h-4 object-contain" alt="Poetics">
 						<span class="text-[#d4af37] font-semibold text-[10px] uppercase">Poetics</span>
 						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Poetics').toLocaleString()"></span>
 					</div>
 
 					<div x-show="getTotalLiability('GC Seals') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/gc-seals.png" class="w-4 h-4 object-contain" alt="GC Seals">
+						<img src="images/icons/gc-seals.png" data-xiv-item="20" class="w-4 h-4 object-contain" alt="GC Seals">
 						<span class="text-blue-400 font-semibold text-[10px] uppercase">GC Seals</span>
 						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('GC Seals').toLocaleString()"></span>
 					</div>
 
 					<div x-show="getTotalLiability('Tokens') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/scrip-token.png" class="w-4 h-4 object-contain" alt="Tokens">
+						<img src="images/icons/scrip-token.png" data-xiv-item="12839" class="w-4 h-4 object-contain" alt="Tokens">
 						<span class="text-purple-400 font-semibold text-[10px] uppercase">Scrip Tokens</span>
 						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Tokens').toLocaleString()"></span>
 					</div>
 
 					<div x-show="getTotalLiability('Seals') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/allied-seals.png" class="w-4 h-4 object-contain" alt="Allied Seals">
+						<img src="images/icons/allied-seals.png" data-xiv-item="27" class="w-4 h-4 object-contain" alt="Allied Seals">
 						<span class="text-green-400 font-semibold text-[10px] uppercase">Allied Seals</span>
 						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Seals').toLocaleString()"></span>
 					</div>
@@ -868,6 +868,7 @@
 			</div>
 		</div>
 
+		<script src="../assets/xivapi-icons.js"></script>
 		<script src="./src/data.js"></script>
 		<script src="./src/main.js"></script>
 	</body>

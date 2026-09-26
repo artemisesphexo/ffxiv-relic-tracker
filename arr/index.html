@@ -904,13 +904,13 @@
 			<div class="fixed bottom-0 left-0 right-0 z-50">
 				<div class="max-w-[1000px] mx-auto bg-[#12151a]/95 border-t border-[#9c7a2e]/60 backdrop-blur-md px-3 py-2 flex items-center justify-center gap-4 flex-wrap">
 					<div x-show="getTotalLiability('Poetics') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/poetics.png" class="w-4 h-4 object-contain" alt="Poetics">
+						<img src="images/icons/poetics.png" data-xiv-item="28" class="w-4 h-4 object-contain" alt="Poetics">
 						<span class="text-[#c9a227] font-semibold text-[10px] uppercase">Poetics</span>
 						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Poetics').toLocaleString()"></span>
 					</div>
 
 					<div x-show="getTotalLiability('Tomestones') > 0" class="flex items-center gap-1.5 text-xs">
-						<img src="images/icons/poetics.png" class="w-4 h-4 object-contain" alt="Tomestones">
+						<img src="images/icons/poetics.png" data-xiv-item="28" class="w-4 h-4 object-contain" alt="Tomestones">
 						<span class="text-blue-400 font-semibold text-[10px] uppercase">Tomestones</span>
 						<span class="font-mono text-slate-200 font-bold" x-text="getTotalLiability('Tomestones').toLocaleString()"></span>
 					</div>
@@ -918,6 +918,7 @@
 			</div>
 		</div>
 
+		<script src="../assets/xivapi-icons.js"></script>
 		<script src="./src/data.js"></script>
 		<script src="./src/main.js"></script>
 	</body>

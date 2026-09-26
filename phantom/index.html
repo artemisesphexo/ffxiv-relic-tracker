@@ -185,10 +185,11 @@
                 <div class="px-3 py-1.5 flex items-center gap-2 text-xs" :class="getRemaining(item) === 0 ? 'bg-emerald-900/5' : 'hover:bg-slate-800/20'">
 
                   <div class="w-8 h-8 shrink-0 rounded-md border border-slate-700 bg-slate-800 shadow-md flex items-center justify-center relative overflow-hidden">
-                    <img :src="'./images/items/' + item.id + '.png'" :alt="item.name"
+                    <img :src="item.icon || ('./images/items/' + item.id + '.png')" :alt="item.name"
                          class="w-full h-full object-cover"
                          :class="getRemaining(item) === 0 ? 'grayscale opacity-50' : ''"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                         onload="this.style.display=''; this.nextElementSibling.style.display='';" />
                     <span class="hidden text-base items-center justify-center w-full h-full absolute inset-0" x-text="item.emoji"></span>
                   </div>
 
@@ -586,7 +587,7 @@
         </div>
         <div x-show="getTotalLiability('Gil') > 0" class="flex items-center gap-1.5 text-xs">
           <span class="w-4 h-4 shrink-0 relative inline-block">
-            <img src="./images/currency/gil.png" alt="Gil" class="w-full h-full object-contain"
+            <img src="./images/currency/gil.png" data-xiv-item="1" alt="Gil" class="w-full h-full object-contain"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
             <span class="hidden absolute inset-0" style="line-height:1rem;">💰</span>
           </span>
@@ -595,7 +596,7 @@
         </div>
         <div x-show="getTotalLiability('Gemstones') > 0" class="flex items-center gap-1.5 text-xs">
           <span class="w-4 h-4 shrink-0 relative inline-block">
-            <img src="./images/currency/gemstone.png" alt="Gemstones" class="w-full h-full object-contain"
+            <img src="./images/currency/gemstone.png" data-xiv-item="26807" alt="Gemstones" class="w-full h-full object-contain"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
             <span class="hidden absolute inset-0" style="line-height:1rem;">🔶</span>
           </span>
@@ -606,6 +607,7 @@
   </div>
 </div>
 
+<script src="../assets/xivapi-icons.js"></script>
 <script>
 document.addEventListener('alpine:init', () => {
 
@@ -627,42 +629,42 @@ document.addEventListener('alpine:init', () => {
 
   const PHANTOM_DATA = [
     // --- STAGE 1: Penumbrae (i745) ---
-    { id: "demiatma_azurite", stage: STAGE_ORDER[0], name: "Azurite Demiatma", emoji: "🔷", qty: 3, scope: "shared",
+    { id: "demiatma_azurite", itemId: 47744, stage: STAGE_ORDER[0], name: "Azurite Demiatma", emoji: "🔷", qty: 3, scope: "shared",
       tip: "Urqopacha FATEs, or CEs in Occult Crescent: South Horn (SE area).",
       options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
-    { id: "demiatma_verdigris", stage: STAGE_ORDER[0], name: "Verdigris Demiatma", emoji: "💠", qty: 3, scope: "shared",
+    { id: "demiatma_verdigris", itemId: 47745, stage: STAGE_ORDER[0], name: "Verdigris Demiatma", emoji: "💠", qty: 3, scope: "shared",
       tip: "Kozama'uka FATEs, or CEs in Occult Crescent: South Horn (SW area).",
       options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
-    { id: "demiatma_malachite", stage: STAGE_ORDER[0], name: "Malachite Demiatma", emoji: "🟢", qty: 3, scope: "shared",
+    { id: "demiatma_malachite", itemId: 47746, stage: STAGE_ORDER[0], name: "Malachite Demiatma", emoji: "🟢", qty: 3, scope: "shared",
       tip: "Yak T'el FATEs, or CEs in Occult Crescent: South Horn (central-west area).",
       options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
-    { id: "demiatma_realgar", stage: STAGE_ORDER[0], name: "Realgar Demiatma", emoji: "🟠", qty: 3, scope: "shared",
+    { id: "demiatma_realgar", itemId: 47747, stage: STAGE_ORDER[0], name: "Realgar Demiatma", emoji: "🟠", qty: 3, scope: "shared",
       tip: "Shaaloani FATEs, or CEs in Occult Crescent: South Horn (NW area).",
       options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
-    { id: "demiatma_caput", stage: STAGE_ORDER[0], name: "Caput Mortuum Demiatma", emoji: "🟣", qty: 3, scope: "shared",
+    { id: "demiatma_caput", itemId: 47748, stage: STAGE_ORDER[0], name: "Caput Mortuum Demiatma", emoji: "🟣", qty: 3, scope: "shared",
       tip: "Heritage Found FATEs, or CEs in Occult Crescent: South Horn (E ruins area).",
       options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
-    { id: "demiatma_orpiment", stage: STAGE_ORDER[0], name: "Orpiment Demiatma", emoji: "🟡", qty: 3, scope: "shared",
+    { id: "demiatma_orpiment", itemId: 47749, stage: STAGE_ORDER[0], name: "Orpiment Demiatma", emoji: "🟡", qty: 3, scope: "shared",
       tip: "Living Memory FATEs, or CEs in Occult Crescent: South Horn (NE/central area).",
       options: [{ label: "FATE / Critical Encounter", cost: 0, currency: "" }] },
-    { id: "math_penumbrae", stage: STAGE_ORDER[0], name: "Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
+    { id: "math_penumbrae", itemId: 47750, stage: STAGE_ORDER[0], name: "Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
       tip: "Buy Arcanite from Ermina (500 Mathematics each, capped at 2000/week so exchange continuously), then trade with Dodokkuli for the i745 weapon.",
       options: [{ label: "Arcanite", cost: 500, currency: "Mathematics" }] },
 
     // --- STAGE 2: Umbrae (i760) ---
-    { id: "rroneek_glue", stage: STAGE_ORDER[1], name: "Rroneek Glue", emoji: "🧴", qty: 1, scope: "shared",
+    { id: "rroneek_glue", itemId: 46854, stage: STAGE_ORDER[1], name: "Rroneek Glue", emoji: "🧴", qty: 1, scope: "shared",
       tip: "Buy from Goplu in Tuliyollal.",
       options: [{ label: "Gil", cost: 300000, currency: "Gil" }] },
-    { id: "utohmu_siderite", stage: STAGE_ORDER[1], name: "Ut'ohmu Siderite", emoji: "🪨", qty: 1, scope: "shared",
+    { id: "utohmu_siderite", itemId: 46852, stage: STAGE_ORDER[1], name: "Ut'ohmu Siderite", emoji: "🪨", qty: 1, scope: "shared",
       tip: "Buy from Rral Wuruq in Yak T'el, or from the Market Board.",
       options: [{ label: "Bicolor Gemstones", cost: 600, currency: "Gemstones" }, { label: "Market Board", cost: 0, currency: "" }] },
-    { id: "synth_alpha", stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Alpha", emoji: "⚗️", qty: 1, scope: "shared",
+    { id: "synth_alpha", itemId: 46855, stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Alpha", emoji: "⚗️", qty: 1, scope: "shared",
       tip: "Crafted by Blacksmith / Armorer / Goldsmith, or bought off the Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
-    { id: "synth_beta", stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Beta", emoji: "⚗️", qty: 1, scope: "shared",
+    { id: "synth_beta", itemId: 46856, stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Beta", emoji: "⚗️", qty: 1, scope: "shared",
       tip: "Crafted by Carpenter / Leatherworker / Weaver, or bought off the Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
-    { id: "synth_gamma", stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Gamma", emoji: "⚗️", qty: 1, scope: "shared",
+    { id: "synth_gamma", itemId: 46857, stage: STAGE_ORDER[1], name: "Synthetic Dark Matter Gamma", emoji: "⚗️", qty: 1, scope: "shared",
       tip: "Crafted by Alchemist / Culinarian, or bought off the Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
     { id: "aether_green", stage: STAGE_ORDER[1], name: "Aetherwell: Green", emoji: "🟢", qty: 10000, scope: "shared",
@@ -677,53 +679,53 @@ document.addEventListener('alpine:init', () => {
     { id: "aether_yellow", stage: STAGE_ORDER[1], name: "Aetherwell: Yellow", emoji: "🟡", qty: 10000, scope: "shared",
       tip: "Duty Roulette: Normal Raids.",
       options: [{ label: "Roulette Clear", cost: 0, currency: "" }] },
-    { id: "math_umbrae", stage: STAGE_ORDER[1], name: "Waxing Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
+    { id: "math_umbrae", itemId: 46850, stage: STAGE_ORDER[1], name: "Waxing Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
       tip: "Buy Waxing Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously), trade + your Penumbrae weapon to Dodokkuli.",
       options: [{ label: "Arcanite", cost: 500, currency: "Mathematics" }] },
 
     // --- STAGE 3: Obscurum (i775) ---
-    { id: "umbral_clay", stage: STAGE_ORDER[2], name: "Umbral Clay", emoji: "🏺", qty: 1, scope: "shared",
+    { id: "umbral_clay", itemId: 50054, stage: STAGE_ORDER[2], name: "Umbral Clay", emoji: "🏺", qty: 1, scope: "shared",
       tip: "Buy from Goplu in Tuliyollal.",
       options: [{ label: "Gil", cost: 500000, currency: "Gil" }] },
-    { id: "aspected_conductor", stage: STAGE_ORDER[2], name: "Aspected Aetheroconductor", emoji: "🔧", qty: 1, scope: "shared",
+    { id: "aspected_conductor", itemId: 50056, stage: STAGE_ORDER[2], name: "Aspected Aetheroconductor", emoji: "🔧", qty: 1, scope: "shared",
       tip: "Crafted by Blacksmith / Armorer / Goldsmith, or Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
-    { id: "aspected_agglomerate", stage: STAGE_ORDER[2], name: "Aspected Aether Agglomerate", emoji: "🧵", qty: 1, scope: "shared",
+    { id: "aspected_agglomerate", itemId: 50055, stage: STAGE_ORDER[2], name: "Aspected Aether Agglomerate", emoji: "🧵", qty: 1, scope: "shared",
       tip: "Crafted by Carpenter / Leatherworker / Weaver, or Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
-    { id: "aspected_catalyst", stage: STAGE_ORDER[2], name: "Aspected Aetherocatalyst", emoji: "🧪", qty: 1, scope: "shared",
+    { id: "aspected_catalyst", itemId: 50057, stage: STAGE_ORDER[2], name: "Aspected Aetherocatalyst", emoji: "🧪", qty: 1, scope: "shared",
       tip: "Crafted by Alchemist / Culinarian, or Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
-    { id: "crystal_paste", stage: STAGE_ORDER[2], name: "Crystal Paste", emoji: "✨", qty: 1200, scope: "shared",
+    { id: "crystal_paste", itemId: 50059, stage: STAGE_ORDER[2], name: "Crystal Paste", emoji: "✨", qty: 1200, scope: "shared",
       tip: "Turn in at 100/200/300/600. Earned from leveling & expert roulettes, DT zone FATEs, Occult Crescent CEs, Extreme trials, Savage raids, and deep dungeons.",
       options: [{ label: "Duties / Roulettes", cost: 0, currency: "" }] },
-    { id: "math_obscurum", stage: STAGE_ORDER[2], name: "Waning Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
+    { id: "math_obscurum", itemId: 50058, stage: STAGE_ORDER[2], name: "Waning Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
       tip: "Buy Waning Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously), trade + your Umbrae weapon to Dodokkuli.",
       options: [{ label: "Arcanite", cost: 500, currency: "Mathematics" }] },
 
     // --- STAGE 4: Eclipticum (i790) ---
-    { id: "monarch_whetstone", stage: STAGE_ORDER[3], name: "Monarch Whetstone", emoji: "🪓", qty: 1, scope: "shared",
+    { id: "monarch_whetstone", itemId: 50970, stage: STAGE_ORDER[3], name: "Monarch Whetstone", emoji: "🪓", qty: 1, scope: "shared",
       tip: "Buy from Goplu in Tuliyollal.",
       options: [{ label: "Gil", cost: 500000, currency: "Gil" }] },
-    { id: "ancestral_alloy", stage: STAGE_ORDER[3], name: "Ancestral Alloy Ingot", emoji: "🔩", qty: 1, scope: "shared",
+    { id: "ancestral_alloy", itemId: 50972, stage: STAGE_ORDER[3], name: "Ancestral Alloy Ingot", emoji: "🔩", qty: 1, scope: "shared",
       tip: "Crafted by Blacksmith / Armorer / Goldsmith, or Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
-    { id: "ascendant_twine", stage: STAGE_ORDER[3], name: "Ascendant Twine", emoji: "🧶", qty: 1, scope: "shared",
+    { id: "ascendant_twine", itemId: 50971, stage: STAGE_ORDER[3], name: "Ascendant Twine", emoji: "🧶", qty: 1, scope: "shared",
       tip: "Crafted by Carpenter / Leatherworker / Weaver, or Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
-    { id: "majestic_polish", stage: STAGE_ORDER[3], name: "Majestic Polish", emoji: "🧴", qty: 1, scope: "shared",
+    { id: "majestic_polish", itemId: 50973, stage: STAGE_ORDER[3], name: "Majestic Polish", emoji: "🧴", qty: 1, scope: "shared",
       tip: "Crafted by Alchemist / Culinarian, or Market Board.",
       options: [{ label: "Craft / Market Board", cost: 0, currency: "" }] },
-    { id: "dispeller_alpha", stage: STAGE_ORDER[3], name: "Phantom Dispeller α", emoji: "α", qty: 100, scope: "shared",
+    { id: "dispeller_alpha", itemId: 50974, stage: STAGE_ORDER[3], name: "Phantom Dispeller α", emoji: "α", qty: 100, scope: "shared",
       tip: "North Horn FATEs (3 each) / CEs (10 each), or high-level Dungeon duty roulettes.",
       options: [{ label: "FATE / CE / Roulette", cost: 0, currency: "" }] },
-    { id: "dispeller_beta", stage: STAGE_ORDER[3], name: "Phantom Dispeller β", emoji: "β", qty: 100, scope: "shared",
+    { id: "dispeller_beta", itemId: 50975, stage: STAGE_ORDER[3], name: "Phantom Dispeller β", emoji: "β", qty: 100, scope: "shared",
       tip: "North Horn FATEs (3 each) / CEs (10 each), or Trial duty roulettes.",
       options: [{ label: "FATE / CE / Roulette", cost: 0, currency: "" }] },
-    { id: "dispeller_gamma", stage: STAGE_ORDER[3], name: "Phantom Dispeller γ", emoji: "γ", qty: 100, scope: "shared",
+    { id: "dispeller_gamma", itemId: 50976, stage: STAGE_ORDER[3], name: "Phantom Dispeller γ", emoji: "γ", qty: 100, scope: "shared",
       tip: "North Horn FATEs (3 each) / CEs (10 each), or Normal Raid duty roulettes.",
       options: [{ label: "FATE / CE / Roulette", cost: 0, currency: "" }] },
-    { id: "math_eclipticum", stage: STAGE_ORDER[3], name: "Ecliptic Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
+    { id: "math_eclipticum", itemId: 50977, stage: STAGE_ORDER[3], name: "Ecliptic Arcanite Exchange", emoji: "📜", qty: 3, scope: "perWeapon",
       tip: "Buy Ecliptic Arcanite (500 Mathematics each, capped at 2000/week so exchange continuously) from Ermina for the i790 weapon.",
       options: [{ label: "Arcanite", cost: 500, currency: "Mathematics" }] },
 
@@ -780,6 +782,12 @@ document.addEventListener('alpine:init', () => {
     sharedStageDone: 0,
 
     init() {
+      // Official game icons via XIVAPI; local PNGs / emoji stay as the fallback.
+      if (typeof XivIcons !== "undefined") {
+        XivIcons.hydrateItems(this.items);
+        XivIcons.hydrateDom();
+      }
+
       try {
         const sInv = localStorage.getItem("phantom_inventory");
         if (sInv) this.inventory = JSON.parse(sInv);

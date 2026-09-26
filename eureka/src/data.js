@@ -3,6 +3,11 @@ const ICONS = {
 	PLACEHOLDER: "./images/icons/placeholder.png",
 };
 
+// In-game item IDs for shared icons, used by assets/xivapi-icons.js to load
+// the official icon from XIVAPI (the local PNG above stays as the fallback).
+// Individual materials carry their own `itemId` on the data entry instead.
+const ICON_ITEM_IDS = {};
+
 // Sources verified against Console Games Wiki's Eurekan Weapons stage table
 // (fine-grained per-substage breakdown) cross-checked against Eorzean
 // Tavern's Eureka Weapons guide (per-tier cumulative totals), Sept 2026.
@@ -31,6 +36,7 @@ const EUREKA_DATA = [
 		name: "Protean Crystal",
 		type: "item",
 		icon: "./images/icons/protean-crystal.png",
+		itemId: 21801,
 		qty: 1300,
 		tip: "Dropped by Notorious Monsters in Eureka Anemos. Accumulates across the Starter, Starter+1, Starter+2, and Anemos upgrade turn-ins.",
 		options: [{ label: "NM Kills", cost: 0, currency: "" }],
@@ -41,6 +47,7 @@ const EUREKA_DATA = [
 		name: "Pazuzu's Feather",
 		type: "item",
 		icon: "./images/icons/pazuzus-feather.png",
+		itemId: 21802,
 		qty: 3,
 		tip: "Dropped from the 'Wail in the Willows' FATE in Eureka Anemos.",
 		options: [{ label: "FATE Drop", cost: 0, currency: "" }],
@@ -53,6 +60,7 @@ const EUREKA_DATA = [
 		name: "Frosted Protean Crystal",
 		type: "item",
 		icon: "./images/icons/frosted-protean-crystal.png",
+		itemId: 23309,
 		qty: 31,
 		tip: "Collected via vitiated-aether gathering and higher-level Notorious Monster kills in Eureka Pagos. Accumulates across the Pagos and Pagos+1 turn-ins.",
 		options: [{ label: "Gathering / NM Kills", cost: 0, currency: "" }],
@@ -63,6 +71,7 @@ const EUREKA_DATA = [
 		name: "Pagos Crystal",
 		type: "item",
 		icon: "./images/icons/pagos-crystal.png",
+		itemId: 22976,
 		qty: 500,
 		tip: "Dropped by higher-level Notorious Monsters in Eureka Pagos.",
 		options: [{ label: "NM Kills", cost: 0, currency: "" }],
@@ -73,6 +82,7 @@ const EUREKA_DATA = [
 		name: "Louhi's Ice",
 		type: "item",
 		icon: "./images/icons/louhis-ice.png",
+		itemId: 22975,
 		qty: 5,
 		tip: "Dropped from the 'Louhi on Ice' FATE in Eureka Pagos.",
 		options: [{ label: "FATE Drop", cost: 0, currency: "" }],
@@ -85,6 +95,7 @@ const EUREKA_DATA = [
 		name: "Pyros Crystal",
 		type: "item",
 		icon: "./images/icons/pyros-crystal.png",
+		itemId: 24124,
 		qty: 650,
 		tip: "Earned through combat and gathering in Eureka Pyros. Accumulates across the Elemental, Elemental+1, Elemental+2, and Pyros turn-ins.",
 		options: [{ label: "Combat / Gathering", cost: 0, currency: "" }],
@@ -95,6 +106,7 @@ const EUREKA_DATA = [
 		name: "Penthesilea's Flame",
 		type: "item",
 		icon: "./images/icons/penthesileas-flame.png",
+		itemId: 24123,
 		qty: 5,
 		tip: "Dropped from the Penthesilea notorious-monster encounter in Eureka Pyros.",
 		options: [{ label: "NM Drop", cost: 0, currency: "" }],
@@ -117,6 +129,7 @@ const EUREKA_DATA = [
 		name: "Hydatos Crystal",
 		type: "item",
 		icon: "./images/icons/hydatos-crystal.png",
+		itemId: 24807,
 		qty: 350,
 		tip: "Dropped by Notorious Monsters in Eureka Hydatos. Accumulates across the Hydatos, Hydatos+1, Base Eureka, and Eureka turn-ins.",
 		options: [{ label: "NM Kills", cost: 0, currency: "" }],
@@ -127,6 +140,7 @@ const EUREKA_DATA = [
 		name: "Crystalline Scale",
 		type: "item",
 		icon: "./images/icons/crystalline-scale.png",
+		itemId: 24806,
 		qty: 5,
 		tip: "Dropped from the 'Crystalline Provenance' FATE in Eureka Hydatos.",
 		options: [{ label: "FATE Drop", cost: 0, currency: "" }],
@@ -139,6 +153,7 @@ const EUREKA_DATA = [
 		name: "Eureka Fragment",
 		type: "item",
 		icon: "./images/icons/eureka-fragment.png",
+		itemId: 24808,
 		qty: 100,
 		tip: "Earned from Notorious Monster kills and Elemental Level milestones. Spent filling out the Magia Board, which unlocks bonus elemental stats usable only inside Eureka zones.",
 		options: [{ label: "NM Kills / Elemental Levels", cost: 0, currency: "" }],
