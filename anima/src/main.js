@@ -25,6 +25,12 @@ document.addEventListener("alpine:init", () => {
 
 		// --- 1. INITIALIZATION ---
 		init() {
+			// Official game icons via XIVAPI; local PNGs stay as the fallback.
+			if (typeof XivIcons !== "undefined") {
+				XivIcons.hydrateItems(this.items, ICON_ITEM_IDS);
+				XivIcons.hydrateDom();
+			}
+
 			// Load Inventory
 			try {
 				const sInv = localStorage.getItem("relic_inventory");

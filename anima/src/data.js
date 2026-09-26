@@ -31,6 +31,30 @@ const ICONS = {
 	PLACEHOLDER: "./images/icons/placeholder.png",
 };
 
+// In-game item IDs for shared icons, used by assets/xivapi-icons.js to load
+// the official icon from XIVAPI (the local PNG above stays as the fallback).
+// Individual materials carry their own `itemId` on the data entry instead.
+const ICON_ITEM_IDS = {
+	[ICONS.POETICS]: 28, // Allagan Tomestone of Poetics
+	[ICONS.GC_SEALS]: 20, // Storm Seal
+	[ICONS.GIL]: 1,
+	[ICONS.ALLIED_SEALS]: 27,
+	[ICONS.SCRIP]: 12839, // Blue Crafters' Scrip Token
+	[ICONS.AMBER_VILEKIN]: 12236, // Amber-encased Vilekin
+	[ICONS.MOONSTONE]: 10124,
+	[ICONS.AMALJAA]: 21076, // Steel Amalj'ok
+	[ICONS.SAHAGIN]: 21077, // Rainbowtide Psashp
+	[ICONS.KOBOLD]: 21078, // Titan Cobaltpiece
+	[ICONS.SYLPH]: 21075, // Sylphic Goldleaf
+	[ICONS.VANU]: 21074, // Vanu Whitebone
+	[ICONS.VATH]: 21079, // Black Copper Gil
+	[ICONS.MOOGLE]: 21080, // Carved Kupo Nut
+	[ICONS.A1_BOLT]: 13581, // Precision Gordian Bolt
+	[ICONS.A2_LENS]: 13583, // Precision Gordian Lens
+	[ICONS.A3_SHAFT]: 13587, // Precision Gordian Shaft
+	[ICONS.A4_SPRING]: 13585, // Precision Gordian Spring
+};
+
 const ANIMA_DATA = [
 	// --- STAGE 1: Animated (i170) ---
 	{
@@ -39,6 +63,7 @@ const ANIMA_DATA = [
 		name: "Luminous Crystal (Wind)",
 		type: "item",
 		icon: "./images/icons/luminous-wind.png",
+		itemId: 13570,
 		qty: 1,
 		tip: "FATEs in Churning Mists. Drop rate is approx 10%.",
 		options: [
@@ -56,6 +81,7 @@ const ANIMA_DATA = [
 		name: "Luminous Crystal (Fire)",
 		type: "item",
 		icon: "./images/icons/luminous-fire.png",
+		itemId: 13571,
 		qty: 1,
 		tip: "FATEs in Azys Lla.",
 		options: [
@@ -68,6 +94,7 @@ const ANIMA_DATA = [
 		name: "Luminous Crystal (Lightning)",
 		type: "item",
 		icon: "./images/icons/luminous-lightning.png",
+		itemId: 13573,
 		qty: 1,
 		tip: "FATEs in Dravanian Forelands.",
 		options: [
@@ -85,6 +112,7 @@ const ANIMA_DATA = [
 		name: "Luminous Crystal (Ice)",
 		type: "item",
 		icon: "./images/icons/luminous-ice.png",
+		itemId: 13569,
 		qty: 1,
 		tip: "FATEs in Coerthas Western Highlands.",
 		options: [
@@ -102,6 +130,7 @@ const ANIMA_DATA = [
 		name: "Luminous Crystal (Earth)",
 		type: "item",
 		icon: "./images/icons/luminous-earth.png",
+		itemId: 13572,
 		qty: 1,
 		tip: "FATEs in Dravanian Hinterlands.",
 		options: [
@@ -119,6 +148,7 @@ const ANIMA_DATA = [
 		name: "Luminous Crystal (Water)",
 		type: "item",
 		icon: "./images/icons/luminous-water.png",
+		itemId: 13574,
 		qty: 1,
 		tip: "FATEs in The Sea of Clouds.",
 		options: [
@@ -162,6 +192,7 @@ const ANIMA_DATA = [
 		name: "Unidentifiable Bone",
 		type: "item",
 		icon: "./images/icons/unid-bone.png",
+		itemId: 13582,
 		qty: 10,
 		tip: "Precision Gordian Bolt drops from Alexander - The Fist of the Father (A1).",
 		options: [
@@ -210,6 +241,7 @@ const ANIMA_DATA = [
 		name: "Unidentifiable Shell",
 		type: "item",
 		icon: "./images/icons/unid-shell.png",
+		itemId: 13584,
 		qty: 10,
 		tip: "Precision Lens drops from Alexander - The Cuff of the Father (A2) Normal.",
 		options: [
@@ -252,6 +284,7 @@ const ANIMA_DATA = [
 		name: "Unidentifiable Ore",
 		type: "item",
 		icon: "./images/icons/unid-ore.png",
+		itemId: 13586,
 		qty: 10,
 		tip: "Precision Shaft drops from Alexander - The Arm of the Father (A3) Normal.",
 		options: [
@@ -294,6 +327,7 @@ const ANIMA_DATA = [
 		name: "Unidentifiable Seeds",
 		type: "item",
 		icon: "./images/icons/unid-seeds.png",
+		itemId: 13588,
 		qty: 10,
 		tip: "Precision Spring drops from Alexander Gordias (A4) Normal.",
 		options: [
@@ -339,6 +373,7 @@ const ANIMA_DATA = [
 		name: "Adamantite Francesca",
 		type: "item",
 		icon: "./images/icons/francesca.png",
+		itemId: 13589,
 		qty: 4,
 		tip: "Can also be crafted. Refer to crafting log.",
 		options: [
@@ -356,6 +391,7 @@ const ANIMA_DATA = [
 		name: "Titanium Alloy Mirror",
 		type: "item",
 		icon: "./images/icons/mirror.png",
+		itemId: 13591,
 		qty: 4,
 		tip: "Can also be crafted. Refer to crafting log.",
 		options: [
@@ -373,6 +409,7 @@ const ANIMA_DATA = [
 		name: "Dispelling Arrow",
 		type: "item",
 		icon: "./images/icons/arrow.png",
+		itemId: 13593,
 		qty: 4,
 		tip: "Can also be crafted. Refer to crafting log.",
 		options: [
@@ -390,6 +427,7 @@ const ANIMA_DATA = [
 		name: "Kingcake",
 		type: "item",
 		icon: "./images/icons/kingcake.png",
+		itemId: 13595,
 		qty: 4,
 		tip: "Can also be crafted. Refer to crafting log.",
 		options: [
@@ -409,6 +447,7 @@ const ANIMA_DATA = [
 		name: "Aether Oil",
 		type: "item",
 		icon: "./images/icons/aether-oil.png",
+		itemId: 14899,
 		qty: 5,
 		tip: "Weekly quest 'The Gift of the Archmagus' gives 1 oil.",
 		options: [
@@ -429,6 +468,7 @@ const ANIMA_DATA = [
 		name: "Umbrite",
 		type: "item",
 		icon: "./images/icons/umbrite.png",
+		itemId: 15840,
 		qty: 75,
 		tip: "No other way to get this. Pure Poetics dump.",
 		options: [
@@ -446,6 +486,7 @@ const ANIMA_DATA = [
 		name: "Crystal Sand",
 		type: "item",
 		icon: "./images/icons/crystal-sand.png",
+		itemId: 15841,
 		qty: 75,
 		yield: 2, // Add this property to indicate 1 trade = 2 items
 		tip: "Trade items to Ulan. Each trade yields 2 Crystal Sands.",
@@ -484,6 +525,7 @@ const ANIMA_DATA = [
 		name: "Singing Cluster",
 		type: "item",
 		icon: "./images/icons/singing-clusters.png",
+		itemId: 16064,
 		qty: 50,
 		tip: "Do the Weekly Quest (18 clusters) and Daily Quest (1 cluster) in Idyllshire.",
 		options: [
@@ -504,6 +546,7 @@ const ANIMA_DATA = [
 		name: "Pneumite",
 		type: "item",
 		icon: "./images/icons/pneumite.png",
+		itemId: 16933,
 		qty: 15,
 		tip: "Use GC Seals as they are easier to farm than Poetics.",
 		options: [
@@ -524,6 +567,7 @@ const ANIMA_DATA = [
 		name: "Archaic Enchanted Ink",
 		type: "number",
 		icon: "./images/icons/ink.png",
+		itemId: 16934,
 		qty: 1,
 		tip: "Buy from Hismena (Idyllshire) for 500 Poetics.",
 		options: [

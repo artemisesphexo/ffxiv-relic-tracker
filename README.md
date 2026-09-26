@@ -20,6 +20,7 @@ Plain HTML/CSS/JS, no build step to run the site itself:
 - [Alpine.js](https://alpinejs.dev/) for interactivity, loaded from a CDN
 - [Tailwind CSS](https://tailwindcss.com/) compiled once into `assets/site.css` (only needed if you're changing styles — see below)
 - No backend, no database — everything runs client-side and saves to `localStorage`
+- Item and currency icons load from [XIVAPI](https://v2.xivapi.com) via `assets/xivapi-icons.js`, looked up by in-game item ID (`itemId` on each data entry, `ICON_ITEM_IDS` for shared currency icons). Results are cached for 30 days, and the local PNGs remain as the fallback if the API is unreachable.
 
 ## Local development
 
@@ -49,4 +50,4 @@ npx tailwindcss -i input.css -o assets/site.css --minify
 
 ## Credits
 
-Made by [@ArtemisEsphexo](https://twitter.com/ArtemisEsphexo). Data cross-referenced against community wikis and guides for accuracy — corrections welcome via an issue or PR.
+Made by [@ArtemisEsphexo](https://twitter.com/ArtemisEsphexo). Game icons served by [XIVAPI](https://v2.xivapi.com); FINAL FANTASY XIV © SQUARE ENIX. Data cross-referenced against community wikis and guides for accuracy — corrections welcome via an issue or PR.
