@@ -11,7 +11,7 @@
  *   node scripts/generate-static-content.js
  *
  * It does NOT need a build step at deploy time — the output is committed
- * as plain HTML, and Netlify keeps serving these files as static assets.
+ * as plain HTML, and GitHub Pages keeps serving these files as static assets.
  * Only re-run this script by hand when the underlying data changes.
  */
 const vm = require('vm');
