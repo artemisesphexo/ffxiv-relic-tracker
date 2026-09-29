@@ -271,7 +271,7 @@ const ANIMA_DATA = [
 				icon: ICONS.MOOGLE,
 			},
 			{
-				label: " Precision Gordian Lens",
+				label: "Precision Gordian Lens",
 				cost: 3,
 				currency: "Alex P2",
 				icon: ICONS.A2_LENS,
@@ -314,7 +314,7 @@ const ANIMA_DATA = [
 				icon: ICONS.MOOGLE,
 			},
 			{
-				label: "Precision Gordian Spring",
+				label: "Precision Gordian Shaft",
 				cost: 3,
 				currency: "Alex P3",
 				icon: ICONS.A3_SHAFT,
@@ -358,7 +358,7 @@ const ANIMA_DATA = [
 				icon: ICONS.ALLIED_SEALS,
 			},
 			{
-				label: "Alex P4 (Spring)",
+				label: "Precision Gordian Spring",
 				cost: 3,
 				currency: "Alex P4",
 				icon: ICONS.A4_SPRING,

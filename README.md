@@ -7,7 +7,7 @@ Progress checklists for Final Fantasy XIV's relic weapon grinds. Pick a line, ch
 ## Trackers
 
 - **ARR Relic Weapon** — the original A Realm Reborn Zodiac Weapon line, i80 → i135. Relic, Zenith, Atma, Animus, Novus, Nexus, Zodiac Braves, and the final Zeta.
-- **Anima Weapon** — Heavensward relic progression, i170 → i275. Nine stages, dungeon runs, and the primal gauntlet.
+- **Anima Weapon** — Heavensward relic progression, i170 → i275. Eight stages, dungeon runs, and the primal gauntlet.
 - **Eureka Weapon** — Stormblood relic progression, i290 → i405. Anemos, Pagos, Pyros, and Hydatos crystal grinding, up to the final Physeos upgrade.
 - **Bozja Resistance Weapon** — Shadowbringers relic progression, i485 → i535. Zadnor grinding and the Irresistible stat allocation.
 - **Manderville Weapon** — Endwalker relic progression, i615 → i665. Four stages (Manderville, Amazing, Majestic, Mandervillous), each 3 upgrade items per weapon bought with Poetics.
@@ -48,7 +48,13 @@ Each tracker's materials live in `<tracker>/src/data.js` (Phantom keeps its `PHA
 node scripts/generate-static-content.js
 ```
 
-The output is committed as plain HTML, so there's still no build step at deploy time.
+The same script also regenerates each tracker's FAQ section, the JSON-LD structured data in each tracker's `<head>`, and `sitemap.xml` (with today's date as `lastmod`). The output is committed as plain HTML, so there's still no build step at deploy time.
+
+## Search engines
+
+- `sitemap.xml` lists the hub and all six trackers. Submit it in Google Search Console and Bing Webmaster Tools. After a data change, rerun the script and commit so `lastmod` updates.
+- A project site on `github.io` can't serve its own `robots.txt` (that lives at the domain root), so the sitemap is submitted directly instead.
+- Keep each page's `<title>`, `description`, `canonical` and OG tags unique when adding a new tracker, and add it to `TRACKERS` in the generator script so it gets a FAQ, JSON-LD and a sitemap entry.
 
 ## Icons
 
@@ -76,7 +82,8 @@ Icons are referenced by game ID in the data files, and `assets/xivapi-icons.js` 
 ├── manderville/          # Endwalker relic tracker
 ├── phantom/              # Dawntrail relic tracker
 ├── assets/               # compiled CSS, fonts, social preview images, xivapi-icons.js
-└── scripts/              # generate-static-content.js
+├── scripts/              # generate-static-content.js
+└── sitemap.xml           # generated; submit to Search Console
 ```
 
 Each tracker folder holds its own `index.html`, `src/` (`data.js` + `main.js`), and `images/` fallbacks.
