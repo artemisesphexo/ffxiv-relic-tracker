@@ -37,6 +37,31 @@
   }
   .ff-card:hover { transform: translateY(-2px); }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "FFXIV Relic Weapon Trackers",
+      "url": "https://artemisesphexo.github.io/ffxiv-relic-tracker/",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "ItemList",
+      "name": "FFXIV relic weapon trackers",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ARR Zodiac Weapon Tracker (A Realm Reborn)", "url": "https://artemisesphexo.github.io/ffxiv-relic-tracker/arr/" },
+        { "@type": "ListItem", "position": 2, "name": "Anima Weapon Tracker (Heavensward)", "url": "https://artemisesphexo.github.io/ffxiv-relic-tracker/anima/" },
+        { "@type": "ListItem", "position": 3, "name": "Eureka Weapon Tracker (Stormblood)", "url": "https://artemisesphexo.github.io/ffxiv-relic-tracker/eureka/" },
+        { "@type": "ListItem", "position": 4, "name": "Bozja Resistance Weapon Tracker (Shadowbringers)", "url": "https://artemisesphexo.github.io/ffxiv-relic-tracker/bozja/" },
+        { "@type": "ListItem", "position": 5, "name": "Manderville Weapon Tracker (Endwalker)", "url": "https://artemisesphexo.github.io/ffxiv-relic-tracker/manderville/" },
+        { "@type": "ListItem", "position": 6, "name": "Phantom Weapon Tracker (Dawntrail)", "url": "https://artemisesphexo.github.io/ffxiv-relic-tracker/phantom/" }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body class="ff-bg text-slate-200 flex items-center justify-center min-h-screen px-4">
   <div class="max-w-[720px] w-full">
@@ -55,7 +80,7 @@
       <a href="anima/" class="ff-card rounded-lg p-6 block border-t-2" style="border-top-color:#b79c59">
         <div class="text-3xl mb-3">⚔️</div>
         <h2 class="text-lg font-bold text-[#fceeb0] mb-1">Anima Weapon</h2>
-        <p class="text-xs text-slate-500 leading-relaxed">Heavensward relic progression, i170 &rarr; i275. Nine stages, dungeon runs, and the primal gauntlet.</p>
+        <p class="text-xs text-slate-500 leading-relaxed">Heavensward relic progression, i170 &rarr; i275. Eight stages, dungeon runs, and the primal gauntlet.</p>
       </a>
 
       <a href="eureka/" class="ff-card rounded-lg p-6 block border-t-2" style="border-top-color:#2ea8a3">
@@ -81,6 +106,12 @@
         <h2 class="text-lg font-bold text-emerald-300 mb-1">Phantom Weapon</h2>
         <p class="text-xs text-slate-500 leading-relaxed">Dawntrail relic progression, i745 &rarr; i795. Five stages through the Occult Crescent.</p>
       </a>
+    </div>
+
+    <div class="ff-card rounded-lg p-6 mt-10 text-xs text-slate-400 leading-relaxed" style="transform:none">
+      <h2 class="text-sm font-bold text-slate-200 mb-3">About these relic trackers</h2>
+      <p class="mb-3">Each tracker covers one Final Fantasy XIV relic weapon line from its first stage to its final upgrade. Pick the jobs you are working on, tick off materials as you farm them, and the page keeps a running total of the Poetics, seals, tokens and crafting materials you still need, multiplied across every weapon.</p>
+      <p>Every tracker page also lists the full material requirements for each stage, including where each item comes from and what it costs to exchange. Progress is saved in your browser, so there is no account to create. Clearing your browser data or switching devices resets it.</p>
     </div>
 
     <div class="text-center text-[11px] text-slate-600 mt-10">
