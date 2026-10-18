@@ -31,14 +31,25 @@ document.addEventListener("alpine:init", () => {
 				XivIcons.hydrateDom();
 			}
 
+			// One-time move from the old generic keys to anima_* keys.
+try {
+	["inventory", "jobs"].forEach((k) => {
+		const old = localStorage.getItem("relic_" + k);
+		if (old !== null && localStorage.getItem("anima_" + k) === null) {
+			localStorage.setItem("anima_" + k, old);
+		}
+		localStorage.removeItem("relic_" + k);
+	});
+} catch (e) {}
+			
 			// Load Inventory
 			try {
-				const sInv = localStorage.getItem("relic_inventory");
+				const sInv = localStorage.getItem("anima_inventory");
 				if (sInv) this.inventory = JSON.parse(sInv);
 			} catch (e) {
 				// Only clear this tracker's own corrupted key — never the whole
 				// origin's localStorage, since Phantom and Bozja's saves live there too.
-				localStorage.removeItem("relic_inventory");
+				localStorage.removeItem("anima_inventory");
 			}
 
 			// Load Selected Jobs
@@ -67,11 +78,11 @@ document.addEventListener("alpine:init", () => {
 
 			// Watchers for Auto-Save
 			this.$watch("selectedJobs", (v) =>
-				localStorage.setItem("relic_jobs", JSON.stringify(v)),
+				localStorage.setItem("anima_jobs", JSON.stringify(v)),
 			);
 			this.$watch(
 				"inventory",
-				(v) => localStorage.setItem("relic_inventory", JSON.stringify(v)),
+				(v) => localStorage.setItem("anima_inventory", JSON.stringify(v)),
 				{ deep: true },
 			);
 		},
@@ -149,8 +160,8 @@ document.addEventListener("alpine:init", () => {
 				this.items.forEach((item) => {
 					this.inventory[item.id] = item.type === "checklist" ? [] : "";
 				});
-				localStorage.removeItem("relic_inventory");
-				localStorage.removeItem("relic_jobs");
+				localStorage.removeItem("anima_inventory");
+				localStorage.removeItem("anima_jobs");
 			}
 		},
 
