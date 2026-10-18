@@ -1052,7 +1052,7 @@ document.addEventListener('alpine:init', () => {
     },
 
     getOwned(item) {
-      return parseInt(this.inventory[item.id]) || 0;
+      return Math.max(0, parseInt(this.inventory[item.id]) || 0);
     },
 
     // Owned amount used for progress bars/rings: real input for anything not
