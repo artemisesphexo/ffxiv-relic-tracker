@@ -54,7 +54,7 @@ try {
 
 			// Load Selected Jobs
 			try {
-				const sJobs = localStorage.getItem("relic_jobs");
+				const sJobs = localStorage.getItem("anima_jobs");
 				if (sJobs) {
 					this.selectedJobs = JSON.parse(sJobs);
 				} else {
