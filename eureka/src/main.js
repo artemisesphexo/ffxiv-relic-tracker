@@ -90,7 +90,7 @@ document.addEventListener("alpine:init", () => {
 					? this.inventory[item.id].length
 					: 0;
 			}
-			return parseInt(this.inventory[item.id]) || 0;
+			return Math.max(0, parseInt(this.inventory[item.id]) || 0);
 		},
 
 		getRemaining(item) {
