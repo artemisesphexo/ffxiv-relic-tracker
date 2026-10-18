@@ -925,7 +925,7 @@ document.addEventListener('alpine:init', () => {
       try {
         const sInv = localStorage.getItem("phantom_inventory");
         if (sInv) this.inventory = JSON.parse(sInv);
-      } catch (e) { localStorage.clear(); }
+      } catch (e) { localStorage.removeItem("phantom_inventory"); }
 
       try {
         const sJobs = localStorage.getItem("phantom_jobs");
