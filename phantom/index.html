@@ -297,7 +297,7 @@
                     <p class="text-[10px] text-slate-500 truncate" x-title="item.tip" x-text="item.tip"></p>
                   </div>
 
-                  <input type="number" x-model="inventory[item.id]" placeholder="0"
+                  <input type="number" min="0" x-model="inventory[item.id]" placeholder="0"
                          class="w-14 bg-[#0b0e0d] border border-slate-800 rounded text-center font-mono text-xs py-0.5 outline-none text-white focus:border-emerald-500 placeholder-slate-700 transition shrink-0" />
                   <span class="text-slate-600 shrink-0">/</span>
                   <span class="w-16 shrink-0 font-mono text-slate-400" x-text="getGoal(item).toLocaleString()"></span>
