@@ -97,27 +97,29 @@ const MANDERVILLE_DATA = [
 	},
 ];
 
-// Mandervillous weapon per job, shown on the job button once that job is done.
-const WEAPON_ITEM_IDS = {
-	PLD: 40932, // Mandervillous Falchion
-	WAR: 40934, // Mandervillous Battleaxe
-	DRK: 40938, // Mandervillous Greatsword
-	GNB: 40947, // Mandervillous Gunblade
-	WHM: 40940, // Mandervillous Cane
-	SCH: 40943, // Mandervillous Codex
-	AST: 40944, // Mandervillous Torquetum
-	SGE: 40949, // Mandervillous Wings
-	MNK: 40933, // Mandervillous Fists
-	DRG: 40935, // Mandervillous Trident
-	NIN: 40937, // Mandervillous Knives
-	SAM: 40945, // Mandervillous Samurai Blade
-	RPR: 40950, // Mandervillous Zaghnal
-	BRD: 40936, // Mandervillous Compound Bow
-	MCH: 40939, // Mandervillous Revolver
-	DNC: 40948, // Mandervillous Chakrams
-	BLM: 40941, // Mandervillous Rod
-	SMN: 40942, // Mandervillous Index
-	RDM: 40946, // Mandervillous Rapier
+// Manderville weapon at each stage, per job: Manderville, Amazing, Majestic,
+// Mandervillous.
+// Item IDs for XIVAPI icons, used for the stage checks and the job buttons.
+const STAGE_WEAPON_IDS = {
+	PLD: [38400, 39144, 39920, 40932], // Manderville Sword → Mandervillous Falchion
+	WAR: [38402, 39146, 39922, 40934], // Manderville Axe → Mandervillous Battleaxe
+	DRK: [38406, 39150, 39926, 40938], // Manderville Zweihander → Mandervillous Greatsword
+	GNB: [38415, 39159, 39935, 40947], // Manderville Gunblade → Mandervillous Gunblade
+	WHM: [38408, 39152, 39928, 40940], // Manderville Cane → Mandervillous Cane
+	SCH: [38411, 39155, 39931, 40943], // Manderville Codex → Mandervillous Codex
+	AST: [38412, 39156, 39932, 40944], // Manderville Torquetum → Mandervillous Torquetum
+	SGE: [38417, 39161, 39937, 40949], // Manderville Milpreves → Mandervillous Wings
+	MNK: [38401, 39145, 39921, 40933], // Manderville Knuckles → Mandervillous Fists
+	DRG: [38403, 39147, 39923, 40935], // Manderville Spear → Mandervillous Trident
+	NIN: [38405, 39149, 39925, 40937], // Manderville Knives → Mandervillous Knives
+	SAM: [38413, 39157, 39933, 40945], // Manderville Samurai Blade → Mandervillous Samurai Blade
+	RPR: [38418, 39162, 39938, 40950], // Manderville Scythe → Mandervillous Zaghnal
+	BRD: [38404, 39148, 39924, 40936], // Manderville Harp Bow → Mandervillous Compound Bow
+	MCH: [38407, 39151, 39927, 40939], // Manderville Revolver → Mandervillous Revolver
+	DNC: [38416, 39160, 39936, 40948], // Manderville Chakrams → Mandervillous Chakrams
+	BLM: [38409, 39153, 39929, 40941], // Manderville Rod → Mandervillous Rod
+	SMN: [38410, 39154, 39930, 40942], // Manderville Index → Mandervillous Index
+	RDM: [38414, 39158, 39934, 40946], // Manderville Rapier → Mandervillous Rapier
 };
 
 // 19 jobs eligible for the Manderville weapon line: every combat job that
