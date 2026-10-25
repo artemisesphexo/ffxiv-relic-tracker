@@ -226,6 +226,30 @@ const BOZJA_DATA = [
 	},
 ];
 
+// Resistance weapon at each stage, per job: Resistance, Augmented Resistance,
+// Recollection, Law's Order, Augmented Law's Order, Blade's, and the Blade's
+// weapon again for Victory (stat allocation doesn't change the weapon).
+// Item IDs for XIVAPI icons, used for the stage checks and the job buttons.
+const STAGE_WEAPON_IDS = {
+	PLD: [30228, 30767, 30785, 32651, 32669, 33462, 33462], // Honorbound → Blade's Honor
+	WAR: [30230, 30769, 30787, 32653, 32671, 33464, 33464], // Skullrender → Blade's Valor
+	DRK: [30234, 30773, 30791, 32657, 32675, 33468, 33468], // Woeborn → Blade's Justice
+	GNB: [30243, 30782, 30800, 32666, 32684, 33477, 33477], // Crownsblade → Blade's Resolve
+	WHM: [30236, 30775, 30793, 32659, 32677, 33470, 33470], // Ingrimm → Blade's Mercy
+	SCH: [30239, 30778, 30796, 32662, 32680, 33473, 33473], // Akademos → Blade's Wisdom
+	AST: [30240, 30779, 30797, 32663, 32681, 33474, 33474], // Solstice → Blade's Providence
+	MNK: [30229, 30768, 30786, 32652, 32670, 33463, 33463], // Samsara → Blade's Serenity
+	DRG: [30231, 30770, 30788, 32654, 32672, 33465, 33465], // Dreizack → Blade's Glory
+	NIN: [30233, 30772, 30790, 32656, 32674, 33467, 33467], // Honeshirazu → Blade's Subtlety
+	SAM: [30241, 30780, 30798, 32664, 32682, 33475, 33475], // Hoshikiri → Blade's Fealty
+	BRD: [30232, 30771, 30789, 32655, 32673, 33466, 33466], // Brilliance → Blade's Muse
+	MCH: [30235, 30774, 30792, 32658, 32676, 33469, 33469], // Lawman → Blade's Ingenuity
+	DNC: [30244, 30783, 30801, 32667, 32685, 33478, 33478], // Enchufla → Blade's Euphoria
+	BLM: [30237, 30776, 30794, 32660, 32678, 33471, 33471], // Soulscourge → Blade's Fury
+	SMN: [30238, 30777, 30795, 32661, 32679, 33472, 33472], // Espiritus → Blade's Acumen
+	RDM: [30242, 30781, 30799, 32665, 32683, 33476, 33476], // Talekeeper → Blade's Temperance
+};
+
 // All 17 jobs eligible for the Resistance weapon line (every job that existed
 // through Shadowbringers — excludes Reaper, Sage, Viper, Pictomancer, which
 // were added in Endwalker/Dawntrail).

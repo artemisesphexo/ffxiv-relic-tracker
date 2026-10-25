@@ -607,6 +607,25 @@ const ANIMA_DATA = [
 	},
 ];
 
+// Anima weapon at each stage, per job: Animated, Awoken, Anima, Hyperconductive,
+// Reconditioned, Sharpened, Complete, Lux.
+// Item IDs for XIVAPI icons, used for the stage checks and the job buttons.
+const STAGE_WEAPON_IDS = {
+	PLD: [13611, 13597, 13223, 14870, 15223, 15237, 15251, 16050], // Animated Hauteclaire → Aettir Lux
+	WAR: [13613, 13599, 13225, 14872, 15225, 15239, 15253, 16052], // Animated Parashu → Minos Lux
+	DRK: [13617, 13603, 13229, 14876, 15229, 15243, 15257, 16056], // Animated Deathbringer → Cronus Lux
+	WHM: [13619, 13605, 13231, 14878, 15231, 15245, 15259, 16058], // Animated Seraph Cane → Sindri Lux
+	SCH: [13622, 13608, 13234, 14881, 15234, 15248, 15262, 16061], // Animated Elements → Anabasis Lux
+	AST: [13623, 13609, 13235, 14882, 15235, 15249, 15263, 16062], // Animated Atlas → Canopus Lux
+	MNK: [13612, 13598, 13224, 14871, 15224, 15238, 15252, 16051], // Animated Rising Suns → Nyepels Lux
+	DRG: [13614, 13600, 13226, 14873, 15226, 15240, 15254, 16053], // Animated Brionac → Areadbhar Lux
+	NIN: [13616, 13602, 13228, 14875, 15228, 15242, 15256, 16055], // Animated Yukimitsu → Sandungs Lux
+	BRD: [13615, 13601, 13227, 14874, 15227, 15241, 15255, 16054], // Animated Berimbau → Terpander Lux
+	MCH: [13618, 13604, 13230, 14877, 15230, 15244, 15258, 16057], // Animated Ferdinand → Deathlocke Lux
+	BLM: [13620, 13606, 13232, 14879, 15232, 15246, 15260, 16059], // Animated Lunaris Rod → Kaladanda Lux
+	SMN: [13621, 13607, 13233, 14880, 15233, 15247, 15261, 16060], // Animated Almandal → Mimesis Lux
+};
+
 // List of all Jobs available for Anima Weapons
 const JOBS = [
 	{ id: "PLD", label: "Paladin", role: "tank" },

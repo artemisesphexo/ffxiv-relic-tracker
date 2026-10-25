@@ -180,6 +180,27 @@ const EUREKA_DATA = [
 	},
 ];
 
+// Eurekan weapon at the end of each stage, per job: Antiquated, Anemos, Elemental
+// (Pagos), Pyros, Eureka (Hydatos), Physeos.
+// Item IDs for XIVAPI icons, used for the stage checks and the job buttons.
+const STAGE_WEAPON_IDS = {
+	PLD: [17817, 21990, 22957, 24071, 24691, 24707], // Antiquated Galatyn → Antea Physeos
+	WAR: [17819, 21992, 22959, 24073, 24693, 24709], // Antiquated Farsha → Shamash Physeos
+	DRK: [17823, 21996, 22963, 24077, 24697, 24713], // Antiquated Caladbolg → Xiphias Physeos
+	WHM: [17825, 21998, 22965, 24079, 24699, 24715], // Antiquated Aymur → Rose Couverte Physeos
+	SCH: [17828, 22001, 22968, 24082, 24702, 24718], // Antiquated Organum → Jebat Physeos
+	AST: [17829, 22002, 22969, 24083, 24703, 24719], // Antiquated Pleiades → Albireo Physeos
+	MNK: [17818, 21991, 22958, 24072, 24692, 24708], // Antiquated Sudarshana Chakra → Dumuzis Physeos
+	DRG: [17820, 21993, 22960, 24074, 24694, 24710], // Antiquated Ryunohige → Daboya Physeos
+	NIN: [17822, 21995, 22962, 24076, 24696, 24712], // Antiquated Nagi → Kasasagi Physeos
+	SAM: [17830, 22003, 22970, 24084, 24704, 24720], // Antiquated Kiku-ichimonji → Torigashira Physeos
+	BRD: [17821, 21994, 22961, 24075, 24695, 24711], // Antiquated Failnaught → Circinae Physeos
+	MCH: [17824, 21997, 22964, 24078, 24698, 24714], // Antiquated Outsider → Mollfrith Physeos
+	BLM: [17826, 21999, 22966, 24080, 24700, 24716], // Antiquated Vanargand → Paikea Physeos
+	SMN: [17827, 22000, 22967, 24081, 24701, 24717], // Antiquated Lemegeton → Tuah Physeos
+	RDM: [17831, 22004, 22971, 24085, 24705, 24721], // Antiquated Murgleis → Brunello Physeos
+};
+
 // 15 jobs eligible for the Eurekan relic weapon line: every job that existed
 // during Stormblood (the ARR/Heavensward roster plus Samurai and Red Mage,
 // both added at Stormblood's 4.0 launch). Gunbreaker and Dancer launched in

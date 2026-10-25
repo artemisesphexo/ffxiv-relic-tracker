@@ -20,9 +20,6 @@ document.addEventListener("alpine:init", () => {
 		availableJobs: JOBS,
 		stageInfo: STAGE_INFO,
 
-		// Job ID -> Mandervillous weapon icon URL (filled from XIVAPI)
-		weaponIcons: {},
-
 		// State
 		selectedJobs: [],
 		inventory: {},
@@ -30,6 +27,8 @@ document.addEventListener("alpine:init", () => {
 		// jobStage: highest stage (0..stageCount) each job's weapon has reached.
 		// stageCount = weapon complete.
 		jobStage: {},
+		// "JOB_n" -> icon URL of that job's weapon at stage n (filled from XIVAPI)
+		stageIcons: {},
 
 		// --- 1. INITIALIZATION ---
 		init() {
@@ -37,14 +36,18 @@ document.addEventListener("alpine:init", () => {
 			if (typeof XivIcons !== "undefined") {
 				XivIcons.hydrateItems(this.items, ICON_ITEM_IDS);
 				XivIcons.hydrateDom();
-				XivIcons.hydrate(
-					Object.keys(WEAPON_ITEM_IDS).map((jobId) => ({
-						ref: WEAPON_ITEM_IDS[jobId],
-						apply: (url) => {
-							this.weaponIcons[jobId] = url;
-						},
-					})),
-				);
+				const refs = [];
+				Object.keys(STAGE_WEAPON_IDS).forEach((jobId) => {
+					STAGE_WEAPON_IDS[jobId].forEach((itemId, i) => {
+						refs.push({
+							ref: itemId,
+							apply: (url) => {
+								this.stageIcons[jobId + "_" + (i + 1)] = url;
+							},
+						});
+					});
+				});
+				XivIcons.hydrate(refs);
 			}
 
 			// Load Inventory
@@ -329,9 +332,20 @@ document.addEventListener("alpine:init", () => {
 
 		// --- 5. JOB COMPLETION ---
 
-		// Finished-weapon icon for a job, or its job icon until XIVAPI answers.
+		// The weapon a job holds at stage n, or its job icon until XIVAPI answers.
+		stageIcon(jobId, n) {
+			return this.stageIcons[jobId + "_" + n] || "./images/jobs/" + jobId + ".png";
+		},
+
+		// Job button: the weapon at the job's current stage, or the job icon at stage 0.
+		jobChipIcon(jobId) {
+			const st = this.getJobStage(jobId);
+			return st > 0 ? this.stageIcon(jobId, st) : "./images/jobs/" + jobId + ".png";
+		},
+
+		// The finished weapon.
 		weaponIcon(jobId) {
-			return this.weaponIcons[jobId] || "./images/jobs/" + jobId + ".png";
+			return this.stageIcon(jobId, this.stageCount);
 		},
 
 		isJobComplete(jobId) {

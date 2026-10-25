@@ -416,6 +416,22 @@ const ARR_DATA = [
 	},
 ];
 
+// ARR relic weapon at each stage, per job: Relic, Zenith, Atma, Animus, Novus,
+// Nexus, Zodiac Braves, Zeta.
+// Item IDs for XIVAPI icons, used for the stage checks and the job buttons.
+const STAGE_WEAPON_IDS = {
+	PLD: [1675, 6257, 7824, 7834, 7863, 8649, 9491, 10054], // Curtana → Excalibur Zeta
+	WAR: [1816, 6259, 7826, 7836, 7865, 8651, 9493, 10056], // Bravura → Ragnarok Zeta
+	WHM: [2052, 6262, 7829, 7839, 7868, 8654, 9496, 10059], // Thyrus → Nirvana Zeta
+	SCH: [2214, 6265, 7832, 7842, 7871, 8657, 9499, 10062], // Omnilex → Last Resort Zeta
+	MNK: [1746, 6258, 7825, 7835, 7864, 8650, 9492, 10055], // Sphairai → Kaiser Knuckles Zeta
+	DRG: [1885, 6260, 7827, 7837, 7866, 8652, 9494, 10057], // Gae Bolg → Longinus Zeta
+	NIN: [7888, 9250, 9251, 9252, 9253, 9254, 9501, 10064], // Yoshimitsu → Sasuke's Blades Zeta
+	BRD: [1955, 6261, 7828, 7838, 7867, 8653, 9495, 10058], // Artemis Bow → Yoichi Bow Zeta
+	BLM: [2140, 6263, 7830, 7840, 7869, 8655, 9497, 10060], // Stardust Rod → Lilith Rod Zeta
+	SMN: [2213, 6264, 7831, 7841, 7870, 8656, 9498, 10061], // The Veil of Wiyu → Apocalypse Zeta
+};
+
 // 10 jobs eligible for the Zodiac relic weapon line: the original ARR launch
 // jobs (PLD, WAR, MNK, DRG, BRD, WHM, SCH, BLM, SMN) plus NIN, added in patch
 // 2.4 while the line was still active. DRK, AST, and MCH launched in
