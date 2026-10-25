@@ -25,7 +25,7 @@
 
 <link rel="stylesheet" href="../assets/site.css" />
 <link rel="stylesheet" href="../assets/fonts.css" />
-<script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js" integrity="sha384-5/joNqFnRyVWzXp99bHot6RHG+EksGp+USSgZwPar7T9SD9PKKER37n/8bXBAZGd"></script>
 <style>
   h1, h2, h3, .ff-title { font-family: "Cinzel", serif; }
   body { font-family: "Lato", sans-serif; }
@@ -282,7 +282,7 @@
                 <div class="px-3 py-1.5 flex items-center gap-2 text-xs" :class="getRemaining(item) === 0 ? 'bg-emerald-900/5' : 'hover:bg-slate-800/20'">
 
                   <div class="w-8 h-8 shrink-0 rounded-md border border-slate-700 bg-slate-800 shadow-md flex items-center justify-center relative overflow-hidden">
-                    <img :src="item.icon || ('./images/items/' + item.id + '.png')" :alt="item.name"
+                    <img :src="item.icon || ''" :alt="item.name"
                          class="w-full h-full object-cover"
                          :class="getRemaining(item) === 0 ? 'grayscale opacity-50' : ''"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -721,7 +721,7 @@
         </div>
         <div x-show="getTotalLiability('Gil') > 0" class="flex items-center gap-1.5 text-xs">
           <span class="w-4 h-4 shrink-0 relative inline-block">
-            <img src="./images/currency/gil.png" data-xiv-item="1" alt="Gil" class="w-full h-full object-contain"
+            <img src="../assets/placeholder.png" data-xiv-item="1" alt="Gil" class="w-full h-full object-contain"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
             <span class="hidden absolute inset-0" style="line-height:1rem;">💰</span>
           </span>
@@ -730,7 +730,7 @@
         </div>
         <div x-show="getTotalLiability('Gemstones') > 0" class="flex items-center gap-1.5 text-xs">
           <span class="w-4 h-4 shrink-0 relative inline-block">
-            <img src="./images/currency/gemstone.png" data-xiv-item="26807" alt="Gemstones" class="w-full h-full object-contain"
+            <img src="../assets/placeholder.png" data-xiv-item="26807" alt="Gemstones" class="w-full h-full object-contain"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
             <span class="hidden absolute inset-0" style="line-height:1rem;">🔶</span>
           </span>
@@ -917,9 +917,9 @@ document.addEventListener('alpine:init', () => {
     sharedStageDone: 0,
 
     init() {
-      // Official game icons via XIVAPI; local PNGs / emoji stay as the fallback.
+      // Official game icons via XIVAPI; emoji shows until (or if) they load.
       if (typeof XivIcons !== "undefined") {
-        XivIcons.hydrateItems(this.items);
+        XivIcons.hydrateItems(this.items, null, { placeholder: false });
         XivIcons.hydrateDom();
       }
 

@@ -23,7 +23,7 @@ document.addEventListener("alpine:init", () => {
 
 		// --- 1. INITIALIZATION ---
 		init() {
-			// Official game icons via XIVAPI; local PNGs stay as the fallback.
+			// Official game icons via XIVAPI (placeholder until they load).
 			if (typeof XivIcons !== "undefined") {
 				XivIcons.hydrateItems(this.items, ICON_ITEM_IDS);
 				XivIcons.hydrateDom();
@@ -78,14 +78,6 @@ document.addEventListener("alpine:init", () => {
 
 		get weaponCount() {
 			return this.selectedJobs.length || 1;
-		},
-
-		toggleJob(jobId) {
-			if (this.selectedJobs.includes(jobId)) {
-				this.selectedJobs = this.selectedJobs.filter((id) => id !== jobId);
-			} else {
-				this.selectedJobs.push(jobId);
-			}
 		},
 
 		getGoal(item) {
@@ -198,7 +190,7 @@ document.addEventListener("alpine:init", () => {
 
 		handleMissingIcon(event) {
 			event.target.onerror = null;
-			event.target.src = "./images/icons/placeholder.png";
+			event.target.src = "../assets/placeholder.png";
 		},
 
 		// --- 4. NEW LOGIC FOR JOB COMPLETION TRACKING ---

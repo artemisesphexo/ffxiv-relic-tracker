@@ -4,7 +4,8 @@ const ICONS = {
 };
 
 // In-game item IDs for shared icons, used by assets/xivapi-icons.js to load
-// the official icon from XIVAPI (the local PNG above stays as the fallback).
+// the official icon from XIVAPI. Paths listed here are only lookup keys, so
+// they need no local file; anything without an ID needs its PNG in images/.
 // Individual materials carry their own `itemId` on the data entry instead.
 const ICON_ITEM_IDS = {};
 
