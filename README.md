@@ -32,13 +32,14 @@ Just open any `index.html` in a browser, or serve the folder locally:
 npx serve .
 ```
 
-If you add or change Tailwind classes in any HTML file, rebuild the stylesheet:
+If you add or change Tailwind classes in any HTML or `src/*.js` file, rebuild the stylesheet (needs [Node.js](https://nodejs.org/)):
 
 ```
-npx tailwindcss -i input.css -o assets/site.css --minify
+npm install        # first time only
+npm run build:css
 ```
 
-Note: `input.css` and the Tailwind config aren't committed, so a rebuild needs them recreated first. Until then, arbitrary-value classes such as `text-[#2ea8a3]` only work if they're already in `assets/site.css` — otherwise define the colour in the page's own `<style>` block (the Manderville page does this).
+Commit the updated `assets/site.css` along with your change. `npm run watch:css` rebuilds automatically while you edit. Tailwind scans the files listed in `tailwind.config.js`, so a new tracker folder following the usual `<tracker>/index.html` + `<tracker>/src/` layout is picked up without changes.
 
 ## Editing tracker data
 

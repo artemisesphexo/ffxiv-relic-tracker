@@ -1,0 +1,10 @@
+# Store text files with LF line endings on every OS, so Windows and
+# Linux/macOS clones never show whole-file line-ending diffs.
+* text=auto eol=lf
+
+# Binary files: never touch.
+*.png binary
+*.jpg binary
+*.webp binary
+*.ico binary
+*.woff2 binary
