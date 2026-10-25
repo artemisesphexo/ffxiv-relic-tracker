@@ -244,6 +244,13 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
         </svg>
     </div>
+
+    <div
+        x-show="getJobStage(job.id) > 0 && !isJobComplete(job.id)"
+        class="absolute bottom-0 right-0 font-mono font-bold text-yellow-300 leading-none"
+        style="font-size:8px;padding:1px 2px;background:rgba(14,17,22,.92);border-top-left-radius:4px;"
+        x-text="getJobStage(job.id) + '/' + stageCount"
+    ></div>
 </button>
 						</template>
 
@@ -440,7 +447,7 @@
 														class="grid grid-cols-4 gap-1.5 justify-items-center"
 													>
 														<template
-															x-for="jobId in selectedJobs"
+															x-for="jobId in checklistJobs(item)"
 															:key="jobId"
 														>
 															<label
@@ -450,8 +457,8 @@
 																<input
     type="checkbox"
     :value="jobId"
-    x-model="inventory[item.id]"
-    @change="if(item.id === 'zeta_complete') toggleCompleteJob(jobId, $el.checked)"
+    :checked="isChecked(item, jobId)"
+    @change="toggleChecked(item, jobId)"
     class="peer sr-only"
 >
 
@@ -604,6 +611,31 @@
 									</div>
 								</div>
 							</template>
+
+							<!-- Per-stage weapon check: tick a job once its weapon has reached this stage.
+							     Checking stage N implies stages 1..N; unchecking drops the job to N-1.
+							     The stage with the completion item uses that item's boxes instead. -->
+							<div x-show="!isCompletionStage(group.name)" class="px-3 py-2 flex items-center gap-2 text-xs bg-purple-900/5" style="flex-wrap:wrap;">
+								<div class="min-w-0" style="flex:1 1 220px;">
+									<span class="font-semibold text-slate-200">Weapon reached this stage</span>
+									<p class="text-[10px] text-slate-500">Already upgraded a job this far? Check it off to drop this stage's materials for that job from the totals.</p>
+								</div>
+								<div class="flex gap-1.5 flex-wrap justify-end" style="flex:0 1 auto;max-width:100%;">
+									<template x-for="jobId in selectedJobs" :key="jobId">
+										<label class="cursor-pointer relative" :title="jobId + (getJobStage(jobId) >= stageNumber(group.name) ? ' — reached' : ' — mark reached')">
+											<input type="checkbox" :checked="getJobStage(jobId) >= stageNumber(group.name)" @change="toggleJobStage(jobId, stageNumber(group.name))" class="peer sr-only" />
+											<div class="w-8 h-8 rounded-md border border-slate-700 bg-slate-800 overflow-hidden flex items-center justify-center transition-all duration-150 hover:scale-110 peer-checked:border-purple-400 peer-checked:bg-purple-900/40 peer-checked:shadow-[0_0_8px_rgba(192,132,252,0.5)]">
+												<img :src="'./images/jobs/' + jobId + '.png'" :alt="jobId"
+												     class="w-full h-full object-contain p-0.5 transition-all"
+												     :class="getJobStage(jobId) >= stageNumber(group.name) ? 'opacity-100' : 'grayscale opacity-50'"
+												     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+												<span class="hidden text-[9px] font-bold text-slate-400" x-text="jobId"></span>
+											</div>
+										</label>
+									</template>
+									<span x-show="!selectedJobs.length" class="text-[10px] text-slate-600">Select a job above</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</template>
