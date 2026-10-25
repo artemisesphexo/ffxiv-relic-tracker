@@ -10,7 +10,7 @@ const ICONS = {
 	DUNGEON: "./images/icons/dungeon.png",
 	REPEATQUEST: "./images/icons/repeat-quest.png",
 	SCRIP: "./images/icons/scrip-token.png",
-	TRIAL: "./images/icons/trials.png",
+	TRIAL: "./images/icons/trial.png",
 	FATE: "./images/icons/fate.png",
 
 	// Tribe Tokens
@@ -32,7 +32,8 @@ const ICONS = {
 };
 
 // In-game item IDs for shared icons, used by assets/xivapi-icons.js to load
-// the official icon from XIVAPI (the local PNG above stays as the fallback).
+// the official icon from XIVAPI. Paths listed here are only lookup keys, so
+// they need no local file; anything without an ID needs its PNG in images/.
 // Individual materials carry their own `itemId` on the data entry instead.
 const ICON_ITEM_IDS = {
 	[ICONS.POETICS]: 28, // Allagan Tomestone of Poetics
@@ -585,7 +586,7 @@ const ANIMA_DATA = [
 		stage: "8. Lux (i275)",
 		name: "Primal Gauntlet (Lux)",
 		type: "checklist",
-		icon: "./images/icons/trial.png",
+		icon: ICONS.TRIAL,
 		qty: 1,
 		tip: "Complete the 12 Trials. Clicking DONE reveals your finished Lux Weapon!",
 		tooltip: [

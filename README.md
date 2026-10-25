@@ -22,7 +22,7 @@ Plain HTML/CSS/JS, no build step to run the site itself:
 - [Alpine.js](https://alpinejs.dev/) for interactivity, loaded from a CDN
 - [Tailwind CSS](https://tailwindcss.com/) compiled once into `assets/site.css` (only needed if you're changing styles — see below)
 - No backend, no database — everything runs client-side and saves to `localStorage`
-- Game icons load from [XIVAPI](https://v2.xivapi.com) via `assets/xivapi-icons.js` (see [Icons](#icons) below). Lookups are cached for 30 days, and the local PNGs remain as the fallback if the API is unreachable.
+- Game icons load from [XIVAPI](https://v2.xivapi.com) via `assets/xivapi-icons.js` (see [Icons](#icons) below). Lookups are cached for 30 days; a shared placeholder (`assets/placeholder.png`) shows until an icon loads, or if the API is unreachable.
 
 ## Local development
 
@@ -68,7 +68,8 @@ Icons are referenced by game ID in the data files, and `assets/xivapi-icons.js` 
 | `itemId: "Icon:61801"` | Raw game icon ID, no lookup needed | Dungeon duty icon |
 
 - Shared currency icons (Poetics, seals, tokens) are mapped once per tracker in `ICON_ITEM_IDS` in `data.js`.
-- Static `<img>` tags take a `data-xiv-item="…"` attribute instead.
+- Static `<img>` tags take a `data-xiv-item="…"` attribute instead, with `src="../assets/placeholder.png"`.
+- Only icons with no game ID ship as local PNGs (currently Anima's dungeon, FATE, trial and repeat-quest icons, and Bozja's stat allocation). Giving one an `Icon:` ID lets you delete its file.
 - Item IDs can be found with XIVAPI's search, e.g. `https://v2.xivapi.com/api/search?query=Name="Cosmic Crystallite"&sheets=Item&fields=Name,Icon`.
 - Icon IDs for non-item things (duty types, FATEs, etc.) are listed in Gamer Escape's [Dictionary of Icons](https://ffxiv.gamerescape.com/wiki/Dictionary_of_Icons) — e.g. 061801 Dungeon, 061804 Trial, 061807 Duty Roulette, 061809 FATE.
 
@@ -87,7 +88,7 @@ Icons are referenced by game ID in the data files, and `assets/xivapi-icons.js` 
 └── sitemap.xml           # generated; submit to Search Console
 ```
 
-Each tracker folder holds its own `index.html`, `src/` (`data.js` + `main.js`), and `images/` fallbacks.
+Each tracker folder holds its own `index.html`, `src/` (`data.js` + `main.js`), and `images/` for job, weapon and stage art plus the few icons that have no game ID.
 
 ## Credits
 

@@ -1,10 +1,9 @@
 /**
  * XIVAPI icon loader
  * ------------------
- * Swaps local item/currency icons for the official game icons served by
- * XIVAPI v2 (https://v2.xivapi.com). Game icons are looked up by in-game
- * item ID, so data files only need to say WHICH item something is — no more
- * hand-saving PNGs.
+ * Loads the official game icons served by XIVAPI v2 (https://v2.xivapi.com).
+ * Game icons are looked up by in-game item ID, so data files only need to say
+ * WHICH item something is — no hand-saved PNGs.
  *
  * How it works:
  *   1. Collect every item ID the page needs (from data objects and from
@@ -12,8 +11,8 @@
  *   2. Ask XIVAPI for all of their Icon paths in one batched request per
  *      sheet (/api/sheet/Item?rows=1,2,3&fields=Icon).
  *   3. Preload each icon image; only once it has actually loaded do we swap
- *      it in. If XIVAPI is down, blocked, or slow, the local PNG simply stays
- *      put — the page never shows a broken image because of this script.
+ *      it in. Until then (or for good, if XIVAPI is down or blocked) the
+ *      shared assets/placeholder.png is shown, never a broken image.
  *   4. The ID → URL map is cached in localStorage for 30 days, so repeat
  *      visits skip step 2 entirely.
  *
@@ -38,6 +37,11 @@
 	var CACHE_KEY = "xivapi_icons_v1";
 	var CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000; // icons basically never change
 	var ROWS_PER_REQUEST = 100;
+
+	// Shown until an icon has loaded. Resolved next to this script, so it works
+	// from the hub and from every tracker folder alike.
+	var SCRIPT_SRC = typeof document !== "undefined" && document.currentScript && document.currentScript.src;
+	var PLACEHOLDER = SCRIPT_SRC ? new URL("placeholder.png", SCRIPT_SRC).href : "assets/placeholder.png";
 
 	// ---- refs ------------------------------------------------------------
 
@@ -248,14 +252,20 @@
 	 * An object's game item comes from its own `itemId`, or failing that from
 	 * `iconMap[object.icon]` — handy for shared currency icons like Poetics.
 	 * Pass Alpine's reactive `this.items` so the UI updates on swap.
+	 *
+	 * Objects with a game icon show the placeholder until it loads. Pass
+	 * { placeholder: false } to leave `icon` untouched instead (Phantom shows
+	 * its emoji fallback while `icon` is empty).
 	 */
-	function hydrateItems(items, iconMap) {
+	function hydrateItems(items, iconMap, opts) {
 		iconMap = iconMap || {};
+		var usePlaceholder = !(opts && opts.placeholder === false);
 		var targets = [];
 		function add(obj) {
 			if (!obj) return;
 			var ref = obj.itemId !== undefined ? obj.itemId : iconMap[obj.icon];
-			if (ref === undefined) return;
+			if (!keyOf(ref)) return;
+			if (usePlaceholder) obj.icon = PLACEHOLDER;
 			targets.push({
 				ref: ref,
 				apply: function (url) {
@@ -291,5 +301,6 @@
 		hydrateItems: hydrateItems,
 		hydrateDom: hydrateDom,
 		assetUrl: assetUrl,
+		PLACEHOLDER: PLACEHOLDER,
 	};
 })(typeof window !== "undefined" ? window : this);
