@@ -80,14 +80,6 @@ document.addEventListener("alpine:init", () => {
 			return this.selectedJobs.length || 1;
 		},
 
-		toggleJob(jobId) {
-			if (this.selectedJobs.includes(jobId)) {
-				this.selectedJobs = this.selectedJobs.filter((id) => id !== jobId);
-			} else {
-				this.selectedJobs.push(jobId);
-			}
-		},
-
 		getGoal(item) {
 			return item.qty * this.weaponCount;
 		},
