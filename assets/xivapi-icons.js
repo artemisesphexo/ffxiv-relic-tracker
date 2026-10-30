@@ -23,6 +23,9 @@
  *     Handy for things that aren't items — duty types, FATEs, etc. IDs come
  *     from https://ffxiv.gamerescape.com/wiki/Dictionary_of_Icons (e.g.
  *     061801 = Dungeon, 061804 = Trial, 061809 = FATE).
+ *   - A translated raw icon (title cards etc.):  itemId: "Icon:128401:en"
+ *     These live in a language subfolder (ui/icon/128000/en/…); the
+ *     language-neutral path is tried as a fallback.
  *
  * Usage (inside an Alpine component's init()):
  *   if (typeof XivIcons !== "undefined") {
@@ -48,17 +51,18 @@
 	function parseRef(ref) {
 		if (ref === undefined || ref === null || ref === "") return null;
 		if (typeof ref === "number") return { sheet: "Item", id: ref };
-		var s = String(ref);
-		var i = s.indexOf(":");
-		var sheet = i === -1 ? "Item" : s.slice(0, i);
-		var id = parseInt(i === -1 ? s : s.slice(i + 1), 10);
-		if (!/^[A-Za-z]+$/.test(sheet) || !(id > 0)) return null;
-		return { sheet: sheet, id: id };
+		var parts = String(ref).split(":");
+		var sheet = parts.length > 1 ? parts[0] : "Item";
+		var id = parseInt(parts.length > 1 ? parts[1] : parts[0], 10);
+		// Optional language, raw icons only: "Icon:128401:en"
+		var lang = sheet === "Icon" && parts[2] ? parts[2] : "";
+		if (!/^[A-Za-z]+$/.test(sheet) || !(id > 0) || !/^[a-z]*$/.test(lang)) return null;
+		return { sheet: sheet, id: id, lang: lang };
 	}
 
 	function keyOf(ref) {
 		var p = parseRef(ref);
-		return p ? p.sheet + ":" + p.id : null;
+		return p ? p.sheet + ":" + p.id + (p.lang ? ":" + p.lang : "") : null;
 	}
 
 	function assetUrl(texPath) {
@@ -69,13 +73,21 @@
 		return ("000000" + n).slice(-6);
 	}
 
-	/** Candidate URLs for a raw icon ID: high-res first, then standard. */
-	function iconUrls(iconId) {
+	/**
+	 * Candidate URLs for a raw icon ID: high-res first, then standard.
+	 * With a language, its subfolder is tried before the neutral path.
+	 */
+	function iconUrls(iconId, lang) {
 		var dir = "ui/icon/" + pad6(Math.floor(iconId / 1000) * 1000) + "/";
-		return [
-			assetUrl(dir + pad6(iconId) + "_hr1.tex"),
-			assetUrl(dir + pad6(iconId) + ".tex"),
-		];
+		var file = pad6(iconId);
+		var urls = [];
+		if (lang) {
+			urls.push(assetUrl(dir + lang + "/" + file + "_hr1.tex"));
+			urls.push(assetUrl(dir + lang + "/" + file + ".tex"));
+		}
+		urls.push(assetUrl(dir + file + "_hr1.tex"));
+		urls.push(assetUrl(dir + file + ".tex"));
+		return urls;
 	}
 
 	// ---- cache -----------------------------------------------------------
@@ -238,7 +250,7 @@
 				targets.map(function (t) {
 					var p = parseRef(t.ref);
 					var urls =
-						p.sheet === "Icon" ? iconUrls(p.id) : [icons[keyOf(t.ref)]];
+						p.sheet === "Icon" ? iconUrls(p.id, p.lang) : [icons[keyOf(t.ref)]];
 					return firstLoaded(urls).then(function (url) {
 						if (url) t.apply(url);
 					});

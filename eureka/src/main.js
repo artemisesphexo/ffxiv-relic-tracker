@@ -15,6 +15,10 @@ const STORAGE_PREFIX = "eureka";
 // set that job to the final stage instead of storing anything in inventory.
 const COMPLETION_ID = "physeos_complete";
 
+// Stage icons already requested from XIVAPI ("JOB_n"). Kept outside Alpine so
+// asking for one doesn't trigger a re-render.
+const requestedStageIcons = new Set();
+
 document.addEventListener("alpine:init", () => {
 	Alpine.data("eurekaApp", () => ({
 		// Data Sources
@@ -29,7 +33,8 @@ document.addEventListener("alpine:init", () => {
 		// jobStage: highest stage (0..stageCount) each job's weapon has reached.
 		// stageCount = weapon complete.
 		jobStage: {},
-		// "JOB_n" -> icon URL of that job's weapon at stage n (filled from XIVAPI)
+		// "JOB_n" -> icon URL of that job's weapon at stage n. Filled from XIVAPI
+		// on first use, so only icons that are actually shown get loaded.
 		stageIcons: {},
 
 		// --- 1. INITIALIZATION ---
@@ -38,18 +43,6 @@ document.addEventListener("alpine:init", () => {
 			if (typeof XivIcons !== "undefined") {
 				XivIcons.hydrateItems(this.items, ICON_ITEM_IDS);
 				XivIcons.hydrateDom();
-				const refs = [];
-				Object.keys(STAGE_WEAPON_IDS).forEach((jobId) => {
-					STAGE_WEAPON_IDS[jobId].forEach((itemId, i) => {
-						refs.push({
-							ref: itemId,
-							apply: (url) => {
-								this.stageIcons[jobId + "_" + (i + 1)] = url;
-							},
-						});
-					});
-				});
-				XivIcons.hydrate(refs);
 			}
 
 			// Load Inventory
@@ -336,13 +329,37 @@ document.addEventListener("alpine:init", () => {
 
 		// The weapon a job holds at stage n, or its job icon until XIVAPI answers.
 		stageIcon(jobId, n) {
-			return this.stageIcons[jobId + "_" + n] || "./images/jobs/" + jobId + ".png";
+			const key = jobId + "_" + n;
+			if (!this.stageIcons[key]) this.requestStageIcon(jobId, n);
+			return this.stageIcons[key] || "./images/jobs/" + jobId + ".png";
+		},
+
+		// Ask XIVAPI for one stage icon, once per page load.
+		requestStageIcon(jobId, n) {
+			const key = jobId + "_" + n;
+			const itemId = (STAGE_WEAPON_IDS[jobId] || [])[n - 1];
+			if (!itemId || requestedStageIcons.has(key) || typeof XivIcons === "undefined") return;
+			requestedStageIcons.add(key);
+			XivIcons.hydrate([
+				{
+					ref: itemId,
+					apply: (url) => {
+						this.stageIcons[key] = url;
+					},
+				},
+			]);
 		},
 
 		// Job button: the weapon at the job's current stage, or the job icon at stage 0.
 		jobChipIcon(jobId) {
 			const st = this.getJobStage(jobId);
 			return st > 0 ? this.stageIcon(jobId, st) : "./images/jobs/" + jobId + ".png";
+		},
+
+		// True once the job button shows a weapon rather than the job icon.
+		jobChipHasWeapon(jobId) {
+			const st = this.getJobStage(jobId);
+			return st > 0 && !!this.stageIcons[jobId + "_" + st];
 		},
 
 		// The finished weapon.

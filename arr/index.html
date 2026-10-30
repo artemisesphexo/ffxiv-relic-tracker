@@ -177,6 +177,7 @@
 				<span class="text-slate-700">&middot;</span>
 				<a href="../phantom/" class="text-slate-500 hover:text-emerald-400 transition-colors">Phantom (Dawntrail) &rarr;</a>
 			</nav>
+			<img data-xiv-item="Icon:120900:en" alt="Zodiac Weapons: The Saga Begins" width="2560" height="720" class="block w-full mx-auto mt-2" style="height:auto;max-width:480px;margin-bottom:-0.5rem;opacity:0;transition:opacity .4s" onload="if(this.src.indexOf('xivapi')>-1)this.style.opacity=1" />
 			<header class="pt-4 pb-4">
 				<div
 					class="flex items-center justify-between gap-3 mb-3"
@@ -218,7 +219,7 @@
     <img
         :src="jobChipIcon(job.id)"
         class="absolute inset-0 w-full h-full"
-        :class="getJobStage(job.id) > 0 ? 'object-contain p-0.5 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]' : 'object-cover'"
+        :class="jobChipHasWeapon(job.id) ? 'object-contain p-0.5 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]' : 'object-cover'"
         :alt="job.id"
         onerror="
             this.style.display = 'none';
