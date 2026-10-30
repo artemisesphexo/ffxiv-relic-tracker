@@ -66,9 +66,11 @@ Icons are referenced by game ID in the data files, and `assets/xivapi-icons.js` 
 | `itemId: 28` | Row in XIVAPI's `Item` sheet | Allagan Tomestone of Poetics |
 | `itemId: "EventItem:2001298"` | Key item (`EventItem` sheet) | Book of Skyfire I |
 | `itemId: "Icon:61801"` | Raw game icon ID, no lookup needed | Dungeon duty icon |
+| `itemId: "Icon:128401:en"` | Raw icon in a language subfolder (title cards); the neutral path is the fallback | Phantom Weapons banner |
 
 - Shared currency icons (Poetics, seals, tokens) are mapped once per tracker in `ICON_ITEM_IDS` in `data.js`.
 - Static `<img>` tags take a `data-xiv-item="…"` attribute instead, with `src="../assets/placeholder.png"`.
+- The title-card banners (hub cards and the top of each tracker page) are static `<img data-xiv-item>` tags without a `src`: they stay invisible until XIVAPI answers, and the hub cards fall back to their emoji.
 - Only icons with no game ID ship as local PNGs (currently Anima's dungeon, FATE, trial and repeat-quest icons, and Bozja's stat allocation). Giving one an `Icon:` ID lets you delete its file.
 - Item IDs can be found with XIVAPI's search, e.g. `https://v2.xivapi.com/api/search?query=Name="Cosmic Crystallite"&sheets=Item&fields=Name,Icon`.
 - Icon IDs for non-item things (duty types, FATEs, etc.) are listed in Gamer Escape's [Dictionary of Icons](https://ffxiv.gamerescape.com/wiki/Dictionary_of_Icons) — e.g. 061801 Dungeon, 061804 Trial, 061807 Duty Roulette, 061809 FATE.
@@ -88,7 +90,7 @@ Icons are referenced by game ID in the data files, and `assets/xivapi-icons.js` 
 └── sitemap.xml           # generated; submit to Search Console
 ```
 
-Each tracker folder holds its own `index.html`, `src/` (`data.js` + `main.js`), and `images/` for job, weapon and stage art plus the few icons that have no game ID.
+Each tracker folder holds its own `index.html`, `src/` (`data.js` + `main.js`), and `images/` for job icons plus the few icons that have no game ID. Weapon icons come from XIVAPI (Phantom still ships its own weapon and stage art).
 
 ## Credits
 
